@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lilicourse/Animations/DelayedAnimation.dart';
 import 'package:lilicourse/main.dart';
 import 'package:lilicourse/models/user/userApi.dart';
+import 'package:lilicourse/screens/Home/HomePage.dart';
 import '../../widgets/bas.dart';
-import '../Home/HomePage.dart';
 import '../Inscription/Choice.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,20 +18,9 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   bool _obscuretext = false;
   Color _color = Colors.grey;
-  bool isLoading = false;
+  bool isLoading = true;
   final email = TextEditingController();
   final pass = TextEditingController();
-
-  Future<void> Authenticate(String mail, String passw) async {
-    setState(() {
-      isLoading = true;
-    });
-    UserApi.authenticateUser(mail, passw);
-    print('ok');
-    setState(() {
-      isLoading = false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                       DelayedAnimation(
                         delay: 400,
                         child: TextFormField(
+                          controller: email,
                           decoration: InputDecoration(
                             labelStyle: TextStyle(
                               color: Colors.grey[400],
@@ -83,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                       DelayedAnimation(
                         delay: 450,
                         child: TextFormField(
+                          controller: pass,
                           obscureText: _obscuretext,
                           decoration: InputDecoration(
                             labelStyle: TextStyle(
@@ -164,12 +155,19 @@ class _LoginPageState extends State<LoginPage> {
                                   color: Colors.white, fontSize: 18),
                             ),
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (ctx) {
-                            return Home();
-                          }),
-                        );
+                        UserApi.authenticateUser(email.text, pass.text)
+                            .then((result) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          return Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (ctx) {
+                              return Home(
+                                user: result,
+                              );
+                            }),
+                          );
+                        });
                       }),
                 ),
               ),

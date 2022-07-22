@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../models/user/user.dart';
+
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  final User user;
+
+  Home({required this.user});
 
   @override
   State<Home> createState() => _HomeState();

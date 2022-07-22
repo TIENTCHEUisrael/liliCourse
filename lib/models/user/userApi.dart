@@ -31,8 +31,9 @@ class UserApi {
     var url = Uri.parse(
         '${Api_services.httpbaseUrl3}/lilicourse/user/login?mail=$email&passw=$password');
     final response = await http.get(url);
+    var data = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      return User.fromJson(jsonDecode(response.body));
+      return User.fromJson(data);
     } else {
       throw Exception('Failed to load this user');
     }
