@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                           return Navigator.of(context).pushReplacement(
                             MaterialPageRoute(builder: (ctx) {
                               return Home(
-                                user: result,
+                                person: result,
                               );
                             }),
                           );
