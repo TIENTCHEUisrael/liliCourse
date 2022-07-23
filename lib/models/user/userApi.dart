@@ -4,6 +4,17 @@ import 'dart:convert';
 import '../../services/service.dart';
 
 class UserApi {
+  static UserApi? _instance;
+
+  UserApi._();
+
+  static UserApi get instance {
+    if (_instance == null) {
+      _instance = UserApi._();
+    }
+    return _instance!;
+  }
+
   static Future<List<User>> getUsers() async {
     var url = Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/users');
     final response = await http.get(url);
@@ -27,7 +38,7 @@ class UserApi {
     }
   }
 
-  static Future<User> authenticateUser(String email, String password) async {
+  Future<User> authenticateUser(String email, String password) async {
     var url = Uri.parse(
         '${Api_services.httpbaseUrl2}/lilicourse/user/login?mail=$email&passw=$password');
     final response = await http.get(url);

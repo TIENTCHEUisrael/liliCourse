@@ -3,6 +3,8 @@ import bcrypt
 from typing import Optional
 from tortoise import fields
 from tortoise.models import Model
+from passlib.context import CryptContext
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from tortoise.contrib.pydantic import pydantic_model_creator
 
 class User(Model):
@@ -11,14 +13,19 @@ class User(Model):
     last_name=fields.CharField(null=False,unique=True,max_length=255)
     email=fields.CharField(null=False,unique=True,max_length=255)
     phone_number=fields.IntField()
-    password=fields.CharField(null=False,max_length=255)
+    password = CryptContext(schemes=["bcrypt"], deprecated="auto")
     commentaire=fields.CharField(max_length=255)
     image=fields.CharField(null=True,max_length=250)
     updated_at=fields.DatetimeField(auto_now=True)
     created_at=fields.DatetimeField(auto_now_add=True)
+    
 
-    def verify_password(self, password):
-        return bcrypt.verify(password, self.password_hash)
+    def get_hashed_password(password: str) -> str:
+        return password.hash(password)
+
+
+    def verify_password(password: str, hashed_pass: str) -> bool:
+        return password.verify(password, hashed_pass)
 
     class PydanticMeta:
         pass

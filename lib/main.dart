@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import '../screens/splashScreen/SplashPage.dart';
+import 'models/user/user.dart';
 
 const blue_button = Color(0xFF32447A);
 const red_button = Color(0xFFF6095F);
+
 void main() {
   runApp(MyApp());
 }

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lilicourse/Animations/DelayedAnimation.dart';
 import 'package:lilicourse/main.dart';
+import 'package:lilicourse/models/user/UserModel.dart';
 import 'package:lilicourse/models/user/userApi.dart';
 import 'package:lilicourse/screens/Home/HomePage.dart';
+import 'package:provider/provider.dart';
+import '../../models/user/user.dart';
 import '../../widgets/bas.dart';
 import '../Inscription/Choice.dart';
 
@@ -16,6 +20,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  User? user;
   bool _obscuretext = false;
   Color _color = Colors.grey;
   bool isLoading = false;
@@ -154,21 +159,64 @@ class _LoginPageState extends State<LoginPage> {
                               style: GoogleFonts.poppins(
                                   color: Colors.white, fontSize: 18),
                             ),
-                      onPressed: () {
-                        UserApi.authenticateUser(email.text, pass.text)
-                            .then((result) {
+                      onPressed:
+                          () {}), /**ChangeNotifierProvider(
+                    create: (context) {
+                      return UserModel(email.text, pass.text);
+                    },
+                    child: Builder(
+                      builder: (context) {
+                        final model = Provider.of<UserModel>(context);
+
+                        if (model.homeState == HomeState.Loading) {
                           setState(() {
                             isLoading = true;
                           });
-                          return Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (ctx) {
-                              return Home(
-                                person: result,
-                              );
-                            }),
+                        }
+                        if (model.homeState == HomeState.Error) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          Fluttertoast.showToast(
+                            msg: "Error:${model.message}",
                           );
+                        }
+                        setState(() {
+                          isLoading = false;
                         });
-                      }),
+                        final currentUser = model.user;
+                        return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: blue_button,
+                              shape: const StadiumBorder(),
+                              padding: const EdgeInsets.only(
+                                left: 100,
+                                right: 100,
+                                top: 10,
+                                bottom: 10,
+                              ),
+                            ),
+                            child: isLoading
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  )
+                                : Text(
+                                    'Connexion',
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.white, fontSize: 18),
+                                  ),
+                            onPressed: () {
+                              isLoading
+                                  ? null
+                                  : Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(builder: (context) {
+                                      return Home(person: currentUser!);
+                                    }));
+                            });
+                      },
+                    ),
+                  ), */
                 ),
               ),
               DelayedAnimation(

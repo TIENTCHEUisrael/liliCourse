@@ -34,14 +34,6 @@ class _InscriptionState extends State<Inscription> {
     });
   }
 
-  Future<void> Authenticate(String mail, String passw) async {
-    UserApi.authenticateUser(mail, passw);
-    print('ok');
-    setState(() {
-      _isLoading = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

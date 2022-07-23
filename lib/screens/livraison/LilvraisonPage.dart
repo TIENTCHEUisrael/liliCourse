@@ -12,11 +12,15 @@ class LivraisonPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(
-          context,
-          Text(
+        context,
+        Hero(
+          tag: 'uniqueTag',
+          child: Text(
             'Demander une Livraison',
             style: GoogleFonts.poppins(color: Colors.black, fontSize: 15),
-          )),
+          ),
+        ),
+      ),
       body: Container(),
     );
   }

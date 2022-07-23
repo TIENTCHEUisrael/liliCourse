@@ -25,7 +25,7 @@ Widget bas() {
           style: GoogleFonts.poppins(color: blue_button),
         ),
         Text(
-          'version 1.0.O',
+          'version 1.0.0',
           style: GoogleFonts.poppins(),
         ),
       ],
