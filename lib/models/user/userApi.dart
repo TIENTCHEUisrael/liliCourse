@@ -5,7 +5,7 @@ import '../../services/service.dart';
 
 class UserApi {
   static Future<List<User>> getUsers() async {
-    var url = Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/users');
+    var url = Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/users');
     final response = await http.get(url);
 
     var data = jsonDecode(response.body);
@@ -18,7 +18,7 @@ class UserApi {
   }
 
   static Future<User> getUser(int id) async {
-    var url = Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/?id=$id');
+    var url = Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/?id=$id');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return User.fromJson(jsonDecode(response.body));
@@ -29,7 +29,7 @@ class UserApi {
 
   static Future<User> authenticateUser(String email, String password) async {
     var url = Uri.parse(
-        '${Api_services.httpbaseUrl3}/lilicourse/user/login?mail=$email&passw=$password');
+        '${Api_services.httpbaseUrl2}/lilicourse/user/login?mail=$email&passw=$password');
     final response = await http.get(url);
     var data = jsonDecode(response.body);
     if (response.statusCode == 200) {

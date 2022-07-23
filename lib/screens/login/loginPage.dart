@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   bool _obscuretext = false;
   Color _color = Colors.grey;
-  bool isLoading = true;
+  bool isLoading = false;
   final email = TextEditingController();
   final pass = TextEditingController();
 
@@ -158,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                         UserApi.authenticateUser(email.text, pass.text)
                             .then((result) {
                           setState(() {
-                            isLoading = false;
+                            isLoading = true;
                           });
                           return Navigator.of(context).pushReplacement(
                             MaterialPageRoute(builder: (ctx) {

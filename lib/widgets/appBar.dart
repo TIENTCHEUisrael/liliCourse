@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-AppBar buildAppBar(BuildContext context, String text) {
+AppBar buildAppBar(BuildContext context, Widget widget) {
   const icon = CupertinoIcons.moon_stars;
   return AppBar(
     leading: const BackButton(
@@ -19,10 +18,7 @@ AppBar buildAppBar(BuildContext context, String text) {
         ),
       ),
     ],
-    title: Text(
-      text,
-      style: GoogleFonts.poppins(color: Colors.black),
-    ),
+    title: widget,
     centerTitle: true,
   );
 }
