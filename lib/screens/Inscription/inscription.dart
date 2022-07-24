@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lilicourse/Animations/DelayedAnimation.dart';
 import 'package:lilicourse/main.dart';
+import 'package:lilicourse/Provider/providerUser.dart';
 import 'package:lilicourse/widgets/bas.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/user/user.dart';
 import '../../models/user/userApi.dart';
+import '../Home/HomePage.dart';
 
 class Inscription extends StatefulWidget {
   const Inscription({Key? key}) : super(key: key);
@@ -27,15 +30,20 @@ class _InscriptionState extends State<Inscription> {
   final confirm = TextEditingController();
   final comment = TextEditingController();
 
-  Future<void> createUser(User user) async {
-    UserApi.createUser(user);
-    setState(() {
-      _isLoading = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    AuthProvider auth = Provider.of<AuthProvider>(context);
+    void validation() {
+      if (_formKey.currentState!.validate()) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('User added'),
+          ),
+        );
+      }
+    }
+
+    ;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -259,21 +267,43 @@ class _InscriptionState extends State<Inscription> {
                             password: pass.text,
                             commentaire: comment.text,
                             image: "");
-                        createUser(us);
-                        _isLoading
-                            ? null
-                            : () {
-                                if (_formKey.currentState!.validate()) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('User added')),
-                                  );
-                                }
-                              };
+                        auth.createUser(us).then(
+                          (value) {
+                            if (value!['status']) {
+                              setState(() {
+                                _isLoading = false;
+                              });
+                              User user = value['data'];
+                              Provider.of<UserProvider>(context).setUser(user);
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('User added'),
+                                  ),
+                                );
+                              }
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return Home(person: user);
+                                  },
+                                ),
+                              );
+                            }
+                          },
+                        );
                       },
-                      child: Text(
-                        'Register',
-                        style: GoogleFonts.poppins(fontSize: 18),
-                      ),
+                      child: auth.loggedInStatus == Status.Authenticating
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            )
+                          : Text(
+                              'Register',
+                              style: GoogleFonts.poppins(fontSize: 18),
+                            ),
                     ),
                   ),
                 ),

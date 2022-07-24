@@ -74,3 +74,61 @@ class UserApi {
     }
   }
 }
+/**ChangeNotifierProvider(
+                    create: (context) {
+                      return UserModel(email.text, pass.text);
+                    },
+                    child: Builder(
+                      builder: (context) {
+                        final model = Provider.of<UserModel>(context);
+
+                        if (model.homeState == HomeState.Loading) {
+                          setState(() {
+                            isLoading = true;
+                          });
+                        }
+                        if (model.homeState == HomeState.Error) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          Fluttertoast.showToast(
+                            msg: "Error:${model.message}",
+                          );
+                        }
+                        setState(() {
+                          isLoading = false;
+                        });
+                        final currentUser = model.user;
+                        return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: blue_button,
+                              shape: const StadiumBorder(),
+                              padding: const EdgeInsets.only(
+                                left: 100,
+                                right: 100,
+                                top: 10,
+                                bottom: 10,
+                              ),
+                            ),
+                            child: isLoading
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  )
+                                : Text(
+                                    'Connexion',
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.white, fontSize: 18),
+                                  ),
+                            onPressed: () {
+                              isLoading
+                                  ? null
+                                  : Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(builder: (context) {
+                                      return Home(person: currentUser!);
+                                    }));
+                            });
+                      },
+                    ),
+                  ), */
+                

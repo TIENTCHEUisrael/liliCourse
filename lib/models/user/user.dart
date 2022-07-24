@@ -37,13 +37,6 @@ class User {
         "image": image,
       };
 
-  // ignore: slash_for_doc_comments
-  /** Map<String, dynamic> toMap() => {
-        "attribute_id": attributeId,
-        "variant_id": variantId,
-        "image": List<dynamic>.from(image.map((x) => x.toMap())),
-    }; */
-
   static List<User> usersFromSnapshot(List snapshot) {
     return snapshot.map((data) => User.fromJson(data)).toList();
   }
