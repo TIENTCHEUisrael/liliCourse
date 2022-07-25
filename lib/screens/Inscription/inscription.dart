@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lilicourse/Animations/DelayedAnimation.dart';
 import 'package:lilicourse/main.dart';
@@ -275,6 +276,9 @@ class _InscriptionState extends State<Inscription> {
                               });
                               User user = value['data'];
                               Provider.of<UserProvider>(context).setUser(user);
+                              Fluttertoast.showToast(
+                                msg: "Warning:${value['message']}",
+                              );
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -290,6 +294,10 @@ class _InscriptionState extends State<Inscription> {
                                     return Home(person: user);
                                   },
                                 ),
+                              );
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: "Error:${value['message']}",
                               );
                             }
                           },

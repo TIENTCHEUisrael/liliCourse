@@ -33,7 +33,7 @@ class AuthProvider extends ChangeNotifier {
   Future<Map<String, dynamic>?> login(String email, String password) async {
     var result;
     var url = Uri.parse(
-        '${Api_services.httpbaseUrl2}/lilicourse/user/login?mail=$email&passw=$password');
+        '${Api_services.httpbaseUrl3}/lilicourse/user/login?mail=$email&passw=$password');
     final response = await http.get(url);
     var data = jsonDecode(response.body);
     print(data);
@@ -48,7 +48,7 @@ class AuthProvider extends ChangeNotifier {
 
       result = {
         'status': true,
-        'message': 'Successfully registered',
+        'message': 'Successfully authenticate',
         'user': authuser
       };
     } else {
@@ -63,7 +63,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<Map<String, dynamic>?> createUser(User user) async {
-    var url = Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/add_user');
+    var url = Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/add_user');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _loggedInStatus = Status.Authenticating;
@@ -80,6 +80,19 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
 
       return response as Future<Map<String, dynamic>?>;
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<Map<String, dynamic>?> createToken(User user) async {
+    var url = Uri.parse(
+        '${Api_services.httpbaseUrl3}/lilicourse/user/loginUser?${user.email}&${user.password}');
+    Map<String, String> header = {"Content-Type": "application/json"};
+    try {
+      final response = await http.post(url);
+      var data = jsonDecode(response.body);
+      print(data);
     } catch (e) {
       print(e.toString());
     }
@@ -106,7 +119,7 @@ class AuthProvider extends ChangeNotifier {
     } else {
       result = {
         'status': false,
-        'message': 'successfuly registered',
+        'message': 'Error registered',
         'data': responseData
       };
     }

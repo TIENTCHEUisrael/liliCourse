@@ -1,6 +1,5 @@
-from sqlalchemy import null, table
-import bcrypt
-from typing import Optional
+from TokenGenerate import *
+from token import *
 from tortoise import fields
 from tortoise.models import Model
 from tortoise.contrib.pydantic import pydantic_model_creator
@@ -16,10 +15,7 @@ class User(Model):
     image=fields.CharField(null=True,max_length=250)
     updated_at=fields.DatetimeField(auto_now=True)
     created_at=fields.DatetimeField(auto_now_add=True)
-    
-
-    def verify_password(self, password):
-        return bcrypt.verify(password, self.password_hash)
+    #tokens=fields.CharField(max_length=255,default=JWTRepo.generate_token({"sub":"sdfsdf"})
 
     class PydanticMeta:
         pass

@@ -170,11 +170,13 @@ class _LoginPageState extends State<LoginPage> {
                             (respo) {
                               if (respo!['status']) {
                                 User user = respo['user'];
+                                final Future<Map<String, dynamic>?> response2 =
+                                    auth.createToken(user);
                                 Provider.of<UserProvider>(context,
                                         listen: false)
                                     .setUser(user);
                                 Fluttertoast.showToast(
-                                  msg: "Error:${respo['message']}",
+                                  msg: "Warning:${respo['message']}",
                                 );
                                 setState(() {
                                   isLoading = false;
@@ -188,6 +190,10 @@ class _LoginPageState extends State<LoginPage> {
                                       );
                                     },
                                   ),
+                                );
+                              } else {
+                                Fluttertoast.showToast(
+                                  msg: "Error:${respo['message']}",
                                 );
                               }
                             },

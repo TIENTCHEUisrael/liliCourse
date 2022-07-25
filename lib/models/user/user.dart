@@ -6,6 +6,7 @@ class User {
   final String password;
   final String commentaire;
   final String? image;
+  String? token;
 
   User(
       {required this.first_name,
@@ -14,7 +15,8 @@ class User {
       required this.phone_number,
       required this.password,
       required this.commentaire,
-      this.image});
+      this.image,
+      this.token});
 
   factory User.fromJson(dynamic json) {
     return User(
@@ -24,7 +26,8 @@ class User {
         phone_number: json['phone_number'] as int,
         password: json['password'] as String,
         commentaire: json['commentaire'] as String,
-        image: json['image'] as String);
+        image: json['image'] as String,
+        token: json['result']);
   }
 
   Map<String, dynamic> toJson() => {
