@@ -62,6 +62,26 @@ class AuthProvider extends ChangeNotifier {
     return result;
   }
 
+  Future<String?> createToken(User user) async {
+    String result;
+    var url = Uri.parse(
+        '${Api_services.httpbaseUrl3}/lilicourse/user/loginUser?mail=${user.email}&passw=${user.password}');
+    Map<String, String> header = {"Content-Type": "application/json"};
+    try {
+      final response = await http.post(url);
+      var data = jsonDecode(response.body);
+      result = data['result'];
+      print(data['result']);
+
+      UserPreferences().saveToken(result);
+      notifyListeners();
+
+      return result;
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   Future<Map<String, dynamic>?> createUser(User user) async {
     var url = Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/add_user');
     Map<String, String> header = {"Content-Type": "application/json"};
@@ -80,19 +100,6 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
 
       return response as Future<Map<String, dynamic>?>;
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  Future<Map<String, dynamic>?> createToken(User user) async {
-    var url = Uri.parse(
-        '${Api_services.httpbaseUrl3}/lilicourse/user/loginUser?${user.email}&${user.password}');
-    Map<String, String> header = {"Content-Type": "application/json"};
-    try {
-      final response = await http.post(url);
-      var data = jsonDecode(response.body);
-      print(data);
     } catch (e) {
       print(e.toString());
     }

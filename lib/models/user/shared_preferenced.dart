@@ -54,8 +54,18 @@ class UserPreferences {
   Future<String> getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    String? token = prefs.getString("result");
+    String? token = prefs.getString(
+      "result",
+    );
 
     return token!;
+  }
+
+  Future<bool> saveToken(String token) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    prefs.setString("result", token);
+
+    return prefs.commit();
   }
 }
