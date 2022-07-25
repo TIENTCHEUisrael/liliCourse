@@ -67,7 +67,6 @@ class AuthProvider extends ChangeNotifier {
         var data = jsonDecode(response1.body);
         if (response1.statusCode == 200) {
           _user = User.fromJson(data);
-          print(_user);
 
           UserPreferences().saveUser(_user!);
           _loggedInStatus = Status.LoggedIn;
@@ -111,13 +110,88 @@ class AuthProvider extends ChangeNotifier {
       print(e.toString());
     }
   }*/
-
   Future<Map<String, dynamic>?> createUser(User user) async {
+    var result;
     var url = Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/add_user');
-    var url1 = Uri.parse(
-        '${Api_services.httpbaseUrl3}/lilicourse/user/login?mail=${user.email}&passw=${user.password}');
-    var url2 = Uri.parse(
-        '${Api_services.httpbaseUrl3}/lilicourse/user/loginUser?mail=${user.email}&passw=${user.password}');
+    Map<String, String> header = {"Content-Type": "application/json"};
+    try {
+      _loggedInStatus = Status.Authenticating;
+      notifyListeners();
+      final response = await http.post(
+        url,
+        headers: header,
+        body: json.encode(
+          user.toJson(),
+        ),
+      );
+      print(response.body);
+      if (response.statusCode == 200) {
+        _loggedInStatus = Status.Registered;
+        notifyListeners();
+        var data = jsonDecode(response.body);
+        print('${data}..........................................!');
+        _user = User.fromJson(data);
+
+        UserPreferences().saveUser(_user!);
+        notifyListeners();
+        result = {
+          'status': true,
+          'message': 'Successfully registered',
+          'data': _user
+        };
+        var urlLogin = Uri.parse(
+            '${Api_services.httpbaseUrl3}/lilicourse/user/login?mail=${_user!.email}&passw=${_user!.password}');
+        var urlToken = Uri.parse(
+            '${Api_services.httpbaseUrl3}/lilicourse/user/loginUser?mail=${_user!.email}&passw=${_user!.password}');
+        final responseToken = await http.post(urlToken);
+        if (responseToken.statusCode == 200) {
+          var dataToken = jsonDecode(responseToken.body);
+          _token = dataToken['result'];
+          print(_token);
+          UserPreferences.saveToken(_token);
+          notifyListeners();
+
+          final responseLogin = await http.get(urlLogin);
+          if (responseLogin.statusCode == 200) {
+            _user = User.fromJson(data);
+
+            _loggedInStatus = Status.LoggedIn;
+            print(_user);
+
+            notifyListeners();
+
+            result = {
+              'status': true,
+              'message': 'Successfully authenticate and register',
+              'user': _user
+            };
+            print(
+                '..................................................................;;;');
+          } else {
+            result = {
+              'status': true,
+              'message': 'Successfully  register and not authenticate',
+              'user': _user
+            };
+            print(result['message']);
+          }
+        } else {
+          result = {
+            'status': true,
+            'message': 'Successfully  register and not generate token',
+            'user': _user
+          };
+        }
+      } else {
+        return {'status': false, 'message': 'Error registered', 'data': _user};
+      }
+      return result;
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+/*Future<Map<String, dynamic>?> createUser(User user) async {
+    var url = Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/add_user');
 
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
@@ -132,8 +206,11 @@ class AuthProvider extends ChangeNotifier {
               headers: header)
           .then(onvalue)
           .catchError(onError("Error"));
+      print('..............................!');
       _loggedInStatus = Status.Registered;
       notifyListeners();
+      print(response);
+      print('..............................................;;');
 
       return response as Future<Map<String, dynamic>?>;
     } catch (e) {
@@ -144,8 +221,7 @@ class AuthProvider extends ChangeNotifier {
   Future<FutureOr> onvalue(http.Response response) async {
     var result;
     final Map<String, dynamic> responseData = json.decode(response.body);
-    print(responseData);
-    print('..............................................;;');
+    //print(responseData);
 
     if (response.statusCode == 200) {
       _user = User.fromJson(responseData);
@@ -166,7 +242,6 @@ class AuthProvider extends ChangeNotifier {
       var data2 = jsonDecode(response2.body);
       if (response2.statusCode == 200) {
         _token = data2['result'];
-        print(data2['result']);
 
         UserPreferences.saveToken(_token);
         notifyListeners();
@@ -174,13 +249,14 @@ class AuthProvider extends ChangeNotifier {
         final response1 = await http.get(url1);
         var data = jsonDecode(response1.body);
         if (response1.statusCode == 200) {
-          _user = User.fromJson(data);
-          print(_user);
-
-          UserPreferences().saveUser(_user!);
           _loggedInStatus = Status.LoggedIn;
 
           notifyListeners();
+          result = {
+            'status': true,
+            'message': 'Successfully registered',
+            'data': _user
+          };
         } else {
           _loggedInStatus = Status.NotLoggedIn;
           notifyListeners();
@@ -202,7 +278,7 @@ class AuthProvider extends ChangeNotifier {
     print('the error is ${error.detail}');
 
     return {'status': false, 'message': 'failed registered', 'data': error};
-  }
+  }*/
 }
 
 class UserProvider extends ChangeNotifier {

@@ -22,7 +22,6 @@ class Inscription extends StatefulWidget {
 class _InscriptionState extends State<Inscription> {
   final _formKey = GlobalKey<FormState>();
   var _obscureText = true;
-  bool _isLoading = false;
   final nom = TextEditingController();
   final prenom = TextEditingController();
   final email = TextEditingController();
@@ -31,20 +30,21 @@ class _InscriptionState extends State<Inscription> {
   final confirm = TextEditingController();
   final comment = TextEditingController();
 
+  void zero() {
+    setState(() {
+      nom.clear();
+      prenom.clear();
+      email.clear();
+      numero.clear();
+      pass.clear();
+      confirm.clear();
+      comment.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     AuthProvider auth = Provider.of<AuthProvider>(context);
-    void validation() {
-      if (_formKey.currentState!.validate()) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('User added'),
-          ),
-        );
-      }
-    }
-
-    ;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -269,37 +269,32 @@ class _InscriptionState extends State<Inscription> {
                             commentaire: comment.text,
                             image: "");
                         auth.createUser(us).then(
-                          (value) {
-                            if (value!['status'] == true) {
-                              setState(() {
-                                _isLoading = false;
-                              });
-                              User user = value['data'];
-                              Provider.of<UserProvider>(context).setUser(user);
-                              Fluttertoast.showToast(
-                                msg: "Warning:${value['message']}",
-                              );
-                              if (_formKey.currentState!.validate()) {
-                                _formKey.currentState!.save();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('User added'),
-                                  ),
-                                );
-                              }
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return Home(person: user);
-                                  },
-                                ),
-                              );
+                          (respo) {
+                            if (respo!['status']) {
+                              User user = respo['user'];
+                              Provider.of<UserProvider>(context, listen: false)
+                                  .setUser(user);
+                              print('.................................ii');
                             } else {
                               Fluttertoast.showToast(
-                                msg: "Error:${value['message']}",
+                                msg: "Error:${respo['message']}",
                               );
                             }
+                            Fluttertoast.showToast(
+                              msg: "Warning:${respo['message']}",
+                            );
+                            auth.loggedInStatus == Status.Authenticating
+                                ? null
+                                : Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (ctx) {
+                                        return Home(
+                                          person: respo['user'],
+                                        );
+                                      },
+                                    ),
+                                  );
                           },
                         );
                       },
