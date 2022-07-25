@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<User> getUserData() => UserPreferences().getUser();
+    Future<String> getUserToken() => UserPreferences().getToken();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'LiliCourse',
         theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-        home: /*FutureBuilder(
+        home: FutureBuilder(
           future: getUserData(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
@@ -44,16 +45,17 @@ class MyApp extends StatelessWidget {
               default:
                 if (snapshot.hasError) {
                   return Text('Error:${snapshot.error}');
-                } else if (snapshot.data.email == null) {
+                } else if (getUserToken() as String == null) {
                   return SplashPage();
                 } else {
-                  Provider.of<UserProvider>(context).setUser(snapshot.data);
+                  Provider.of<UserProvider>(context)
+                      .setUser(snapshot.data as User);
                 }
-                return Home(person: snapshot.data);
+                return Home(person: snapshot.data as User);
             }
           },
-        ),*/
-            SplashPage(),
+        ),
+        //SplashPage(),
         initialRoute: '/',
       ),
     );
