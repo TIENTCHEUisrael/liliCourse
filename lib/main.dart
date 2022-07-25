@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'LiliCourse',
         theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-        home: FutureBuilder(
+        home: /*FutureBuilder(
           future: getUserData(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
               default:
                 if (snapshot.hasError) {
                   return Text('Error:${snapshot.error}');
-                } else if (getUserToken() as String == null) {
+                } else if (getUserToken() == null) {
                   return SplashPage();
                 } else {
                   Provider.of<UserProvider>(context)
@@ -54,8 +54,8 @@ class MyApp extends StatelessWidget {
                 return Home(person: snapshot.data as User);
             }
           },
-        ),
-        //SplashPage(),
+        ),*/
+            SplashPage(),
         initialRoute: '/',
       ),
     );

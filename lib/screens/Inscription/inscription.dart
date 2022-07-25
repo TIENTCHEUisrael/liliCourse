@@ -270,7 +270,7 @@ class _InscriptionState extends State<Inscription> {
                             image: "");
                         auth.createUser(us).then(
                           (value) {
-                            if (value!['status']) {
+                            if (value!['status'] == true) {
                               setState(() {
                                 _isLoading = false;
                               });

@@ -170,8 +170,6 @@ class _LoginPageState extends State<LoginPage> {
                             (respo) {
                               if (respo!['status']) {
                                 User user = respo['user'];
-                                final Future<String?> response2 =
-                                    auth.createToken(user);
                                 Provider.of<UserProvider>(context,
                                         listen: false)
                                     .setUser(user);
