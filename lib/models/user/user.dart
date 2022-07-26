@@ -6,6 +6,7 @@ class User {
   final String password;
   final String commentaire;
   final String? image;
+  final String? updated_At;
 
   User(
       {required this.first_name,
@@ -14,7 +15,8 @@ class User {
       required this.phone_number,
       required this.password,
       required this.commentaire,
-      this.image});
+      this.image,
+      this.updated_At});
 
   factory User.fromJson(dynamic json) {
     return User(
@@ -25,6 +27,7 @@ class User {
       password: json['password'] as String,
       commentaire: json['commentaire'] as String,
       image: json['image'] as String,
+      updated_At: json['updated_at'] as String,
     );
   }
 
@@ -36,6 +39,7 @@ class User {
         "password": password,
         "commentaire": commentaire,
         "image": image,
+        "updated_at": updated_At,
       };
 
   static List<User> usersFromSnapshot(List snapshot) {
@@ -48,6 +52,6 @@ class User {
 
   @override
   String toString() {
-    return 'User {first_name: $first_name, last_name: $last_name, email: $email, phone_number: $phone_number,password:$password, commentaire:$commentaire, image!$image}';
+    return 'User {first_name: $first_name, last_name: $last_name, email: $email, phone_number: $phone_number,password:$password, commentaire:$commentaire, image!$image,updated_at!$updated_At}';
   }
 }

@@ -36,6 +36,11 @@ class AuthProvider extends ChangeNotifier {
     return null;
   }
 
+  void setUser(User user) {
+    _user = user;
+    notifyListeners();
+  }
+
   Status get loggedInStatus => _loggedInStatus;
   set loggedInStatus(Status value) {
     _loggedInStatus = value;

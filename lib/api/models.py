@@ -13,9 +13,8 @@ class User(Model):
     password=fields.CharField(null=False,max_length=255)
     commentaire=fields.CharField(max_length=255)
     image=fields.CharField(null=True,max_length=250)
-    updated_at=fields.DatetimeField(auto_now=True)
+    updated_at=fields.CharField(max_length=255)
     created_at=fields.DatetimeField(auto_now_add=True)
-    #tokens=fields.CharField(max_length=255,default=JWTRepo.generate_token({"sub":"sdfsdf"})
 
     class PydanticMeta:
         pass
@@ -33,7 +32,7 @@ class Coursier(Model):
     commande_id=fields.IntField()
     transport=fields.CharField(max_length=255)
     rating=fields.FloatField()
-    updated_at=fields.DatetimeField(auto_now=True)
+    updated_at=fields.CharField(max_length=255)
     created_at=fields.DatetimeField(auto_now_add=True)
 
     class PydanticMeta:
@@ -53,7 +52,7 @@ class Partenaire(Model):
     secteurs=fields.CharField(max_length=255)
     country=fields.CharField(max_length=255)
     postal_code=fields.CharField(max_length=255)
-    updated_at=fields.DatetimeField(auto_now=True)
+    updated_at=fields.CharField(max_length=255)
     created_at=fields.DatetimeField(auto_now_add=True)
 
     class PydanticMeta:
@@ -70,7 +69,7 @@ class Commande(Model):
     commande_id=fields.IntField(pk=True)
     user_id=fields.IntField()
     adresse_id=fields.CharField(max_length=255)
-    updated_at=fields.DatetimeField(auto_now=True)
+    updated_at=fields.CharField(max_length=255)
     created_at=fields.DatetimeField(auto_now_add=True)
 
     class PydanticMeta:
@@ -90,7 +89,7 @@ class Adresse(Model):
     poids=fields.CharField(max_length=255)
     taille=fields.CharField(max_length=255)
     type=fields.CharField(max_length=255)
-    updated_at=fields.DatetimeField(auto_now=True)
+    updated_at=fields.CharField(max_length=255)
     created_at=fields.DatetimeField(auto_now_add=True)
 
     class PydanticMeta:
@@ -111,7 +110,7 @@ class Adresse_ram(Model):
     email_recepteur=fields.CharField(max_length=255)
     civilite_recepteur=fields.CharField(max_length=255)
     planification=fields.CharField(max_length=255)
-    updated_at=fields.DatetimeField(auto_now=True)
+    updated_at=fields.CharField(max_length=255)
     created_at=fields.DatetimeField(auto_now_add=True)
 
     class PydanticMeta:
@@ -132,7 +131,7 @@ class Adresse_liv(Model):
     email=fields.CharField(max_length=255)
     civilite=fields.CharField(max_length=255)
     instruction=fields.CharField(max_length=255)
-    updated_at=fields.DatetimeField(auto_now=True)
+    updated_at=fields.CharField(max_length=255)
     created_at=fields.DatetimeField(auto_now_add=True)
 
     class PydanticMeta:
@@ -153,7 +152,7 @@ class Paiement(Model):
     montant=fields.FloatField()
     mode=fields.CharField(max_length=255)
     code=fields.CharField(max_length=255)
-    updated_at=fields.DatetimeField(auto_now=True)
+    updated_at=fields.CharField(max_length=255)
     created_at=fields.DatetimeField(auto_now_add=True)
 
     class PydanticMeta:

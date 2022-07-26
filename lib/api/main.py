@@ -1,3 +1,4 @@
+import email
 from requests import request
 from db import app, register_tortoise
 from fastapi import HTTPException
@@ -71,10 +72,10 @@ async def create_user(user:UserIn_Pydantic):
 
 
 #put
-@app.put("/lilicourse/update_user{id}",response_model=User_Pydantic,responses={404: {"model": HTTPNotFoundError}})
-async def update_user(id:int,user:UserIn_Pydantic):
-    await User.filter(user_id=id).update(**user.dict(exclude_unset=True))
-    retour=await User_Pydantic.from_queryset_single(User.get(user_id=id))
+@app.put("/lilicourse/update_user",response_model=User_Pydantic,responses={404: {"model": HTTPNotFoundError}})
+async def update_user(mail:str,user:UserIn_Pydantic):
+    await User.filter(email=mail).update(**user.dict(exclude_unset=True))
+    retour=await User_Pydantic.from_queryset_single(User.get(email=mail))
     return retour
 
 

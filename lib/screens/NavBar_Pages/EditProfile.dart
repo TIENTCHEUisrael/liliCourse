@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lilicourse/Animations/DelayedAnimation.dart';
 import 'package:lilicourse/main.dart';
 import 'package:lilicourse/widgets/appBar.dart';
-
 import '../../models/user/user.dart';
 import '../../widgets/TextFieldwidget.dart';
 
@@ -62,6 +61,7 @@ class _EditPageState extends State<EditProfile> {
                     bottomLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20),
                   ),
+                  border: Border.all(color: Colors.grey),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -77,7 +77,7 @@ class _EditPageState extends State<EditProfile> {
                           ),
                         ),
                         child: Image.asset(
-                          'assets/images/israel.jpeg',
+                          'assets/images/Profile.png',
                           fit: BoxFit.cover,
                         ),
                       ),
