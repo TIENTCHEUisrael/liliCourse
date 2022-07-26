@@ -64,7 +64,7 @@ async def tokengenerated(mail: str,passw:str):
 
 
 #post
-@app.post("/lilicourse/add_user",response_model=User_Pydantic)
+@app.post("/lilicourse/user/add_user",response_model=User_Pydantic)
 async def create_user(user:UserIn_Pydantic):
     obj=await User.create(**user.dict(exclude_unset=True))
     print(obj)
@@ -72,7 +72,7 @@ async def create_user(user:UserIn_Pydantic):
 
 
 #put
-@app.put("/lilicourse/update_user",response_model=User_Pydantic,responses={404: {"model": HTTPNotFoundError}})
+@app.put("/lilicourse/user/update_user",response_model=User_Pydantic,responses={404: {"model": HTTPNotFoundError}})
 async def update_user(mail:str,user:UserIn_Pydantic):
     await User.filter(email=mail).update(**user.dict(exclude_unset=True))
     retour=await User_Pydantic.from_queryset_single(User.get(email=mail))

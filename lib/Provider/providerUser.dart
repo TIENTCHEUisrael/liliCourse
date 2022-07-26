@@ -56,9 +56,9 @@ class AuthProvider extends ChangeNotifier {
   Future<Map<String, dynamic>?> login(String email, String password) async {
     var result;
     var url = Uri.parse(
-        '${Api_services.httpbaseUrl2}/lilicourse/user/login?mail=$email&passw=$password');
+        '${Api_services.httpbaseUrl3}/lilicourse/user/login?mail=$email&passw=$password');
     var url2 = Uri.parse(
-        '${Api_services.httpbaseUrl2}/lilicourse/user/loginUser?mail=$email&passw=$password');
+        '${Api_services.httpbaseUrl3}/lilicourse/user/loginUser?mail=$email&passw=$password');
 
     try {
       final response2 = await http.post(url2);
@@ -119,7 +119,8 @@ class AuthProvider extends ChangeNotifier {
   }*/
   Future<Map<String, dynamic>?> createUser(User user) async {
     var result;
-    var url = Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/add_user');
+    var url =
+        Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/user/add_user');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _loggedInStatus = Status.Authenticating;
@@ -146,9 +147,9 @@ class AuthProvider extends ChangeNotifier {
           'data': _user
         };
         var urlLogin = Uri.parse(
-            '${Api_services.httpbaseUrl2}/lilicourse/user/login?mail=${_user!.email}&passw=${_user!.password}');
+            '${Api_services.httpbaseUrl3}/lilicourse/user/login?mail=${_user!.email}&passw=${_user!.password}');
         var urlToken = Uri.parse(
-            '${Api_services.httpbaseUrl2}/lilicourse/user/loginUser?mail=${_user!.email}&passw=${_user!.password}');
+            '${Api_services.httpbaseUrl3}/lilicourse/user/loginUser?mail=${_user!.email}&passw=${_user!.password}');
         final responseToken = await http.post(urlToken);
         if (responseToken.statusCode == 200) {
           var dataToken = jsonDecode(responseToken.body);
@@ -198,7 +199,7 @@ class AuthProvider extends ChangeNotifier {
   Future<Map<String, dynamic>?> update_User(String email, User user) async {
     var result;
     final url = Uri.parse(
-        '${Api_services.httpbaseUrl2}/lilicourse/user/update_user?mail=$email');
+        '${Api_services.httpbaseUrl3}/lilicourse/user/update_user?mail=$email');
     final headers = {"Content-type": "application/json"};
     try {
       _loggedInStatus = Status.updatedIn;

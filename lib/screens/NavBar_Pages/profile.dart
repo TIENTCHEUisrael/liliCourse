@@ -93,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Text(
-                            'Laast_name :',
+                            'Last_name :',
                             style: GoogleFonts.poppins(
                                 color: blue_button, fontSize: 16),
                           ),
