@@ -50,6 +50,10 @@ class User {
     return snapshot;
   }
 
+  /*static String userToken(String token) {
+    return token;
+  }*/
+
   @override
   String toString() {
     return 'User {first_name: $first_name, last_name: $last_name, email: $email, phone_number: $phone_number,password:$password, commentaire:$commentaire, image!$image,updated_at!$updated_At}';

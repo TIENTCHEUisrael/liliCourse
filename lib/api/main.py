@@ -52,6 +52,10 @@ async def login_user(mail: str,passw:str):
     retour =await UserIn_Pydantic.from_queryset_single(User.get(password=passw,email=mail))
     return retour
 
+@app.get('/lilicourse/user/getId')
+async def getId():
+    return {"":""}
+
 @app.post("/lilicourse/user/loginUser")
 async def tokengenerated(mail: str,passw:str):
     

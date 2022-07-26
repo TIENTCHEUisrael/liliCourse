@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lilicourse/screens/NavBar_Pages/Apropos.dart';
 
 import '../models/user/user.dart';
 import '../screens/NavBar_Pages/profile.dart';
@@ -106,11 +107,11 @@ class _NavBarState extends State<NavBar> {
               return;
             },
             onTap: () {
-              /*Navigator.of(context).push(
+              Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) {
-                  return Apropos2();
+                  return Apropos();
                 }),
-              );*/
+              );
             },
           ),
           const Divider(),

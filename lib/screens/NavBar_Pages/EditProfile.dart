@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lilicourse/Animations/DelayedAnimation.dart';
 import 'package:lilicourse/Provider/providerUser.dart';
 import 'package:lilicourse/main.dart';
@@ -18,6 +22,28 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditProfile> {
+  File? images;
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) {
+        return;
+      }
+
+      final imageTemporary = File(image.path);
+      setState(
+        () {
+          images = imageTemporary;
+        },
+      );
+    } on PlatformException catch (e) {
+      print('Failed to pick Image');
+      Fluttertoast.showToast(
+        msg: "Error: Failed to pick Image}",
+      );
+    }
+  }
+
   User? authuser;
   final nom = TextEditingController();
   final prenom = TextEditingController();
@@ -45,6 +71,7 @@ class _EditPageState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     AuthProvider auth = Provider.of<AuthProvider>(context);
+
     return Scaffold(
       appBar: buildAppBar(
         context,
@@ -77,35 +104,70 @@ class _EditPageState extends State<EditProfile> {
                       child: Container(
                         padding: const EdgeInsets.only(left: 10),
                         height: 130,
+                        width: 110,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(
                             Radius.circular(20),
                           ),
                         ),
-                        child: Image.asset(
-                          'assets/images/Profile.png',
-                          fit: BoxFit.cover,
-                        ),
+                        child: images != null
+                            ? Image.file(
+                                images!,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset(
+                                'assets/images/Profile.png',
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
-                    InkWell(
-                      child: Card(
-                        color: blue_button,
-                        elevation: 10,
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.camera,
-                              color: Colors.white,
+                    Container(
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 45,
+                            alignment: Alignment.center,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: blue_button,
+                                  onPrimary: Colors.white),
+                              onPressed: () => pickImage(),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.image_outlined),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    'Pick Gallery',
+                                    style: GoogleFonts.poppins(),
+                                  ),
+                                ],
+                              ),
                             ),
-                            Text(
-                              '  Edit Camera  ',
-                              style: GoogleFonts.poppins(color: Colors.white),
+                          ),
+                          Container(
+                            height: 45,
+                            alignment: Alignment.center,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: blue_button,
+                                  onPrimary: Colors.white),
+                              onPressed: () {},
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.camera_alt_outlined),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    'Pick Camera',
+                                    style: GoogleFonts.poppins(),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      onTap: () {},
                     ),
                   ],
                 ),

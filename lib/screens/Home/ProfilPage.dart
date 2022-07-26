@@ -228,23 +228,6 @@ class _ProfilPageState extends State<ProfilePage> {
                       const SizedBox(
                         height: 30,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            'Adresse :',
-                            style: GoogleFonts.poppins(
-                                color: blue_button, fontSize: 16),
-                          ),
-                          Text(
-                            'Adresse',
-                            //widget.user.phone_number.toString(),
-                            style: GoogleFonts.poppins(
-                              color: Colors.grey[650],
-                            ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                 ),
@@ -256,7 +239,7 @@ class _ProfilPageState extends State<ProfilePage> {
                 color: Colors.white,
                 child: ListTile(
                   iconColor: Colors.black,
-                  leading: Icon(Icons.shop),
+                  leading: const Icon(Icons.shop),
                   title: Text(
                     'Orders',
                     style:
