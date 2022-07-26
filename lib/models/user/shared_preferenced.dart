@@ -51,17 +51,16 @@ class UserPreferences {
     prefs.remove("image");
   }
 
-  Future<String> getToken() async {
+  static getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    String? token = prefs.getString("currentToken");
-
-    return token!;
+    const key = 'result';
+    final value = prefs.getString(key) ?? 0;
+    print('read :$value');
   }
 
-  static Future<void> saveToken(String? token) async {
+  static saveToken(String token) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    prefs.setString("currentToken", token!);
+    prefs.setString('result', token);
   }
 }

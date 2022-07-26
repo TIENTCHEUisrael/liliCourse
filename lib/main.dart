@@ -16,8 +16,9 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Future<User> getUserData() => UserPreferences().getUser();
-    Future<String> getUserToken() => UserPreferences().getToken();
+    //Future<User> getUserData() => UserPreferences().getUser();
+    //Future<String> getUserToken() => UserPreferences().getToken();
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(

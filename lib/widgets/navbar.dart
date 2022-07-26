@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../models/user/user.dart';
+import '../screens/NavBar_Pages/profile.dart';
 
 class NavBar extends StatefulWidget {
   final User? user;
@@ -46,11 +47,11 @@ class _NavBarState extends State<NavBar> {
               return;
             },
             onTap: () {
-              /*Navigator.of(context).push(
+              Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) {
-                  return Profile2();
+                  return ProfilePage(user: widget.user!);
                 }),
-              );*/
+              );
             },
           ),
           Divider(),

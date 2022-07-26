@@ -1,9 +1,10 @@
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lilicourse/main.dart';
+import 'package:provider/provider.dart';
+import '../../Provider/providerUser.dart';
 import '../../models/user/user.dart';
-import './HomePage.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _ProfilPageState extends State<ProfilePage> {
   final _icon = CupertinoIcons.moon_stars;
   @override
   Widget build(BuildContext context) {
+    AuthProvider auth = Provider.of<AuthProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -38,7 +40,7 @@ class _ProfilPageState extends State<ProfilePage> {
                     Container(
                       height: 180,
                       width: 150,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         image: DecorationImage(
                           image: AssetImage("assets/images/israel.jpeg"),
@@ -59,45 +61,26 @@ class _ProfilPageState extends State<ProfilePage> {
       ),
     );
   }
-
-  buildName(User user) => Column(
-        children: [
-          Container(
-            height: 0.5,
-            width: double.infinity,
-            color: Colors.grey,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            user.first_name + ' ' + user.last_name,
-            style: GoogleFonts.poppins(
-              fontWeight: FontWeight.bold,
-              fontSize: 24,
-            ),
-          ),
-          SizedBox(
-            height: 2,
-          ),
-          Text(
-            user.phone_number.toString(),
-            style: GoogleFonts.poppins(fontSize: 15, color: Colors.blueGrey),
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          Text(
-            user.email,
-            style: GoogleFonts.poppins(color: Colors.grey),
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          Text(
-            'address',
-            style: GoogleFonts.poppins(color: Colors.grey),
-          ),
-        ],
-      );
 }
+  /*AvatarGlow(
+                glowColor: Colors.blue,
+                endRadius: 90.0,
+                duration: Duration(milliseconds: 2000),
+                repeat: true,
+                showTwoGlows: true,
+                repeatPauseDuration: Duration(milliseconds: 100),
+                child: Material(
+                  // Replace this child with your own
+                  elevation: 8.0,
+                  shape: CircleBorder(),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.grey[100],
+                    child: Image.asset(
+                      'assets/images/d.png',
+                      height: 60,
+                    ),
+                    radius: 40.0,
+                  ),
+                ),
+              ),*/
+            
