@@ -9,7 +9,6 @@ import 'package:lilicourse/widgets/bas.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/user/user.dart';
-import '../../models/user/userApi.dart';
 import '../Home/HomePage.dart';
 
 class Inscription extends StatefulWidget {
@@ -282,7 +281,7 @@ class _InscriptionState extends State<Inscription> {
                               );
                             }
                             Fluttertoast.showToast(
-                              msg: "Warning:${respo['message']}",
+                              msg: "Message:${respo['message']}",
                             );
                             auth.loggedInStatus == Status.Authenticating
                                 ? null

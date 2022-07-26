@@ -13,7 +13,9 @@ enum Status {
   Registered,
   Authenticating,
   Registering,
-  LoggetOut
+  LoggetOut,
+  updatedIn,
+  upadated,
 }
 
 class AuthProvider extends ChangeNotifier {
@@ -134,7 +136,6 @@ class AuthProvider extends ChangeNotifier {
         _loggedInStatus = Status.Registered;
         notifyListeners();
         var data = jsonDecode(response.body);
-        print('${data}..........................................!');
         _user = User.fromJson(data);
 
         UserPreferences().saveUser(_user!);
@@ -170,8 +171,6 @@ class AuthProvider extends ChangeNotifier {
               'message': 'Successfully authenticate and register',
               'user': _user
             };
-            print(
-                '..................................................................;;;');
           } else {
             result = {
               'status': true,
@@ -189,6 +188,46 @@ class AuthProvider extends ChangeNotifier {
         }
       } else {
         return {'status': false, 'message': 'Error registered', 'data': _user};
+      }
+      return result;
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<Map<String, dynamic>?> update_User(String email, User user) async {
+    var result;
+    final url = Uri.parse(
+        '${Api_services.httpbaseUrl2}/lilicourse/user/update_user?mail=$email');
+    final headers = {"Content-type": "application/json"};
+    try {
+      _loggedInStatus = Status.updatedIn;
+      notifyListeners();
+      final responseput = await http.put(
+        url,
+        headers: headers,
+        body: json.encode(
+          user.toJson(),
+        ),
+      );
+      if (responseput.statusCode == 200) {
+        print(
+            '${responseput.body}...............................................;;;;');
+        var data = jsonDecode(responseput.body);
+        _user = User.fromJson(data);
+        print('$_user....................................................');
+        setUser(_user!);
+        UserPreferences().saveUser(_user!);
+        _loggedInStatus = Status.upadated;
+        notifyListeners();
+
+        result = {
+          'status': true,
+          'message': 'Successfully  updated',
+          'user': _user
+        };
+      } else {
+        result = {'status': false, 'message': 'Error updating', 'user': _user};
       }
       return result;
     } catch (e) {

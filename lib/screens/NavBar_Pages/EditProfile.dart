@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lilicourse/Animations/DelayedAnimation.dart';
+import 'package:lilicourse/Provider/providerUser.dart';
 import 'package:lilicourse/main.dart';
 import 'package:lilicourse/widgets/appBar.dart';
+import 'package:provider/provider.dart';
 import '../../models/user/user.dart';
 import '../../widgets/TextFieldwidget.dart';
 
@@ -15,6 +18,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditProfile> {
+  User? authuser;
   final nom = TextEditingController();
   final prenom = TextEditingController();
   final email = TextEditingController();
@@ -34,11 +38,13 @@ class _EditPageState extends State<EditProfile> {
   @override
   void initState() {
     super.initState();
+    authuser = widget.user;
     chargement();
   }
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider auth = Provider.of<AuthProvider>(context);
     return Scaffold(
       appBar: buildAppBar(
         context,
@@ -160,7 +166,32 @@ class _EditPageState extends State<EditProfile> {
                     DelayedAnimation(
                       delay: 120,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          var us = User(
+                              first_name: nom.text,
+                              last_name: prenom.text,
+                              email: email.text,
+                              phone_number: int.parse(phone.text),
+                              password: password.text,
+                              commentaire: comentaire.text,
+                              image: "",
+                              updated_At: DateTime.now().toString());
+                          auth.update_User(authuser!.email, us).then((value) {
+                            if (value!['status']) {
+                              User user = value['user'];
+                              Provider.of<UserProvider>(context, listen: false)
+                                  .setUser(user);
+                              print('......................');
+                              Fluttertoast.showToast(
+                                msg: "Message:${value['message']}",
+                              );
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: "Error:${value['message']}",
+                              );
+                            }
+                          });
+                        },
                         style: ElevatedButton.styleFrom(
                           shape: const StadiumBorder(),
                           onPrimary: Colors.white,
