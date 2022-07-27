@@ -53,7 +53,7 @@ class UserPreferences {
 
   static getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    const key = 'result';
+    const key = 'token';
     final value = prefs.getString(key) ?? 0;
     print('read :$value');
   }
@@ -61,6 +61,6 @@ class UserPreferences {
   static saveToken(String token) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    prefs.setString('result', token);
+    prefs.setString('token', token);
   }
 }

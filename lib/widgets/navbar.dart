@@ -28,12 +28,15 @@ class _NavBarState extends State<NavBar> {
               style: const TextStyle(color: Colors.white60),
             ),
             currentAccountPicture: CircleAvatar(
-              child: ClipOval(
-                child: Image.asset(
-                  'assets/images/israel.jpeg',
-                  height: 100,
-                  width: 100,
-                  fit: BoxFit.cover,
+              child: Hero(
+                tag: 'tag1',
+                child: ClipOval(
+                  child: Image.asset(
+                    'assets/images/israel.jpeg',
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),

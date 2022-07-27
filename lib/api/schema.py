@@ -1,5 +1,6 @@
 from typing import Optional,TypeVar
 from unittest import result
+from paramiko import PKey
 from pydantic import BaseModel
 
 T=TypeVar('T')
@@ -11,4 +12,5 @@ class responseSchema(BaseModel):
     result:Optional[T]=None
 
 class response(BaseModel):
-    result:Optional[T]=None
+    token:Optional[T]=None
+

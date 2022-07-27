@@ -8,15 +8,16 @@ class User {
   final String? image;
   final String? updated_At;
 
-  User(
-      {required this.first_name,
-      required this.last_name,
-      required this.email,
-      required this.phone_number,
-      required this.password,
-      required this.commentaire,
-      this.image,
-      this.updated_At});
+  User({
+    required this.first_name,
+    required this.last_name,
+    required this.email,
+    required this.phone_number,
+    required this.password,
+    required this.commentaire,
+    this.image,
+    this.updated_At,
+  });
 
   factory User.fromJson(dynamic json) {
     return User(
@@ -49,10 +50,6 @@ class User {
   static User userFromSnapshot(User snapshot) {
     return snapshot;
   }
-
-  /*static String userToken(String token) {
-    return token;
-  }*/
 
   @override
   String toString() {

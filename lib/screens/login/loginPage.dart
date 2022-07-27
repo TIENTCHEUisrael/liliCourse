@@ -3,9 +3,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lilicourse/Animations/DelayedAnimation.dart';
 import 'package:lilicourse/main.dart';
-import 'package:lilicourse/Provider/providerUser.dart';
 import 'package:lilicourse/screens/Home/HomePage.dart';
 import 'package:provider/provider.dart';
+import '../../Provider/provideruser.dart';
 import '../../models/user/user.dart';
 import '../../widgets/bas.dart';
 import '../Inscription/Choice.dart';
@@ -165,14 +165,14 @@ class _LoginPageState extends State<LoginPage> {
                         if (form!.validate()) {
                           form.save();
                           final Future<Map<String, dynamic>?> response =
-                              auth.login(email.text, pass.text);
+                              auth.loginUser(email.text, pass.text);
                           response.then(
                             (respo) {
-                              if (respo!['status']) {
+                              if (respo!['statut']) {
                                 User user = respo['user'];
-                                Provider.of<UserProvider>(context,
+                                Provider.of<AuthProvider>(context,
                                         listen: false)
-                                    .setUser(user);
+                                    .setUSer(user);
                                 Fluttertoast.showToast(
                                   msg: "Warning:${respo['message']}",
                                 );

@@ -6,16 +6,16 @@ from tortoise.contrib.pydantic import pydantic_model_creator
 
 class User(Model):
     user_id=fields.IntField(pk=True)
-    first_name=fields.CharField(null=False,unique=True,max_length=255)
-    last_name=fields.CharField(null=False,unique=True,max_length=255)
+    first_name=fields.CharField(null=False,max_length=255)
+    last_name=fields.CharField(null=False,max_length=255)
     email=fields.CharField(null=False,unique=True,max_length=255)
     phone_number=fields.IntField()
-    password=fields.CharField(null=False,max_length=255)
+    password=fields.CharField(null=False,unique=True,max_length=255)
     commentaire=fields.CharField(max_length=255)
-    image=fields.CharField(null=True,max_length=250)
-    updated_at=fields.CharField(max_length=255)
+    image=fields.CharField(null=True,max_length=250,default=" ")
+    updated_at=fields.CharField(max_length=255,default=" ")
     created_at=fields.DatetimeField(auto_now_add=True)
-
+        
     class PydanticMeta:
         pass
     
@@ -28,12 +28,14 @@ UserIn_Pydantic=pydantic_model_creator(User,name="UserIn",exclude_readonly=True)
 
 class Coursier(Model):
     coursier_id=fields.IntField(pk=True)
-    user_id=fields.IntField()
-    commande_id=fields.IntField()
+    user_id=fields.ForeignKeyField("models.User",related_name="fk_user_coursier",null=False)
+    comande_id=fields.ForeignKeyField("models.Commande",related_name="fk_coursier_com",null=True)
     transport=fields.CharField(max_length=255)
     rating=fields.FloatField()
     updated_at=fields.CharField(max_length=255)
     created_at=fields.DatetimeField(auto_now_add=True)
+
+
 
     class PydanticMeta:
         pass
@@ -47,7 +49,7 @@ CoursierIn_Pydantic=pydantic_model_creator(Coursier,name="CoursierIn",exclude_re
 
 class Partenaire(Model):
     partenaire_id=fields.IntField(pk=True)
-    user_id=fields.IntField()
+    user_id=fields.ForeignKeyField("models.User",related_name="fk_user_partenaire",null=False)
     name_societe=fields.CharField(max_length=255)
     secteurs=fields.CharField(max_length=255)
     country=fields.CharField(max_length=255)
@@ -67,7 +69,7 @@ PartenaireIn_Pydantic=pydantic_model_creator(Partenaire,name="PartenaireIn",excl
 
 class Commande(Model):
     commande_id=fields.IntField(pk=True)
-    user_id=fields.IntField()
+    user_id=fields.ForeignKeyField("models.User",related_name="fk_commande_user",null=False)
     adresse_id=fields.CharField(max_length=255)
     updated_at=fields.CharField(max_length=255)
     created_at=fields.DatetimeField(auto_now_add=True)
@@ -84,8 +86,8 @@ CommandeIn_Pydantic=pydantic_model_creator(Commande,name="CommandeIn",exclude_re
 
 class Adresse(Model):
     adresse_id=fields.IntField(pk=True)
-    adresse_liv_id=fields.IntField()
-    adresse_ram_id=fields.IntField()
+    adresse_liv_id=fields.ForeignKeyField("models.Adresse_liv",related_name="fk_adres_liv",null=True)
+    adresse_ram_id=fields.ForeignKeyField("models.Adresse_ram",related_name="fk_adres_ram",null=True)
     poids=fields.CharField(max_length=255)
     taille=fields.CharField(max_length=255)
     type=fields.CharField(max_length=255)

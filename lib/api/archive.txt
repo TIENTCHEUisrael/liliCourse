@@ -1,0 +1,38 @@
+
+
+#essai token
+@app.post('/log')
+async def token_essai():
+    try:        
+        token=JWTRepo.generate_token({"sub":"sdfsdf"})
+        return responseSchema(code="200",status="succes",message="sqdqsd",result=TokenResponse(access_token=token,token_type="Bearer")).dict(exclude_none=True)
+    except Exception as error:
+        error_message=str(error.args)
+        print(error_message)
+        return responseSchema(code="500",status="alse",message="sqdqsd",result=TokenResponse(access_token=token,token_type="Bearer")).dict(exclude_none=True)
+
+
+
+@app.post("/lilicourse/user/add_user2",response_model=User_Pydantic)
+async def create_user_token(user:UserIn_Pydantic):
+    obj=await User.create(**user.dict(exclude_unset=True))
+    obj.token=JWTRepo.generate_token({"sub":obj.email})
+    return  await User_Pydantic.from_tortoise_orm(obj)
+
+@app.post("/lilicourse/user/loginUser",response_model=UserIn_Pydantic, responses={404: {"model": HTTPNotFoundError}})
+async def logUserAndToken(mail: str,passw:str):    
+    obj=await User.get(password=passw,email=mail)
+    obj.token=JWTRepo.generate_token({"sub":obj.email})
+    retour =await UserIn_Pydantic.from_tortoise_orm(obj)
+    return retour
+
+class UserModel(BaseModel):
+    first_name:str
+    last_name:str
+    email:str
+    phone_number:int
+    password:str
+    commentaire=str
+    image:str
+    updated_at=str
+    token:Optional[T]=None

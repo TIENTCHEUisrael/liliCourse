@@ -7,7 +7,8 @@ import 'package:lilicourse/Animations/DelayedAnimation.dart';
 import 'package:lilicourse/main.dart';
 import 'package:lilicourse/screens/NavBar_Pages/EditProfile.dart';
 import 'package:provider/provider.dart';
-import '../../Provider/providerUser.dart';
+
+import '../../Provider/provideruser.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -92,7 +93,7 @@ class _ProfilPageState extends State<ProfilePage> {
                                     PageRouteBuilder(
                                       pageBuilder: (context, animation,
                                           secondaryAnimation) {
-                                        return EditProfile(auth.user!);
+                                        return EditProfile(auth.user);
                                       },
                                       transitionsBuilder: (context, animation,
                                           secondaryAnimation, child) {
@@ -161,7 +162,7 @@ class _ProfilPageState extends State<ProfilePage> {
                                 color: blue_button, fontSize: 16),
                           ),
                           Text(
-                            auth.user!.first_name,
+                            auth.user.first_name,
                             style: GoogleFonts.poppins(
                               color: Colors.grey[650],
                             ),
@@ -180,7 +181,7 @@ class _ProfilPageState extends State<ProfilePage> {
                                 color: blue_button, fontSize: 16),
                           ),
                           Text(
-                            auth.user!.last_name,
+                            auth.user.last_name,
                             style: GoogleFonts.poppins(
                               color: Colors.grey[650],
                             ),
@@ -199,7 +200,7 @@ class _ProfilPageState extends State<ProfilePage> {
                                 color: blue_button, fontSize: 16),
                           ),
                           Text(
-                            auth.user!.email,
+                            auth.user.email,
                             style: GoogleFonts.poppins(
                               color: Colors.grey[650],
                             ),
@@ -218,7 +219,7 @@ class _ProfilPageState extends State<ProfilePage> {
                                 color: blue_button, fontSize: 16),
                           ),
                           Text(
-                            auth.user!.phone_number.toString(),
+                            auth.user.phone_number.toString(),
                             style: GoogleFonts.poppins(
                               color: Colors.grey[650],
                             ),

@@ -6,10 +6,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lilicourse/Animations/DelayedAnimation.dart';
-import 'package:lilicourse/Provider/providerUser.dart';
 import 'package:lilicourse/main.dart';
 import 'package:lilicourse/widgets/appBar.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import '../../Provider/provideruser.dart';
 import '../../models/user/user.dart';
 import '../../widgets/TextFieldwidget.dart';
 
@@ -23,23 +25,24 @@ class EditProfile extends StatefulWidget {
 
 class _EditPageState extends State<EditProfile> {
   File? images;
-  Future pickImage() async {
+  Future pickImage(ImageSource source) async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      final image = await ImagePicker().pickImage(source: source);
       if (image == null) {
         return;
       }
 
-      final imageTemporary = File(image.path);
+      //final imageTemporary = File(image.path);
+      final imagePermanent = await saveImagePermany(image.path);
+      print(image.path);
       setState(
         () {
-          images = imageTemporary;
+          images = imagePermanent;
         },
       );
     } on PlatformException catch (e) {
-      print('Failed to pick Image');
       Fluttertoast.showToast(
-        msg: "Error: Failed to pick Image}",
+        msg: "Failed to pick Image :$e}",
       );
     }
   }
@@ -133,7 +136,7 @@ class _EditPageState extends State<EditProfile> {
                               style: ElevatedButton.styleFrom(
                                   primary: blue_button,
                                   onPrimary: Colors.white),
-                              onPressed: () => pickImage(),
+                              onPressed: () => pickImage(ImageSource.gallery),
                               child: Row(
                                 children: [
                                   const Icon(Icons.image_outlined),
@@ -153,7 +156,7 @@ class _EditPageState extends State<EditProfile> {
                               style: ElevatedButton.styleFrom(
                                   primary: blue_button,
                                   onPrimary: Colors.white),
-                              onPressed: () {},
+                              onPressed: () => pickImage(ImageSource.camera),
                               child: Row(
                                 children: [
                                   const Icon(Icons.camera_alt_outlined),
@@ -241,8 +244,8 @@ class _EditPageState extends State<EditProfile> {
                           auth.update_User(authuser!.email, us).then((value) {
                             if (value!['status']) {
                               User user = value['user'];
-                              Provider.of<UserProvider>(context, listen: false)
-                                  .setUser(user);
+                              Provider.of<AuthProvider>(context, listen: false)
+                                  .setUSer(user);
                               print('......................');
                               Fluttertoast.showToast(
                                 msg: "Message:${value['message']}",
@@ -274,5 +277,13 @@ class _EditPageState extends State<EditProfile> {
         ),
       ),
     );
+  }
+
+  Future<File> saveImagePermany(String path) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final name = basename(path);
+    final image = File('${directory.path}/$name');
+    print(name);
+    return File(path).copy(image.path);
   }
 }

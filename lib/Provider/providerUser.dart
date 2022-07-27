@@ -56,9 +56,9 @@ class AuthProvider extends ChangeNotifier {
   Future<Map<String, dynamic>?> login(String email, String password) async {
     var result;
     var url = Uri.parse(
-        '${Api_services.httpbaseUrl2}/lilicourse/user/login?mail=$email&passw=$password');
+        '${Api_services.httpbaseUrl3}/lilicourse/user/login?mail=$email&passw=$password');
     var url2 = Uri.parse(
-        '${Api_services.httpbaseUrl2}/lilicourse/user/loginUser?mail=$email&passw=$password');
+        '${Api_services.httpbaseUrl3}/lilicourse/user/loginUser?mail=$email&passw=$password');
 
     try {
       final response2 = await http.post(url2);
@@ -102,25 +102,10 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  /*Future<void> createToken(User user) async {
-    var url = Uri.parse(
-        '${Api_services.httpbaseUrl3}/lilicourse/user/loginUser?mail=${user.email}&passw=${user.password}');
-    try {
-      final response = await http.post(url);
-      var data = jsonDecode(response.body);
-      _token = data['result'];
-      print(data['result']);
-
-      UserPreferences.saveToken(_token);
-      notifyListeners();
-    } catch (e) {
-      print(e.toString());
-    }
-  }*/
   Future<Map<String, dynamic>?> createUser(User user) async {
     var result;
     var url =
-        Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/user/add_user');
+        Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/user/add_user');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _loggedInStatus = Status.Authenticating;
@@ -147,9 +132,9 @@ class AuthProvider extends ChangeNotifier {
           'data': _user
         };
         var urlLogin = Uri.parse(
-            '${Api_services.httpbaseUrl2}/lilicourse/user/login?mail=${_user!.email}&passw=${_user!.password}');
+            '${Api_services.httpbaseUrl3}/lilicourse/user/login?mail=${_user!.email}&passw=${_user!.password}');
         var urlToken = Uri.parse(
-            '${Api_services.httpbaseUrl2}/lilicourse/user/loginUser?mail=${_user!.email}&passw=${_user!.password}');
+            '${Api_services.httpbaseUrl3}/lilicourse/user/loginUser?mail=${_user!.email}&passw=${_user!.password}');
         final responseToken = await http.post(urlToken);
         if (responseToken.statusCode == 200) {
           var dataToken = jsonDecode(responseToken.body);
@@ -199,7 +184,7 @@ class AuthProvider extends ChangeNotifier {
   Future<Map<String, dynamic>?> update_User(String email, User user) async {
     var result;
     final url = Uri.parse(
-        '${Api_services.httpbaseUrl2}/lilicourse/user/update_user?mail=$email');
+        '${Api_services.httpbaseUrl3}/lilicourse/user/update_user?mail=$email');
     final headers = {"Content-type": "application/json"};
     try {
       _loggedInStatus = Status.updatedIn;
@@ -233,6 +218,63 @@ class AuthProvider extends ChangeNotifier {
       return result;
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  Future<Map<String, dynamic>?> createAuthenticateUser(User user) async {
+    var result;
+    var url =
+        Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/user/add_user');
+    Map<String, String> header = {"Content-Type": "application/json"};
+    try {
+      _loggedInStatus = Status.Registering;
+      notifyListeners();
+      final response = await http.post(
+        url,
+        headers: header,
+        body: json.encode(
+          user.toJson(),
+        ),
+      );
+      print(response.body);
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        _user = User.fromJson(data);
+
+        UserPreferences().saveUser(_user!);
+        notifyListeners();
+        var urlLogin = Uri.parse(
+            '${Api_services.httpbaseUrl3}/lilicourse/user/loginUser?mail=${_user!.email}&passw=${_user!.password}');
+
+        final responseLogin = await http.post(urlLogin);
+
+        if (responseLogin.statusCode == 200) {
+          _loggedInStatus = Status.Registered;
+          var data = jsonDecode(responseLogin.body);
+          _token = data['token'];
+          print(_token);
+          print(data);
+          UserPreferences.saveToken(_token!);
+          notifyListeners();
+          _user = data;
+          UserPreferences().saveUser(_user!);
+          notifyListeners();
+          result = {
+            'status': true,
+            'message': 'Successfully registered',
+            'data': _user
+          };
+        }
+      } else {
+        result = {
+          'status': false,
+          'message': 'Error registered',
+          'data': _user
+        };
+      }
+      return result;
+    } on Exception catch (e) {
+      print("$e");
     }
   }
 }
