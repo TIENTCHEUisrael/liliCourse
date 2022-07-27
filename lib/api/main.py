@@ -60,7 +60,7 @@ async def create_upload_file(file: UploadFile = File(...)):
 async def test():
     return {"hello":"world"}
 
-@app.get("/lilicourse/users", response_model=List[User_Pydantic])
+@app.get("/lilicourse/users",dependencies=[Depends(JWTBearer())], response_model=List[User_Pydantic])
 async def get_all_user():
     retour= await User_Pydantic.from_queryset(User.all())
     return retour
@@ -108,17 +108,3 @@ async def generate_token(mail:str):
         error_message=str(error.args)
         print(error_message)
         return responseSchema(code="500",status="alse",message="Error",token=TokenResponse(access_token=token,token_type="Bearer")).dict(exclude_none=True)
-
-@app.get('/lilicourse/user/verify')
-async def verify(token:str):
-    try:        
-        token=JWTRepo.decode_token(token)
-        return response(token=token).dict(exclude_none=True)
-    except Exception as error:
-        error_message=str(error.args)
-        print(error_message)
-        return responseSchema(code="500",status="alse",message="sqdqsd",token=TokenResponse(access_token=token,token_type="Bearer")).dict(exclude_none=True)
-
-
-
-
