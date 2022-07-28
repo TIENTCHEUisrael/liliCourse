@@ -10,7 +10,7 @@ class User(Model):
     last_name=fields.CharField(null=False,max_length=255)
     email=fields.CharField(null=False,unique=True,max_length=255)
     phone_number=fields.IntField()
-    password=fields.CharField(null=False,unique=True,max_length=255)
+    password=fields.CharField(null=False,max_length=255)
     commentaire=fields.CharField(max_length=255)
     image=fields.CharField(null=True,max_length=250,default=" ")
     updated_at=fields.CharField(max_length=255,default=" ")

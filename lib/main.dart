@@ -21,13 +21,15 @@ class MyApp extends StatelessWidget {
           },
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'LiliCourse',
-        theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-        home: SplashPage(),
-        initialRoute: '/',
-      ),
+      child: Consumer<AuthProvider>(builder: (context, auth, _) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'LiliCourse',
+          theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+          home: SplashPage(),
+          initialRoute: '/',
+        );
+      }),
     );
   }
 }

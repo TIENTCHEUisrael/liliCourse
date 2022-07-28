@@ -24,6 +24,7 @@ enum Statut {
 class AuthProvider extends ChangeNotifier {
   String? _token;
   User? _user;
+  int? _id;
 
   Statut _logStatus = Statut.notauthenticate;
   Statut _registerStatus = Statut.notregisted;
@@ -40,6 +41,10 @@ class AuthProvider extends ChangeNotifier {
 
   User get user {
     return _user!;
+  }
+
+  int get id {
+    return _id!;
   }
 
   void setUSer(User us) {
@@ -198,36 +203,40 @@ class AuthProvider extends ChangeNotifier {
 
   Future<Map<String, dynamic>?> update_User(String email, User user) async {
     var result;
-    final urlUpdate = Uri.parse(
-        '${Api_services.httpbaseUrl3}/lilicourse/user/update_user?mail=$email');
+    final urlId =
+        Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/user/getId=$email');
     final headers = {"Content-type": "application/json"};
     try {
-      _logStatus = Statut.updating;
-      notifyListeners();
-      final responseput = await http.put(
-        urlUpdate,
-        headers: headers,
-        body: json.encode(user.toJson()),
-      );
+      final responseput = await http.get(urlId);
       if (responseput.statusCode == 200) {
-        _logStatus = Statut.updated;
-        notifyListeners();
-        print(
-            '${responseput.body}...............................................;;;;');
         var data = jsonDecode(responseput.body);
-        _user = User.fromJson(data);
-        print('$_user....................................................');
-        UserPreferences().saveUser(_user!);
+        _id = data['id'];
         notifyListeners();
+        final urlupdate = Uri.parse(
+            '${Api_services.httpbaseUrl3}/lilicourse/user/update_user?id=$_id');
+        final respon = await http.put(
+          urlupdate,
+          headers: headers,
+          body: jsonEncode(
+            user.toJson(),
+          ),
+        );
+        if (respon.statusCode == 200) {
+          var data = jsonDecode(respon.body);
+          _user = User.fromJson(data);
 
-        result = {
-          'status': true,
-          'message': 'Successfully  updated',
-          'user': _user
-        };
+          UserPreferences().saveUser(_user!);
+          notifyListeners();
+
+          result = {
+            'status': true,
+            'message': 'Successfully  updated',
+            'user': _user
+          };
+        }
       } else {
         _logStatus = Statut.notupdated;
-        result = {'status': false, 'message': 'Error updating', 'user': _user};
+        result = {'status': false, 'message': 'Error updating'};
       }
       return result;
     } catch (e) {

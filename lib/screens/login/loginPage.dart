@@ -174,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                                         listen: false)
                                     .setUSer(user);
                                 Fluttertoast.showToast(
-                                  msg: "Warning:${respo['message']}",
+                                  msg: "${respo['message']}",
                                 );
                                 setState(() {
                                   isLoading = false;

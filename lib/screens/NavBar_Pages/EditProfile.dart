@@ -25,6 +25,7 @@ class EditProfile extends StatefulWidget {
 
 class _EditPageState extends State<EditProfile> {
   File? images;
+  String? name;
   Future pickImage(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
@@ -34,10 +35,11 @@ class _EditPageState extends State<EditProfile> {
 
       //final imageTemporary = File(image.path);
       final imagePermanent = await saveImagePermany(image.path);
-      print(image.path);
+      print(image.name);
       setState(
         () {
           images = imagePermanent;
+          name = image.name;
         },
       );
     } on PlatformException catch (e) {
@@ -56,12 +58,12 @@ class _EditPageState extends State<EditProfile> {
   final comentaire = TextEditingController();
 
   void chargement() {
-    nom.text = widget.user.first_name;
-    prenom.text = widget.user.last_name;
-    email.text = widget.user.email;
-    phone.text = widget.user.phone_number.toString();
-    password.text = widget.user.password;
-    comentaire.text = widget.user.commentaire;
+    nom.text = authuser!.first_name;
+    prenom.text = authuser!.last_name;
+    email.text = authuser!.email;
+    phone.text = authuser!.phone_number.toString();
+    password.text = authuser!.password;
+    comentaire.text = authuser!.commentaire;
   }
 
   @override
@@ -280,10 +282,12 @@ class _EditPageState extends State<EditProfile> {
   }
 
   Future<File> saveImagePermany(String path) async {
+    //final d = Directory("/static/images/");
     final directory = await getApplicationDocumentsDirectory();
     final name = basename(path);
     final image = File('${directory.path}/$name');
     print(name);
+    print('............................................;');
     return File(path).copy(image.path);
   }
 }

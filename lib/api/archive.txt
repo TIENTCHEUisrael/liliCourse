@@ -36,3 +36,19 @@ class UserModel(BaseModel):
     image:str
     updated_at=str
     token:Optional[T]=None
+
+@app.post('/lilicourse/user/save_image')
+async def save(u:UploadFile,p:Path):
+    save_upload_file(u,p)
+    return u.filename
+
+
+@app.post('/lilicourse/user/save_image/1')
+async def save(u:UploadFile):
+    save_upload_file_tmp(u)
+    return u.filename
+
+@app.post('/lilicourse/user/save_image/2')
+async def save(u:UploadFile,c:Callable[[Path], None]):
+    handle_upload_file(u,c)
+    return u.filename

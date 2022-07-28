@@ -3,6 +3,7 @@ from typing_extensions import Self
 from requests import request
 from db import app, register_tortoise
 from fastapi import HTTPException, File
+from fastapi.encoders import jsonable_encoder
 from fastapi.staticfiles import StaticFiles
 from tortoise.contrib.fastapi import HTTPNotFoundError
 from TokenGenerate import JWTRepo
@@ -31,36 +32,14 @@ print(list)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.post("/upload/profile")
-async def create_upload_file(file: UploadFile = File(...)):
-    filepath = "./static/images"
-    filename = file.filename
-    extension = filename.split(".")[1]
-    if extension not in ["png", "jpg"]:
-        return {"status": "error", "details": "File extension not allowed"}
-
-    token_name = secrets.token_hex(10) + "." + extension
-    generate_name = filepath + token_name
-    file_content = await  file.read()
-    with open(generate_name, "wb") as file:
-        file.write(file_content)
-
-        # PILLOW
-        img = Image.open(generate_name)
-        img.save(generate_name)
-        file.close()
-        # business = await Business.get(owner)
-    file_url = generate_name[1:]
-    return {"statut": "ok", "filename": file_url}
-
 #requete de get, put,post,delete
 
 #get
 @app.get("/")
 async def test():
     return {"hello":"world"}
-
-@app.get("/lilicourse/users",dependencies=[Depends(JWTBearer())], response_model=List[User_Pydantic])
+#dependencies=[Depends(JWTBearer())], 
+@app.get("/lilicourse/users",response_model=List[User_Pydantic])
 async def get_all_user():
     retour= await User_Pydantic.from_queryset(User.all())
     return retour
@@ -89,14 +68,59 @@ async def simple_create_user(user:UserIn_Pydantic):
     return await User_Pydantic.from_tortoise_orm(obj)
 
 
+@app.post("/lilicourse/user/image")
+async def createFileUser(file: UploadFile = File(...)):
+    filepath = "./static/user/"
+    filename = file.filename
+    extension = filename.split(".")[1]
+    if extension not in ["png", "jpg","jpeg"]:
+        return {"status": "error", "details": "File extension not allowed"}
+
+    token_name = secrets.token_hex(5) + "." + extension
+    generate_name = filepath + token_name
+    file_content = await  file.read()
+    with open(generate_name, "wb") as file:
+        file.write(file_content)
+
+        # PILLOW
+        img = Image.open(generate_name)
+        img.save(generate_name)
+        file.close()
+        # business = await Business.get(owner)
+    file_url = generate_name[1:]
+    return {"statut": "ok", "filename": file_url}
+
+
+@app.post("/lilicourse/coursier/image")
+async def create_Image_coursier(file: UploadFile = File(...)):
+    filepath = "./static/coursier/"
+    filename = file.filename
+    extension = filename.split(".")[1]
+    if extension not in ["png", "jpg","jpeg"]:
+        return {"status": "error", "details": "File extension not allowed"}
+
+    token_name = secrets.token_hex(5) + "." + extension
+    generate_name = filepath + token_name
+    file_content = await  file.read()
+    with open(generate_name, "wb") as file:
+        file.write(file_content)
+
+        # PILLOW
+        img = Image.open(generate_name)
+        img.save(generate_name)
+        file.close()
+        # business = await Business.get(owner)
+    file_url = generate_name[1:]
+    return {"statut": "ok", "filename": file_url}
+
+
 
 #put
 @app.put("/lilicourse/user/update_user",response_model=UserIn_Pydantic,responses={404: {"model": HTTPNotFoundError}})
-async def update_user(mail:str,user:UserIn_Pydantic):
-    await User.filter(email=mail).update(**user.dict(exclude_unset=True))
-    retour=await UserIn_Pydantic.from_queryset_single(User.get(email=mail))
+async def update_user(id:int,user:UserIn_Pydantic):
+    await User.filter(user_id=id).update(**user.dict(exclude_unset=True))
+    retour=await UserIn_Pydantic.from_queryset_single(User.get(user_id=id))
     return retour
-
 
 #essai token
 @app.post('/lilicourse/user/generate')
@@ -108,3 +132,6 @@ async def generate_token(mail:str):
         error_message=str(error.args)
         print(error_message)
         return responseSchema(code="500",status="alse",message="Error",token=TokenResponse(access_token=token,token_type="Bearer")).dict(exclude_none=True)
+
+
+

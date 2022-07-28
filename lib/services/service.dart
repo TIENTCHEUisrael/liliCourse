@@ -11,4 +11,6 @@ class Api_services {
   static String httpbaseUrl4 = "http://$baseUrl4";
   static String httpbaseUrl5 = "http://$baseUrl5";
   static String httpbaseUrl6 = "http://$baseUrl6";
+  static String ImageUrlUser = "$httpbaseUrl3/static/user/";
+  static String ImageUrlCoursier = "$httpbaseUrl3/static/coursier/";
 }
