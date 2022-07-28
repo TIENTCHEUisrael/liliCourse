@@ -5,7 +5,6 @@ class TextFieldWidget extends StatefulWidget {
   final String label;
   final String text;
   final int maxLines;
-  final ValueChanged<String> onChanged;
   final TextEditingController controller;
 
   const TextFieldWidget(
@@ -13,7 +12,6 @@ class TextFieldWidget extends StatefulWidget {
       required this.controller,
       required this.label,
       required this.text,
-      required this.onChanged,
       this.maxLines = 1})
       : super(key: key);
 

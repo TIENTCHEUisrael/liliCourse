@@ -32,8 +32,6 @@ class _EditPageState extends State<EditProfile> {
       if (image == null) {
         return;
       }
-
-      //final imageTemporary = File(image.path);
       final imagePermanent = await saveImagePermany(image.path);
       print(image.name);
       setState(
@@ -193,51 +191,51 @@ class _EditPageState extends State<EditProfile> {
                 child: Column(
                   children: [
                     TextFieldWidget(
-                        controller: nom,
-                        label: 'Nom',
-                        text: nom.text,
-                        onChanged: (name) {}),
+                      controller: nom,
+                      label: 'Nom',
+                      text: nom.text,
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
                     TextFieldWidget(
-                        controller: prenom,
-                        label: 'Prenom',
-                        text: prenom.text,
-                        onChanged: (name) {}),
+                      controller: prenom,
+                      label: 'Prenom',
+                      text: prenom.text,
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
                     TextFieldWidget(
-                        controller: phone,
-                        label: 'Telephone',
-                        text: phone.text,
-                        onChanged: (name) {}),
+                      controller: phone,
+                      label: 'Telephone',
+                      text: phone.text,
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
                     TextFieldWidget(
-                        controller: email,
-                        label: 'Email',
-                        text: email.text,
-                        onChanged: (name) {}),
+                      controller: email,
+                      label: 'Email',
+                      text: email.text,
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
                     TextFieldWidget(
-                        controller: adress,
-                        label: 'Adresse',
-                        text: 'Adresse',
-                        onChanged: (name) {}),
+                      controller: adress,
+                      label: 'Adresse',
+                      text: 'Adresse',
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
                     TextFieldWidget(
-                        controller: comentaire,
-                        label: 'About you',
-                        text: comentaire.text,
-                        maxLines: 5,
-                        onChanged: (name) {}),
+                      controller: comentaire,
+                      label: 'About you',
+                      text: comentaire.text,
+                      maxLines: 5,
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -252,7 +250,7 @@ class _EditPageState extends State<EditProfile> {
                               phone_number: int.parse(phone.text),
                               password: password.text,
                               commentaire: comentaire.text,
-                              image: name,
+                              image: name == null ? " " : name as String,
                               updated_At: DateTime.now().toString());
                           auth.update_User(widget.user.email, us).then((value) {
                             if (value!['status']) {

@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
+import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:lilicourse/models/user/shared_preferenced.dart';
@@ -25,7 +27,7 @@ class AuthProvider extends ChangeNotifier {
   String? _token;
   User? _user;
   int? _id;
-
+  String? _name;
   Statut _logStatus = Statut.notauthenticate;
   Statut _registerStatus = Statut.notregisted;
   Statut _deleteStatus = Statut.notdeleted;
@@ -45,6 +47,10 @@ class AuthProvider extends ChangeNotifier {
 
   int get id {
     return _id!;
+  }
+
+  String get name {
+    return _name!;
   }
 
   void setUSer(User us) {
@@ -78,6 +84,8 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<Map<String, dynamic>?> loginUser(String mail, String pass) async {
+    print('......................;');
+    print(mail);
     var result;
     var urlLogin = Uri.parse(
         '${Api_services.httpbaseUrl7}/lilicourse/user/login?mail=$mail&passw=$pass');
@@ -86,21 +94,22 @@ class AuthProvider extends ChangeNotifier {
       _logStatus = Statut.authenticating;
       notifyListeners();
       final response = await http.get(urlLogin);
+      print('...................');
       if (response.statusCode == 200) {
+        print('...........................');
         var data = jsonDecode(response.body);
         _user = User.fromJson(data);
+        print(User.fromJson(data));
         print(_user!);
         UserPreferences().saveUser(_user!);
         notifyListeners();
-
+        print('................................................');
         var urlToken = Uri.parse(
             '${Api_services.httpbaseUrl7}/lilicourse/user/generate?mail=${_user!.email}');
         final responseToken = await http.post(urlToken);
         if (responseToken.statusCode == 200) {
           var data1 = jsonDecode(responseToken.body);
           _token = data1['token'];
-          print(
-              '...................................................................;');
           print(_token!);
           _logStatus = Statut.authenticated;
           notifyListeners();
@@ -199,6 +208,29 @@ class AuthProvider extends ChangeNotifier {
   Future<Map<String, dynamic>?> deleteUser(User us) async {
     var urlDelete = Uri.parse('${Api_services.httpbaseUrl7}/lilicourse/user/');
     try {} catch (e) {}
+  }
+
+  Future<Map<String, dynamic>?> uploadImage(File image) async {
+    var result;
+    var urlImage = Uri.parse(
+        '${Api_services.httpbaseUrl7}/lilicourse/user/image?file=$image');
+    try {
+      final responseImage = await http.post(urlImage);
+      if (responseImage.statusCode == 200) {
+        var data = jsonDecode(responseImage.body);
+        _name = data['filename'];
+        notifyListeners();
+        result = {"statut": true, "message": "Image Added", "filename": _name!};
+      } else {
+        result = {
+          "statut": false,
+          "message": "User is not registed",
+          "filename": _name!
+        };
+      }
+    } on PlatformException catch (e) {
+      print(e);
+    }
   }
 
   Future<Map<String, dynamic>?> update_User(String email, User user) async {
