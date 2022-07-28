@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:lilicourse/models/user/shared_preferenced.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user/user.dart';
 import '../services/service.dart';
 
@@ -96,11 +97,12 @@ class AuthProvider extends ChangeNotifier {
       final response = await http.get(urlLogin);
       print('...................');
       if (response.statusCode == 200) {
-        print('...........................');
+        print('..........CURRENT DATA.................');
         var data = jsonDecode(response.body);
+        UserPreferences.saveUserToSharePreference(data);
+
         _user = User.fromJson(data);
         print(User.fromJson(data));
-        print(_user!);
         UserPreferences().saveUser(_user!);
         notifyListeners();
         print('................................................');
@@ -224,7 +226,7 @@ class AuthProvider extends ChangeNotifier {
       } else {
         result = {
           "statut": false,
-          "message": "User is not registed",
+          "message": "Image is not registed",
           "filename": _name!
         };
       }
@@ -279,5 +281,32 @@ class AuthProvider extends ChangeNotifier {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  Future<bool> tryAutoLogin() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool result;
+
+    if (prefs.getString('token') == null &&
+        prefs.getString('currentUser') == null) {
+      print('...........NOT LOGGING..............');
+      result = false;
+    } else {
+      var extractUser = jsonDecode(prefs.getString('currentUser')!);
+      print(prefs.getString('currentUser')!);
+      print(prefs.getString('token')!);
+      _user = User.fromJson(extractUser);
+
+      print('............ LOGGED..............');
+
+      var extractToken = prefs.getString('token')!;
+      _token = extractToken;
+
+      print('............ TOKEN..............');
+      notifyListeners();
+
+      result = true;
+    }
+    return result;
   }
 }

@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBar(user: widget.person),
+      drawer: NavBar(),
       drawerScrimColor: Colors.grey,
       appBar: AppBar(
         elevation: 0.1,

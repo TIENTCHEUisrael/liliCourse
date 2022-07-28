@@ -1,13 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lilicourse/Animations/DelayedAnimation.dart';
-import 'package:lilicourse/main.dart';
-import 'package:lilicourse/widgets/appBar.dart';
+import '../../Animations/DelayedAnimation.dart';
+import '../../../main.dart';
+import '../../../widgets/appBar.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +32,6 @@ class _EditPageState extends State<EditProfile> {
         return;
       }
       final imagePermanent = await saveImagePermany(image.path);
-      print(image.name);
       setState(
         () {
           images = imagePermanent;
@@ -243,6 +241,17 @@ class _EditPageState extends State<EditProfile> {
                       delay: 120,
                       child: ElevatedButton(
                         onPressed: () {
+                          auth.uploadImage(images!).then((value) {
+                            if (value!['status']) {
+                              Fluttertoast.showToast(
+                                msg: "Message:${value['message']}",
+                              );
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: "Error:${value['message']}",
+                              );
+                            }
+                          });
                           var us = User(
                               first_name: nom.text,
                               last_name: prenom.text,
@@ -261,6 +270,7 @@ class _EditPageState extends State<EditProfile> {
                               Fluttertoast.showToast(
                                 msg: "Message:${value['message']}",
                               );
+                              Navigator.of(context).pop();
                             } else {
                               Fluttertoast.showToast(
                                 msg: "Error:${value['message']}",

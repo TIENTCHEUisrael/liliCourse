@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:lilicourse/main.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../widgets/bas.dart';
@@ -20,9 +18,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+
     Timer(const Duration(seconds: 10), () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (ctx) => Navigators()));
+          context, MaterialPageRoute(builder: (ctx) => const Navigators()));
     });
   }
 

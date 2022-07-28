@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import './user.dart';
@@ -62,5 +64,11 @@ class UserPreferences {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     prefs.setString('token', token);
+  }
+
+  static saveUserToSharePreference(Map<String, dynamic> data) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    prefs.setString('currentUser', jsonEncode(data));
   }
 }
