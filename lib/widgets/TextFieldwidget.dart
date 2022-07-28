@@ -6,9 +6,11 @@ class TextFieldWidget extends StatefulWidget {
   final String text;
   final int maxLines;
   final ValueChanged<String> onChanged;
+  final TextEditingController controller;
 
   const TextFieldWidget(
       {Key? key,
+      required this.controller,
       required this.label,
       required this.text,
       required this.onChanged,
@@ -20,17 +22,14 @@ class TextFieldWidget extends StatefulWidget {
 }
 
 class _TextFieldWidgetState extends State<TextFieldWidget> {
-  late final TextEditingController _controller;
-
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.text);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    widget.controller.dispose();
     super.dispose();
   }
 
@@ -43,11 +42,11 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           widget.label,
           style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         TextField(
-          controller: _controller,
+          controller: widget.controller,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),

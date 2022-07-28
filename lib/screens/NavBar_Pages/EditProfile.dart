@@ -56,6 +56,7 @@ class _EditPageState extends State<EditProfile> {
   final phone = TextEditingController();
   final password = TextEditingController();
   final comentaire = TextEditingController();
+  final adress = TextEditingController();
 
   void chargement() {
     nom.text = authuser!.first_name;
@@ -192,11 +193,15 @@ class _EditPageState extends State<EditProfile> {
                 child: Column(
                   children: [
                     TextFieldWidget(
-                        label: 'Nom', text: nom.text, onChanged: (name) {}),
+                        controller: nom,
+                        label: 'Nom',
+                        text: nom.text,
+                        onChanged: (name) {}),
                     const SizedBox(
                       height: 20,
                     ),
                     TextFieldWidget(
+                        controller: prenom,
                         label: 'Prenom',
                         text: prenom.text,
                         onChanged: (name) {}),
@@ -204,6 +209,7 @@ class _EditPageState extends State<EditProfile> {
                       height: 20,
                     ),
                     TextFieldWidget(
+                        controller: phone,
                         label: 'Telephone',
                         text: phone.text,
                         onChanged: (name) {}),
@@ -211,11 +217,15 @@ class _EditPageState extends State<EditProfile> {
                       height: 20,
                     ),
                     TextFieldWidget(
-                        label: 'Email', text: email.text, onChanged: (name) {}),
+                        controller: email,
+                        label: 'Email',
+                        text: email.text,
+                        onChanged: (name) {}),
                     const SizedBox(
                       height: 20,
                     ),
                     TextFieldWidget(
+                        controller: adress,
                         label: 'Adresse',
                         text: 'Adresse',
                         onChanged: (name) {}),
@@ -223,6 +233,7 @@ class _EditPageState extends State<EditProfile> {
                       height: 20,
                     ),
                     TextFieldWidget(
+                        controller: comentaire,
                         label: 'About you',
                         text: comentaire.text,
                         maxLines: 5,
@@ -241,9 +252,9 @@ class _EditPageState extends State<EditProfile> {
                               phone_number: int.parse(phone.text),
                               password: password.text,
                               commentaire: comentaire.text,
-                              image: "",
+                              image: name,
                               updated_At: DateTime.now().toString());
-                          auth.update_User(authuser!.email, us).then((value) {
+                          auth.update_User(widget.user.email, us).then((value) {
                             if (value!['status']) {
                               User user = value['user'];
                               Provider.of<AuthProvider>(context, listen: false)
@@ -265,10 +276,15 @@ class _EditPageState extends State<EditProfile> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 32, vertical: 12),
                         ),
-                        child: Text(
-                          'Update Profile',
-                          style: GoogleFonts.poppins(),
-                        ),
+                        child: auth.logStatus == Statut.updating
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              )
+                            : Text(
+                                'Update Profile',
+                                style: GoogleFonts.poppins(),
+                              ),
                       ),
                     ),
                   ],
