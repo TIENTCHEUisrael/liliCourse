@@ -7,7 +7,7 @@ import './user.dart';
 class UserPreferences {
   Future<bool> saveUser(User user) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-
+    print('.......................SAVE USER.............');
     prefs.setString("first_name", user.first_name);
     prefs.setString("last_name", user.last_name);
     prefs.setString("email", user.email);
@@ -15,6 +15,7 @@ class UserPreferences {
     prefs.setString("password", user.password);
     prefs.setString("commentaire", user.commentaire);
     prefs.setString("image", user.image!);
+    prefs.setString("updatedAt", user.updated_At!);
 
     return prefs.commit();
   }
@@ -29,6 +30,7 @@ class UserPreferences {
     String? password = prefs.getString("passwordd");
     String? commentaire = prefs.getString("commentaire");
     String? image = prefs.getString("image");
+    String? updatedAt = prefs.getString("updatedAt");
 
     return User(
       first_name: first_name!,
@@ -38,6 +40,7 @@ class UserPreferences {
       password: password!,
       commentaire: commentaire!,
       image: image,
+      updated_At: updatedAt,
     );
   }
 
@@ -51,19 +54,21 @@ class UserPreferences {
     prefs.remove("password");
     prefs.remove("commentaire");
     prefs.remove("image");
+    prefs.remove("updatedAt");
   }
 
-  static getToken() async {
+  Future<String> getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    const key = 'token';
-    final value = prefs.getString(key) ?? 0;
+    String value = prefs.getString("token")!;
     print('read :$value');
+    return value;
   }
 
-  static saveToken(String token) async {
+  Future<bool> saveToken(String token) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    prefs.setString('token', token);
+    prefs.setString("token", token);
+    return true;
   }
 
   static saveUserToSharePreference(Map<String, dynamic> data) async {

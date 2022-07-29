@@ -85,8 +85,6 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<Map<String, dynamic>?> loginUser(String mail, String pass) async {
-    print('......................;');
-    print(mail);
     var result;
     var urlLogin = Uri.parse(
         '${Api_services.httpbaseUrl7}/lilicourse/user/login?mail=$mail&passw=$pass');
@@ -95,27 +93,22 @@ class AuthProvider extends ChangeNotifier {
       _logStatus = Statut.authenticating;
       notifyListeners();
       final response = await http.get(urlLogin);
-      print('...................');
       if (response.statusCode == 200) {
-        print('..........CURRENT DATA.................');
         var data = jsonDecode(response.body);
         UserPreferences.saveUserToSharePreference(data);
 
         _user = User.fromJson(data);
-        print(User.fromJson(data));
-        UserPreferences().saveUser(_user!);
+        //UserPreferences().saveUser(_user!);
         notifyListeners();
-        print('................................................');
         var urlToken = Uri.parse(
             '${Api_services.httpbaseUrl7}/lilicourse/user/generate?mail=${_user!.email}');
         final responseToken = await http.post(urlToken);
         if (responseToken.statusCode == 200) {
           var data1 = jsonDecode(responseToken.body);
           _token = data1['token'];
-          print(_token!);
+
           _logStatus = Statut.authenticated;
-          notifyListeners();
-          UserPreferences.saveToken(_token!);
+          UserPreferences().saveToken(_token!);
           notifyListeners();
 
           result = {
@@ -146,7 +139,6 @@ class AuthProvider extends ChangeNotifier {
     var urlCreate =
         Uri.parse('${Api_services.httpbaseUrl7}/lilicourse/user/add_user');
     Map<String, String> header = {"Content-Type": "application/json"};
-    print('..................................');
     try {
       _logStatus = Statut.registing;
       notifyListeners();
@@ -161,10 +153,11 @@ class AuthProvider extends ChangeNotifier {
         _logStatus = Statut.registed;
         notifyListeners();
         var data = jsonDecode(reponse.body);
+        UserPreferences.saveUserToSharePreference(data);
         _user = User.fromJson(data);
-        UserPreferences().saveUser(_user!);
+
+        //UserPreferences().saveUser(_user!);
         notifyListeners();
-        print('${_user!}...........................................');
 
         var urlToken = Uri.parse(
             '${Api_services.httpbaseUrl7}/lilicourse/user/generate?mail=${_user!.email}');
@@ -172,11 +165,7 @@ class AuthProvider extends ChangeNotifier {
         if (responseToken.statusCode == 200) {
           var data1 = jsonDecode(responseToken.body);
           _token = data1['token'];
-          print(
-              '...................................................................;');
-          print(_token!);
-          notifyListeners();
-          UserPreferences.saveToken(_token!);
+          UserPreferences().saveToken(_token!);
           notifyListeners();
 
           result = {
@@ -262,10 +251,9 @@ class AuthProvider extends ChangeNotifier {
           notifyListeners();
           var data = jsonDecode(respon.body);
           _user = User.fromJson(data);
-
-          UserPreferences().saveUser(_user!);
+          UserPreferences.saveUserToSharePreference(data);
+          //UserPreferences().saveUser(_user!);
           notifyListeners();
-          print(_user);
 
           result = {
             'status': true,
@@ -297,15 +285,11 @@ class AuthProvider extends ChangeNotifier {
       print(prefs.getString('token')!);
       _user = User.fromJson(extractUser);
 
-      print('............ LOGGED..............');
-
       var extractToken = prefs.getString('token')!;
       _token = extractToken;
-
-      print('............ TOKEN..............');
       notifyListeners();
-
       result = true;
+      print('............ LOGGED..............');
     }
     return result;
   }
