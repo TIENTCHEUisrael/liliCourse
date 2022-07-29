@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lilicourse/Provider/provideruser.dart';
 import 'package:lilicourse/main.dart';
 import 'package:lilicourse/widgets/bas.dart';
 import 'package:lilicourse/widgets/navbar.dart';
+import 'package:provider/provider.dart';
 import '../../models/user/user.dart';
 import '../livraison/LilvraisonPage.dart';
 import './CommandesPage.dart';
@@ -12,9 +14,6 @@ import './ChatsPage.dart';
 import './ProfilPage.dart';
 
 class Home extends StatefulWidget {
-  final User person;
-  Home({required this.person});
-
   @override
   State<Home> createState() => _HomeState();
 }
@@ -34,6 +33,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    var auth = Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       drawer: NavBar(),
       drawerScrimColor: Colors.grey,
@@ -91,7 +91,7 @@ class _HomeState extends State<Home> {
             context,
             PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) {
-                return LivraisonPage(user: widget.person);
+                return LivraisonPage(user: auth.user);
               },
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {

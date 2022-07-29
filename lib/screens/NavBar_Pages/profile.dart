@@ -51,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Material(
                             color: Colors.transparent,
                             child: Image.asset(
-                              'assets/images/Profile.png',
+                              'assets/images/prof3.png',
                               height: 128,
                               width: 128,
                               fit: BoxFit.cover,

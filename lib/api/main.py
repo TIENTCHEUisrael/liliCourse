@@ -33,7 +33,7 @@ print(list)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 #requete de get, put,post,delete
-
+#................................................USER...............................................
 #get
 @app.get("/")
 async def test():
@@ -134,4 +134,8 @@ async def generate_token(mail:str):
         return responseSchema(code="500",status="alse",message="Error",token=TokenResponse(access_token=token,token_type="Bearer")).dict(exclude_none=True)
 
 
-
+#..................................COURSIER.............................................;
+#..................................ADRESSE .............................................;
+#..................................ADRESSE_RAM..........................................;
+#..................................ADRESSE_LIV..........................................;
+#..................................COMMANDE.............................................;

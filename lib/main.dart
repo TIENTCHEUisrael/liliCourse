@@ -17,7 +17,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Future<bool>? _appTryAutoLogin;
+  //Future<bool>? _appTryAutoLogin;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +36,36 @@ class _MyAppState extends State<MyApp> {
       ],
       child: Consumer<AuthProvider>(
         builder: (context, auth, _) {
-          _appTryAutoLogin = auth.tryAutoLogin();
           return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'LiliCourse',
-              theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-              home: auth.isAuth == true
-                  ? Home(person: auth.user)
-                  : const SplashPage());
+            debugShowCheckedModeBanner: false,
+            title: 'LiliCourse',
+            theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+            home: auth.isAuth == true
+                ? Home()
+                : FutureBuilder<bool>(
+                    future: auth.tryAutoLogin(),
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Scaffold(
+                            backgroundColor: Colors.white,
+                            body: Container(
+                              child: const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                          );
+
+                        default:
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            return SplashPage();
+                          }
+                      }
+                    },
+                  ),
+          );
         },
       ),
     );

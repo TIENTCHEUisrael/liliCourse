@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import './../../main.dart';
 import '../../widgets/bas.dart';
 import '../../Animations/DelayedAnimation.dart';
@@ -23,8 +24,8 @@ class _Page1State extends State<Page1> {
             delay: 300,
             child: Container(
               alignment: Alignment.center,
-              child: SvgPicture.asset(
-                'assets/images/delivery/svg/question.svg',
+              child: Lottie.asset(
+                'assets/images/okk.json',
                 height: 350,
                 width: 350,
               ),

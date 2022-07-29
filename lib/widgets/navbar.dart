@@ -34,7 +34,7 @@ class _NavBarState extends State<NavBar> {
                         tag: 'tag1',
                         child: ClipOval(
                           child: Image.asset(
-                            'assets/images/israel.jpeg',
+                            'assets/images/prof3.png',
                             height: 100,
                             width: 100,
                             fit: BoxFit.cover,

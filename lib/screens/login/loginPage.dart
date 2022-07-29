@@ -183,9 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (ctx) {
-                                      return Home(
-                                        person: user,
-                                      );
+                                      return Home();
                                     },
                                   ),
                                 );

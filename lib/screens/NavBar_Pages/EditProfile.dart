@@ -7,8 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import '../../Animations/DelayedAnimation.dart';
 import '../../../main.dart';
 import '../../../widgets/appBar.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart' as syspaths;
 import 'package:provider/provider.dart';
 import '../../Provider/provideruser.dart';
 import '../../models/user/user.dart';
@@ -25,6 +25,11 @@ class EditProfile extends StatefulWidget {
 class _EditPageState extends State<EditProfile> {
   File? images;
   String? name;
+
+  void _selectImage(File pickedImage) {
+    images = pickedImage;
+  }
+
   Future pickImage(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
@@ -118,7 +123,7 @@ class _EditPageState extends State<EditProfile> {
                                 fit: BoxFit.cover,
                               )
                             : Image.asset(
-                                'assets/images/Profile.png',
+                                'assets/images/prof3.png',
                                 fit: BoxFit.cover,
                               ),
                       ),
@@ -305,13 +310,13 @@ class _EditPageState extends State<EditProfile> {
     );
   }
 
-  Future<File> saveImagePermany(String path) async {
+  Future<File> saveImagePermany(String paths) async {
     //final d = Directory("/static/images/");
-    final directory = await getApplicationDocumentsDirectory();
-    final name = basename(path);
+    final directory = await syspaths.getApplicationDocumentsDirectory();
+    final name = path.basename(paths);
     final image = File('${directory.path}/$name');
     print(name);
     print('............................................;');
-    return File(path).copy(image.path);
+    return File(paths).copy(image.path);
   }
 }

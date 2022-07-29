@@ -69,13 +69,14 @@ class _ProfilPageState extends State<ProfilePage> {
                                 width: 130,
                                 child: Card(
                                   child: Container(
+                                    color: blue_button,
                                     padding: const EdgeInsets.all(12),
                                     child: Hero(
                                       tag: 'tag1',
                                       child: ClipOval(
                                         child: Material(
                                           child: Image.asset(
-                                              'assets/images/israel.jpeg'),
+                                              'assets/images/prof3.png'),
                                         ),
                                       ),
                                     ),

@@ -291,9 +291,7 @@ class _InscriptionState extends State<Inscription> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (ctx) {
-                                          return Home(
-                                            person: respo['user'],
-                                          );
+                                          return Home();
                                         },
                                       ),
                                     );

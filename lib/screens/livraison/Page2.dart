@@ -462,7 +462,7 @@ class _Page2State extends State<Page2> {
             child: Column(
               children: [
                 containFirst(
-                    imagePath: 'assets/image/delivery/svg/delivery.svg',
+                    imagePath: 'assets/images/delivery/svg/delivery.svg',
                     text: 'Demander une livraison'),
                 Card(
                   elevation: 8,
