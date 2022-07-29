@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lilicourse/main.dart';
+import './../../main.dart';
+import '../../widgets/bas.dart';
 import '../../Animations/DelayedAnimation.dart';
 import '../../Animations/animatedButton.dart';
 
@@ -43,29 +44,9 @@ class _Page1State extends State<Page1> {
           ),
           animatedButton(),
           const SizedBox(
-            height: 150,
+            height: 130,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Shex',
-                style: GoogleFonts.poppins(
-                  color: Colors.red,
-                ),
-              ),
-              Text(
-                'pi',
-                style: GoogleFonts.poppins(
-                  color: Colors.blue,
-                ),
-              ),
-              Text(
-                ' livraison version 1.0',
-                style: GoogleFonts.poppins(),
-              ),
-            ],
-          ),
+          bas()
         ],
       ),
     );

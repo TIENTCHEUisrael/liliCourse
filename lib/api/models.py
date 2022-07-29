@@ -70,7 +70,7 @@ PartenaireIn_Pydantic=pydantic_model_creator(Partenaire,name="PartenaireIn",excl
 class Commande(Model):
     commande_id=fields.IntField(pk=True)
     user_id=fields.ForeignKeyField("models.User",related_name="fk_commande_user",null=False)
-    adresse_id=fields.CharField(max_length=255)
+    adresse_id=fields.ForeignKeyField("models.Adresse",related_name="fk_commande_adresse",null=False)
     updated_at=fields.CharField(max_length=255)
     created_at=fields.DatetimeField(auto_now_add=True)
 

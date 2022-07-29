@@ -14,7 +14,7 @@ class _AttentePageState extends State<AttentePage> {
       padding: EdgeInsets.all(5),
       child: Column(
         children: [
-          containFirst(imagePath: 'assets/image/delivery/svg/delivery.svg', text: 'Demander une livraison'),
+          containFirst(imagePath: 'assets/images/delivery/svg/delivery.svg', text: 'Demander une livraison'),
           Card(
             elevation: 5,
             child: Column(
@@ -41,6 +41,7 @@ class _AttentePageState extends State<AttentePage> {
           ),
         ],
       ),
-    ),*/Container();
+    ),*/
+        Container();
   }
 }

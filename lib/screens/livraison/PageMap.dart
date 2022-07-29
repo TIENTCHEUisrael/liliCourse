@@ -28,7 +28,7 @@ class _TimeWaitingState extends State<TimeWaiting> {
               padding: const EdgeInsets.only(top: 95),
               child: Center(
                 child: SvgPicture.asset(
-                  'assets/image/delivery/svg/ok.svg',
+                  'assets/images/delivery/svg/ok.svg',
                   height: 250,
                   width: 200,
                 ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lilicourse/main.dart';
 import '../../Animations/DelayedAnimation.dart';
 import '../../widgets/appBar.dart';
+import '../../widgets/containFirst.dart';
 import 'PageMap.dart';
 
 class Page2 extends StatefulWidget {
@@ -29,7 +29,7 @@ class _Page2State extends State<Page2> {
     return Scaffold(
       appBar: buildAppBar(
         context,
-        Text('DeliveryPage', style: GoogleFonts.poppins()),
+        Text('Delivery Page', style: GoogleFonts.poppins(color: Colors.black)),
       ),
       body: isCompleted
           ? buildCompleted()
@@ -119,10 +119,10 @@ class _Page2State extends State<Page2> {
             child: Column(
               children: [
                 containFirst(
-                    imagePath: 'assets/image/delivery/svg/delivery.svg',
+                    imagePath: 'assets/images/delivery/svg/delivery.svg',
                     text: 'Demander une livraison'),
                 Card(
-                  elevation: 5,
+                  elevation: 8,
                   child: Column(
                     children: [
                       Container(
@@ -178,16 +178,16 @@ class _Page2State extends State<Page2> {
             child: Column(
               children: [
                 containFirst(
-                    imagePath: 'assets/image/delivery/svg/delivery.svg',
+                    imagePath: 'assets/images/delivery/svg/delivery.svg',
                     text: 'Demander une livraison'),
                 Card(
-                  elevation: 5,
+                  elevation: 8,
                   child: Column(
                     children: [
                       Container(
                         padding: const EdgeInsets.all(15),
                         child: Text(
-                          'Caracteristique de votre Colis?',
+                          'Caracteristique de votre Colis',
                           style: GoogleFonts.poppins(fontSize: 15),
                           textAlign: TextAlign.center,
                         ),
@@ -269,10 +269,10 @@ class _Page2State extends State<Page2> {
             child: Column(
               children: [
                 containFirst(
-                    imagePath: 'assets/image/delivery/svg/delivery.svg',
+                    imagePath: 'assets/images/delivery/svg/delivery.svg',
                     text: 'Demander une livraison'),
                 Card(
-                  elevation: 5,
+                  elevation: 8,
                   child: Container(
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: Column(
@@ -367,10 +367,10 @@ class _Page2State extends State<Page2> {
             child: Column(
               children: [
                 containFirst(
-                    imagePath: 'assets/image/delivery/svg/delivery.svg',
+                    imagePath: 'assets/images/delivery/svg/delivery.svg',
                     text: 'Demander une livraison'),
                 Card(
-                  elevation: 2,
+                  elevation: 8,
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -465,7 +465,7 @@ class _Page2State extends State<Page2> {
                     imagePath: 'assets/image/delivery/svg/delivery.svg',
                     text: 'Demander une livraison'),
                 Card(
-                  elevation: 2,
+                  elevation: 8,
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -566,7 +566,7 @@ class _Page2State extends State<Page2> {
             child: Column(
               children: [
                 containFirst(
-                    imagePath: 'assets/image/delivery/svg/delivery.svg',
+                    imagePath: 'assets/images/delivery/svg/delivery.svg',
                     text: 'Demander une livraison'),
                 Card(
                   elevation: 5,
@@ -575,7 +575,7 @@ class _Page2State extends State<Page2> {
                       Container(
                         padding: const EdgeInsets.all(15),
                         child: Text(
-                          'Paiyements ',
+                          'Paiyments ',
                           style: GoogleFonts.poppins(fontSize: 15),
                           textAlign: TextAlign.center,
                         ),
@@ -589,7 +589,7 @@ class _Page2State extends State<Page2> {
                             },
                             child: Carte2(
                                 titre: 'Orange Money',
-                                imagePath: 'assets/image/image2.png',
+                                imagePath: 'assets/images/image2.png',
                                 height: 120,
                                 width: 115),
                           ),
@@ -599,7 +599,7 @@ class _Page2State extends State<Page2> {
                             },
                             child: Carte2(
                                 titre: 'Mobile Money',
-                                imagePath: 'assets/image/image3.jpg',
+                                imagePath: 'assets/images/image3.jpg',
                                 height: 120,
                                 width: 115),
                           ),
@@ -612,7 +612,7 @@ class _Page2State extends State<Page2> {
                         alignment: Alignment.center,
                         child: Carte2(
                             titre: 'Paypal',
-                            imagePath: 'assets/image/image1.png',
+                            imagePath: 'assets/images/image1.png',
                             height: 120,
                             width: 115),
                       ),
@@ -630,7 +630,7 @@ class _Page2State extends State<Page2> {
       child: Column(
         children: [
           containFirst(
-              imagePath: 'assets/image/delivery/svg/delivery.svg',
+              imagePath: 'assets/images/delivery/svg/delivery.svg',
               text: 'Demander une livraison'),
           Card(
             elevation: 5,
@@ -705,37 +705,6 @@ class _Page2State extends State<Page2> {
   }
 }
 
-Widget containFirst({
-  required String imagePath,
-  required String text,
-}) {
-  return Container(
-    child: Column(
-      children: [
-        Center(
-          child: SvgPicture.asset(
-            imagePath,
-            height: 185,
-            width: 140,
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(10),
-          child: Center(
-            child: Text(
-              text,
-              style: GoogleFonts.poppins(
-                fontSize: 18,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
 Widget Carte({
   required String titre,
   required Icon icon,
@@ -793,16 +762,16 @@ Widget Carte3({
   return Card(
     elevation: 4,
     child: Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Column(
         children: [
           Text(
-            text1 + ' KG',
+            '$text1 KG',
             style: GoogleFonts.poppins(color: blue_button),
             textAlign: TextAlign.center,
           ),
           Text(
-            text2 + ' XAF',
+            '$text2 XAF',
             style: GoogleFonts.poppins(color: blue_button),
             textAlign: TextAlign.center,
           ),
