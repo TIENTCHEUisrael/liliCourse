@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lilicourse/screens/livraison/Page1.dart';
 import 'package:lilicourse/widgets/appBar.dart';
 import '../../models/user/user.dart';
 import '../../widgets/appBar.dart';
@@ -21,7 +22,7 @@ class LivraisonPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Container(),
+      body: const Page1(),
     );
   }
 }

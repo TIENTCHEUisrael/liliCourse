@@ -293,4 +293,26 @@ class AuthProvider extends ChangeNotifier {
     }
     return result;
   }
+
+  Future<Map<String, dynamic>?> logOutUser() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var result;
+    try {
+      UserPreferences.removeUserToSharePreference();
+      notifyListeners();
+      if (prefs.getString('currentUser') == null &&
+          prefs.getString('token') == null) {
+        result = {"status": true, "message": "User removed", "user": _user};
+      } else {
+        result = {
+          "status": false,
+          "message": "User not removed",
+          "user": _user
+        };
+      }
+    } catch (e) {
+      print(e);
+    }
+    return result;
+  }
 }

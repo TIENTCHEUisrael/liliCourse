@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lilicourse/Provider/provideruser.dart';
 import 'package:lilicourse/screens/NavBar_Pages/Apropos.dart';
+import 'package:lilicourse/screens/login/loginPage.dart';
 import 'package:provider/provider.dart';
 import '../screens/NavBar_Pages/profile.dart';
 
@@ -125,7 +127,27 @@ class _NavBarState extends State<NavBar> {
                       return;
                     },
                     onTap: () {
-                      return print('Deconnexion ');
+                      auth.logOutUser().then(
+                        (value) {
+                          if (value!['status'] == true) {
+                            Fluttertoast.showToast(
+                              msg: "Message:${value['message']}",
+                            );
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return LoginPage();
+                                },
+                              ),
+                            );
+                          } else {
+                            Fluttertoast.showToast(
+                              msg: "Error:${value['message']}",
+                            );
+                          }
+                        },
+                      );
                     },
                   ),
                 ],
