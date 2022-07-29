@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lilicourse/Provider/provideruser.dart';
+import 'package:lilicourse/Provider/providerUser.dart';
 import 'package:lilicourse/main.dart';
 import 'package:lilicourse/widgets/bas.dart';
 import 'package:lilicourse/widgets/navbar.dart';

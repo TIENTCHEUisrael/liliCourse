@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../screens/splashScreen/SplashPage.dart';
-import 'Provider/provideruser.dart';
+import 'Provider/providerUser.dart';
 import 'screens/Home/HomePage.dart';
 
 const blue_button = Color(0xFF32447A);

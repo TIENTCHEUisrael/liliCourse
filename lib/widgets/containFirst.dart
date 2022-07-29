@@ -11,30 +11,28 @@ class containFirst extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Center(
-            child: SvgPicture.asset(
-              imagePath,
-              height: 185,
-              width: 140,
-            ),
+    return Column(
+      children: [
+        Center(
+          child: SvgPicture.asset(
+            imagePath,
+            height: 185,
+            width: 140,
           ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            child: Center(
-              child: Text(
-                text,
-                style: GoogleFonts.poppins(
-                  fontSize: 18,
-                ),
-                textAlign: TextAlign.center,
+        ),
+        Container(
+          padding: const EdgeInsets.all(10),
+          child: Center(
+            child: Text(
+              text,
+              style: GoogleFonts.poppins(
+                fontSize: 18,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

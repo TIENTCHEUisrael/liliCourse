@@ -5,7 +5,7 @@ import 'package:lilicourse/Animations/DelayedAnimation.dart';
 import 'package:lilicourse/main.dart';
 import 'package:lilicourse/screens/Home/HomePage.dart';
 import 'package:provider/provider.dart';
-import '../../Provider/provideruser.dart';
+import '../../Provider/providerUser.dart';
 import '../../models/user/user.dart';
 import '../../widgets/bas.dart';
 import '../Inscription/Choice.dart';

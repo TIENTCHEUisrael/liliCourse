@@ -8,7 +8,7 @@ import 'package:lilicourse/main.dart';
 import 'package:lilicourse/screens/NavBar_Pages/EditProfile.dart';
 import 'package:provider/provider.dart';
 
-import '../../Provider/provideruser.dart';
+import '../../Provider/providerUser.dart';
 
 class ProfilePage extends StatefulWidget {
   static const routedName = '/profile';

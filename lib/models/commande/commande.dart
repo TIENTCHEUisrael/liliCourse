@@ -9,7 +9,7 @@ class Commande {
   factory Commande.fromJson(dynamic json) {
     return Commande(
       client_id: json['user_id'] as int,
-      adresse_id: json['commande_id'] as int,
+      adresse_id: json['adresse_id'] as int,
       updated_at: json['updated_at'] as String,
     );
   }

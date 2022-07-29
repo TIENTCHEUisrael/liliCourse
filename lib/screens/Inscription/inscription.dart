@@ -6,7 +6,7 @@ import 'package:lilicourse/Animations/DelayedAnimation.dart';
 import 'package:lilicourse/main.dart';
 import 'package:lilicourse/widgets/bas.dart';
 import 'package:provider/provider.dart';
-import '../../Provider/provideruser.dart';
+import '../../Provider/providerUser.dart';
 import '../../models/user/user.dart';
 import '../Home/HomePage.dart';
 

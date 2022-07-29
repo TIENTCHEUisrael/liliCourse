@@ -20,6 +20,20 @@ class _Page2State extends State<Page2> {
   int _value3 = 1;
   bool isCompleted = false;
 
+  String? localisationrecepteur;
+  String? namerecepteur;
+  int? contactrecepteur;
+  String? emailrecepteur;
+  String? civiliterecepteur;
+  String? planification;
+
+  String? localisationlivrable;
+  String? namelivrable;
+  int? contactlivrable;
+  String? emaillivrable;
+  String? civilitelivrable;
+  String? instructionlivrable;
+
   final email = TextEditingController();
   final numero = TextEditingController();
   final mot = TextEditingController();
@@ -35,76 +49,81 @@ class _Page2State extends State<Page2> {
           ? buildCompleted()
           : Theme(
               data: Theme.of(context).copyWith(
-                colorScheme: const ColorScheme.light(primary: blue_button),
+                colorScheme: const ColorScheme.light(primary: Colors.blue),
               ),
               child: Stepper(
-                  type: StepperType.horizontal,
-                  steps: getSteps(),
-                  currentStep: currentStep,
-                  //lorsque on reparr en avant d'un step
-                  onStepContinue: () {
-                    final isLastStep = currentStep == getSteps().length - 1;
-                    if (isLastStep) {
-                      setState(() {
-                        isCompleted = true;
-                      });
-                      print('completed');
-                    } else {
-                      setState(() {
-                        currentStep += 1;
-                      });
-                    }
-                  },
-                  //lorsque on revient en arriere d'un step
-                  onStepCancel: currentStep == 0
-                      ? null
-                      : () {
-                          setState(() {
-                            currentStep -= 1;
-                          });
-                        },
-                  //Au clic sur un step
-                  onStepTapped: (step) {
+                type: StepperType.horizontal,
+                steps: getSteps(),
+                currentStep: currentStep,
+                //lorsque on reparr en avant d'un step
+                onStepContinue: () {
+                  final isLastStep = currentStep == getSteps().length - 1;
+                  if (isLastStep) {
                     setState(() {
-                      currentStep =
-                          step; //Pour permettre de defiler en cliquand tu l'un des step
+                      isCompleted = true;
                     });
-                  },
-                  controlsBuilder: (context, ControlsDetails details) {
-                    final isLastStep = currentStep == getSteps().length - 1;
-                    return Container(
-                      margin: const EdgeInsets.only(top: 50),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: DelayedAnimation(
-                              delay: 150,
-                              child: ElevatedButton(
-                                child:
-                                    Text('Next', style: GoogleFonts.poppins()),
-                                onPressed: details.onStepContinue,
+                    print('completed');
+                  } else {
+                    setState(() {
+                      currentStep += 1;
+                    });
+                  }
+                },
+                //lorsque on revient en arriere d'un step
+                onStepCancel: currentStep == 0
+                    ? null
+                    : () {
+                        setState(() {
+                          currentStep -= 1;
+                        });
+                      },
+                //Au clic sur un step
+                onStepTapped: (step) {
+                  setState(() {
+                    currentStep =
+                        step; //Pour permettre de defiler en cliquand tu l'un des step
+                  });
+                },
+                controlsBuilder: (context, ControlsDetails details) {
+                  final isLastStep = currentStep == getSteps().length - 1;
+                  return Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: DelayedAnimation(
+                            delay: 150,
+                            child: ElevatedButton(
+                              onPressed: details.onStepContinue,
+                              child: Text(
+                                'Next',
+                                style: GoogleFonts.poppins(),
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 12,
-                          ),
-                          if (currentStep != 0)
-                            Expanded(
-                              child: DelayedAnimation(
-                                delay: 200,
-                                child: ElevatedButton(
-                                  child: Text('Cancel'),
-                                  onPressed: details.onStepCancel,
+                        ),
+                        const SizedBox(
+                          width: 12,
+                        ),
+                        if (currentStep != 0)
+                          Expanded(
+                            child: DelayedAnimation(
+                              delay: 200,
+                              child: ElevatedButton(
+                                onPressed: details.onStepCancel,
+                                child: Text(
+                                  'Cancel',
+                                  style: GoogleFonts.poppins(),
                                 ),
                               ),
                             ),
-                        ],
-                      ),
-                    );
-                  }
-                  //Customiser nos bouton
-                  ),
+                          ),
+                      ],
+                    ),
+                  );
+                },
+                //Customiser nos bouton
+              ),
             ),
     );
   }
@@ -145,6 +164,7 @@ class _Page2State extends State<Page2> {
                               icon: const Icon(
                                 Icons.collections,
                                 size: 90,
+                                color: blue_button,
                               ),
                             ),
                           ),
@@ -157,6 +177,7 @@ class _Page2State extends State<Page2> {
                               icon: const Icon(
                                 Icons.contact_mail_rounded,
                                 size: 90,
+                                color: blue_button,
                               ),
                             ),
                           ),
@@ -720,7 +741,7 @@ Widget Carte({
         child: Text(
           titre,
           style: GoogleFonts.poppins(
-              fontSize: 12, fontWeight: FontWeight.bold, color: red_button),
+              fontSize: 12, fontWeight: FontWeight.bold, color: blue_button),
         ),
       ),
     ],

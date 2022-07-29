@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:lilicourse/Provider/provideruser.dart';
+import 'package:lilicourse/Provider/providerUser.dart';
 import 'package:lilicourse/screens/NavBar_Pages/Apropos.dart';
 import 'package:lilicourse/screens/login/loginPage.dart';
 import 'package:provider/provider.dart';
