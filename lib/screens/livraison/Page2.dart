@@ -15,10 +15,17 @@ class Page2 extends StatefulWidget {
 
 class _Page2State extends State<Page2> {
   int currentStep = 0;
+  Color? colorIn = Colors.transparent;
+  Color? colorOut = Colors.transparent;
+
   int _value = 1;
   int _value2 = 1;
   int _value3 = 1;
   bool isCompleted = false;
+
+  String? type;
+  String? taille;
+  double? poids;
 
   String? localisationrecepteur;
   String? namerecepteur;
@@ -37,6 +44,17 @@ class _Page2State extends State<Page2> {
   final email = TextEditingController();
   final numero = TextEditingController();
   final mot = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void addAdresse() {}
+  void addAdressLivraison() {}
+  void addAdressRamassage() {}
+
+  void AddCommange() {}
 
   @override
   Widget build(BuildContext context) {
@@ -155,29 +173,86 @@ class _Page2State extends State<Page2> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              print('Ok1');
-                            },
-                            child: Carte(
-                              titre: 'Tout type d\'Object',
-                              icon: const Icon(
-                                Icons.collections,
-                                size: 90,
-                                color: blue_button,
+                          AnimatedContainer(
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.elasticInOut,
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  type = "All type of Object";
+                                  colorIn = Colors.blueGrey;
+                                  colorOut = Colors.transparent;
+                                });
+                                print(type);
+                              },
+                              child: Column(
+                                children: [
+                                  const Card(
+                                    //color: Colors.grey,
+                                    elevation: 4,
+                                    child: Icon(
+                                      Icons.collections,
+                                      size: 90,
+                                      color: blue_button,
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(20),
+                                        ),
+                                        border: Border.all(color: colorIn!)),
+                                    padding: const EdgeInsets.all(15),
+                                    child: Text(
+                                      'All type of Object',
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: blue_button),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              print('ok2');
-                            },
-                            child: Carte(
-                              titre: 'Courrier',
-                              icon: const Icon(
-                                Icons.contact_mail_rounded,
-                                size: 90,
-                                color: blue_button,
+                          AnimatedContainer(
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.elasticInOut,
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  type = "Courriel";
+                                  colorIn = Colors.transparent;
+                                  colorOut = Colors.blueGrey;
+                                });
+                                print(type);
+                              },
+                              child: Column(
+                                children: [
+                                  const Card(
+                                    elevation: 4,
+                                    child: Icon(
+                                      Icons.contact_mail,
+                                      size: 90,
+                                      color: blue_button,
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(20),
+                                        ),
+                                        border: Border.all(color: colorOut!)),
+                                    padding: const EdgeInsets.all(15),
+                                    child: Text(
+                                      'Courrier',
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: blue_button),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -294,85 +369,17 @@ class _Page2State extends State<Page2> {
                     text: 'Demander une livraison'),
                 Card(
                   elevation: 8,
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(15),
-                          child: Text(
-                            'Details du ramassage',
-                            style: GoogleFonts.poppins(fontSize: 15),
-                            textAlign: TextAlign.center,
-                          ),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          'Details du ramassage',
+                          style: GoogleFonts.poppins(fontSize: 15),
+                          textAlign: TextAlign.center,
                         ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              child: Text(
-                                'Lieu de ramassage',
-                                style: GoogleFonts.poppins(),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: 300,
-                          height: 25,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: blue_button)),
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              child: Text(
-                                'Lieu de depot',
-                                style: GoogleFonts.poppins(),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: 300,
-                          height: 25,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: blue_button)),
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              child: Text(
-                                'Instruction a donner au coursier',
-                                style: GoogleFonts.poppins(),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          width: 300,
-                          child: TextField(
-                            controller: mot,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            style: GoogleFonts.poppins(color: Colors.grey),
-                            maxLines: 5,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -392,83 +399,21 @@ class _Page2State extends State<Page2> {
                     text: 'Demander une livraison'),
                 Card(
                   elevation: 8,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
                       children: [
                         Container(
-                          alignment: Alignment.center,
                           padding: const EdgeInsets.all(15),
                           child: Text(
-                            'Details du recepteur',
+                            'Details du ramassage',
                             style: GoogleFonts.poppins(fontSize: 15),
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        TextFormField(
-                          controller: numero,
-                          decoration: InputDecoration(
-                            labelStyle: TextStyle(
-                              color: Colors.grey[400],
-                            ),
-                            label: Text(
-                              'Numero a contacter',
-                              style: GoogleFonts.poppins(),
-                            ),
-                            prefixIcon: const Icon(
-                              Icons.phone,
-                            ),
-                          ),
-                        ),
-                        TextFormField(
-                          controller: email,
-                          decoration: InputDecoration(
-                            labelStyle: TextStyle(
-                              color: Colors.grey[400],
-                            ),
-                            label: Text(
-                              'Email ',
-                              style: GoogleFonts.poppins(),
-                            ),
-                            prefixIcon: const Icon(
-                              Icons.mail,
-                            ),
-                          ),
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              'Civilite ',
-                              style: GoogleFonts.poppins(fontSize: 15),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Radio(
-                                    value: 1,
-                                    groupValue: _value2,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _value2 = value as int;
-                                      });
-                                    }),
-                                const Text('Madame'),
-                                Radio(
-                                    value: 2,
-                                    groupValue: _value2,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _value2 = value as int;
-                                      });
-                                    }),
-                                const Text('Monsieur'),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ]),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -477,6 +422,38 @@ class _Page2State extends State<Page2> {
         Step(
           state: currentStep > 4 ? StepState.complete : StepState.indexed,
           isActive: currentStep >= 4,
+          title: const Text(''),
+          content: SingleChildScrollView(
+            padding: const EdgeInsets.all(5),
+            child: Column(
+              children: [
+                containFirst(
+                    imagePath: 'assets/images/delivery/svg/delivery.svg',
+                    text: 'Demander une livraison'),
+                Card(
+                  elevation: 8,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          'Details du recepteur',
+                          style: GoogleFonts.poppins(fontSize: 15),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Step(
+          state: currentStep > 5 ? StepState.complete : StepState.indexed,
+          isActive: currentStep >= 5,
           title: const Text(''),
           content: SingleChildScrollView(
             padding: const EdgeInsets.all(5),
@@ -579,8 +556,8 @@ class _Page2State extends State<Page2> {
           ),
         ),
         Step(
-          state: currentStep > 5 ? StepState.complete : StepState.indexed,
-          isActive: currentStep >= 5,
+          state: currentStep > 6 ? StepState.complete : StepState.indexed,
+          isActive: currentStep >= 6,
           title: const Text(''),
           content: SingleChildScrollView(
             padding: const EdgeInsets.all(5),
@@ -729,6 +706,7 @@ class _Page2State extends State<Page2> {
 Widget Carte({
   required String titre,
   required Icon icon,
+  required Color colors,
 }) {
   return Column(
     children: [
@@ -737,6 +715,7 @@ Widget Carte({
         child: icon,
       ),
       Container(
+        decoration: BoxDecoration(border: Border.all(color: colors)),
         padding: const EdgeInsets.all(15),
         child: Text(
           titre,

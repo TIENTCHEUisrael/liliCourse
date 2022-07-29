@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../main.dart';
 import '../../widgets/appBar.dart';
@@ -27,8 +28,8 @@ class _TimeWaitingState extends State<TimeWaiting> {
             Container(
               padding: const EdgeInsets.only(top: 95),
               child: Center(
-                child: SvgPicture.asset(
-                  'assets/images/delivery/svg/ok.svg',
+                child: Lottie.asset(
+                  'assets/images/timer.json',
                   height: 250,
                   width: 200,
                 ),
