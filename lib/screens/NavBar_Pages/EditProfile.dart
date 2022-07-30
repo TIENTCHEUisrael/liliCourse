@@ -136,40 +136,24 @@ class _EditPageState extends State<EditProfile> {
                           Container(
                             height: 45,
                             alignment: Alignment.center,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: blue_button,
-                                  onPrimary: Colors.white),
-                              onPressed: () => pickImage(ImageSource.gallery),
-                              child: Row(
-                                children: [
-                                  const Icon(Icons.image_outlined),
-                                  const SizedBox(width: 5),
-                                  Text(
-                                    'Pick Gallery',
-                                    style: GoogleFonts.poppins(),
-                                  ),
-                                ],
+                            child: Expanded(
+                              child: FlatButton.icon(
+                                icon: const Icon(Icons.camera),
+                                label: const Text('Gallery'),
+                                textColor: Theme.of(context).primaryColor,
+                                onPressed: () => pickImage(ImageSource.gallery),
                               ),
                             ),
                           ),
                           Container(
                             height: 45,
                             alignment: Alignment.center,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: blue_button,
-                                  onPrimary: Colors.white),
-                              onPressed: () => pickImage(ImageSource.camera),
-                              child: Row(
-                                children: [
-                                  const Icon(Icons.camera_alt_outlined),
-                                  const SizedBox(width: 5),
-                                  Text(
-                                    'Pick Camera',
-                                    style: GoogleFonts.poppins(),
-                                  ),
-                                ],
+                            child: Expanded(
+                              child: FlatButton.icon(
+                                icon: const Icon(Icons.camera),
+                                label: const Text('Gallery'),
+                                textColor: Theme.of(context).primaryColor,
+                                onPressed: () => pickImage(ImageSource.gallery),
                               ),
                             ),
                           ),

@@ -17,4 +17,4 @@ enum Statut {
   notdeleted,
 }
 
-class AdProvider extends ChangeNotifier {}
+class AdRProvider extends ChangeNotifier {}

@@ -79,7 +79,6 @@ class UserPreferences {
 
   static removeUserToSharePreference() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    print('...........PROCESSING..............');
     prefs.remove("currentUser");
     prefs.remove("token");
     print('..............REMOVE.............');

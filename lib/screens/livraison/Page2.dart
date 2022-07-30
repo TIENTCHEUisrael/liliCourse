@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lilicourse/Provider/ProviderAdress.dart';
+import 'package:lilicourse/Provider/ProviderAdressLiv.dart';
+import 'package:lilicourse/Provider/ProviderCommande.dart';
 import 'package:lilicourse/main.dart';
+import 'package:provider/provider.dart';
 import '../../Animations/DelayedAnimation.dart';
+import '../../Provider/ProviderAdressRam.dart';
 import '../../widgets/appBar.dart';
 import '../../widgets/containFirst.dart';
 import 'PageMap.dart';
@@ -17,6 +22,12 @@ class _Page2State extends State<Page2> {
   int currentStep = 0;
   Color? colorIn = Colors.transparent;
   Color? colorOut = Colors.transparent;
+  /*Color t1 = Colors.transparent;
+  Color t2 = Colors.transparent;
+  Color t3 = Colors.transparent;*/
+  double t1 = 10;
+  double t2 = 10;
+  double t3 = 10;
 
   int _value = 1;
   int _value2 = 1;
@@ -58,6 +69,11 @@ class _Page2State extends State<Page2> {
 
   @override
   Widget build(BuildContext context) {
+    CommProvider com = Provider.of<CommProvider>(context);
+    AdProvider ad = Provider.of<AdProvider>(context);
+    AdRProvider adR = Provider.of<AdRProvider>(context);
+    AdLProvider adL = Provider.of<AdLProvider>(context);
+
     return Scaffold(
       appBar: buildAppBar(
         context,
@@ -291,21 +307,110 @@ class _Page2State extends State<Page2> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          GestureDetector(
-                              onTap: () {
-                                print('Ok1');
-                              },
-                              child: Carte3(text2: '+0', text1: '0-3')),
-                          GestureDetector(
-                              onTap: () {
-                                print('ok2');
-                              },
-                              child: Carte3(text1: '4-7', text2: '+1000')),
-                          GestureDetector(
-                              onTap: () {
-                                print('ok2');
-                              },
-                              child: Carte3(text1: '8-10', text2: '+3000')),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                poids = 3;
+                                t1 = 15;
+                                t2 = 10;
+                                t3 = 10;
+                                print('poids:$poids');
+                              });
+                            },
+                            child: Card(
+                              elevation: 4,
+                              child: Container(
+                                padding: EdgeInsets.all(t1),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      '0-3 KG',
+                                      style: GoogleFonts.poppins(
+                                          color: blue_button),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      '+0 XAF',
+                                      style: GoogleFonts.poppins(
+                                          color: blue_button),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(
+                                () {
+                                  poids = 7;
+                                  t2 = 15;
+                                  t1 = 10;
+                                  t3 = 10;
+                                  print('poids:$poids');
+                                },
+                              );
+                            },
+                            child: Card(
+                              elevation: 4,
+                              child: Container(
+                                padding: EdgeInsets.all(t2),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      '4-7 KG',
+                                      style: GoogleFonts.poppins(
+                                          color: blue_button),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      '+1000 XAF',
+                                      style: GoogleFonts.poppins(
+                                          color: blue_button),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(
+                                () {
+                                  poids = 10;
+                                  t3 = 15;
+                                  t2 = 10;
+                                  t1 = 10;
+
+                                  print('poids:$poids');
+                                },
+                              );
+                            },
+                            child: Card(
+                              elevation: 4,
+                              child: Container(
+                                padding: EdgeInsets.all(t3),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      '8-10 KG',
+                                      style: GoogleFonts.poppins(
+                                          color: blue_button),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      '+3000 XAF',
+                                      style: GoogleFonts.poppins(
+                                          color: blue_button),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                       Container(
@@ -320,6 +425,8 @@ class _Page2State extends State<Page2> {
                                   onChanged: (value) {
                                     setState(() {
                                       _value3 = value as int;
+                                      taille = "Taille M";
+                                      print('taille:$taille');
                                     });
                                   },
                                 ),
@@ -337,6 +444,8 @@ class _Page2State extends State<Page2> {
                                   onChanged: (value) {
                                     setState(() {
                                       _value3 = value as int;
+                                      taille = "Taille S";
+                                      print('taille:$taille');
                                     });
                                   },
                                 ),
@@ -377,6 +486,17 @@ class _Page2State extends State<Page2> {
                           'Details du ramassage',
                           style: GoogleFonts.poppins(fontSize: 15),
                           textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        padding: EdgeInsets.zero,
+                        child: Column(
+                          children: [
+                            Text("qsdfqsdf"),
+                          ],
                         ),
                       ),
                     ],

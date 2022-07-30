@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lilicourse/Provider/ProviderAdress.dart';
+import 'package:lilicourse/Provider/ProviderAdressLiv.dart';
+import 'package:lilicourse/Provider/ProviderAdressRam.dart';
+import 'package:lilicourse/Provider/ProviderCommande.dart';
+import 'package:lilicourse/Provider/ProviderCoursier.dart';
 import 'package:provider/provider.dart';
 import '../screens/splashScreen/SplashPage.dart';
 import 'Provider/providerUser.dart';
@@ -31,6 +36,31 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (_) {
             return AuthProvider();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (_) {
+            return AdLProvider();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (_) {
+            return AdProvider();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (_) {
+            return AdRProvider();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (_) {
+            return CoursProvider();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (_) {
+            return CommProvider();
           },
         ),
       ],
