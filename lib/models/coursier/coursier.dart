@@ -1,19 +1,22 @@
 class Coursier {
-  final int user_id;
-  final int commande_id;
+  int? coursierId;
+  final int userId;
+  final int commandeId;
   final String transport;
   final double rating;
 
   Coursier(
-      {required this.user_id,
-      required this.commande_id,
+      {this.coursierId,
+      required this.userId,
+      required this.commandeId,
       required this.transport,
       required this.rating});
 
   factory Coursier.fromJson(dynamic json) {
     return Coursier(
-      user_id: json['user_id'] as int,
-      commande_id: json['commande_id'] as int,
+      coursierId: json['coursier_id'],
+      userId: json['user_id'] as int,
+      commandeId: json['commande_id'] as int,
       transport: json['transport'] as String,
       rating: json['rating'] as double,
     );
@@ -25,6 +28,6 @@ class Coursier {
 
   @override
   String toString() {
-    return 'Coursier {user_id: $user_id, commande_id: $commande_id, transport: $transport, rating: $rating}';
+    return 'Coursier {coursier_id:$coursierId,user_id: $userId, commande_id: $commandeId, transport: $transport, rating: $rating}';
   }
 }

@@ -26,10 +26,6 @@ class _EditPageState extends State<EditProfile> {
   File? images;
   String? name;
 
-  void _selectImage(File pickedImage) {
-    images = pickedImage;
-  }
-
   Future pickImage(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
@@ -72,6 +68,7 @@ class _EditPageState extends State<EditProfile> {
   void initState() {
     super.initState();
     authuser = widget.user;
+    print(authuser);
     chargement();
   }
 

@@ -6,6 +6,7 @@ class Api_services {
   static String baseUrl5 = "192.168.140.44:8000";
   static String baseUrl6 = "192.168.165.44:8000";
   static String baseUrl7 = "192.168.137.57:8000";
+  static String baseUrl8 = "192.168.225.44:8000";
   static String httpbaseUrl1 = "http://$baseUrl1";
   static String httpbaseUrl2 = "http://$baseUrl2";
   static String httpbaseUrl3 = "http://$baseUrl3";
@@ -13,6 +14,7 @@ class Api_services {
   static String httpbaseUrl5 = "http://$baseUrl5";
   static String httpbaseUrl6 = "http://$baseUrl6";
   static String httpbaseUrl7 = "http://$baseUrl7";
+  static String httpbaseUrl8 = "http://$baseUrl8";
   static String imageUrlUser = "$httpbaseUrl3/static/user/";
   static String imageUrlCoursier = "$httpbaseUrl3/static/coursier/";
 }

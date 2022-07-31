@@ -4,6 +4,7 @@ import 'package:lilicourse/Provider/ProviderAdress.dart';
 import 'package:lilicourse/Provider/ProviderAdressLiv.dart';
 import 'package:lilicourse/Provider/ProviderCommande.dart';
 import 'package:lilicourse/main.dart';
+import 'package:lilicourse/widgets/locationInput.dart';
 import 'package:provider/provider.dart';
 import '../../Animations/DelayedAnimation.dart';
 import '../../Provider/ProviderAdressRam.dart';
@@ -35,26 +36,24 @@ class _Page2State extends State<Page2> {
   bool isCompleted = false;
 
   String? type;
-  String? taille;
+  String taille = "Taille M";
   double? poids;
 
   String? localisationrecepteur;
-  String? namerecepteur;
-  int? contactrecepteur;
-  String? emailrecepteur;
+  final localisationR = TextEditingController();
+  final namerecepteur = TextEditingController();
+  final contactrecepteur = TextEditingController();
+  final emailrecepteur = TextEditingController();
   String? civiliterecepteur;
   String? planification;
 
-  String? localisationlivrable;
-  String? namelivrable;
-  int? contactlivrable;
-  String? emaillivrable;
-  String? civilitelivrable;
-  String? instructionlivrable;
-
-  final email = TextEditingController();
-  final numero = TextEditingController();
-  final mot = TextEditingController();
+  String? localisationRamassage;
+  final localisationE = TextEditingController();
+  final nameemetteur = TextEditingController();
+  final contactemetteur = TextEditingController();
+  final emailemetteur = TextEditingController();
+  String? civiliteemetteur;
+  String? instructionemetteur;
 
   @override
   void initState() {
@@ -65,7 +64,7 @@ class _Page2State extends State<Page2> {
   void addAdressLivraison() {}
   void addAdressRamassage() {}
 
-  void AddCommange() {}
+  void addCommande() {}
 
   @override
   Widget build(BuildContext context) {
@@ -483,21 +482,128 @@ class _Page2State extends State<Page2> {
                       Container(
                         padding: const EdgeInsets.all(15),
                         child: Text(
-                          'Details du ramassage',
+                          'Details du ramassage(1)',
                           style: GoogleFonts.poppins(fontSize: 15),
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
                       Container(
-                        padding: EdgeInsets.zero,
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Column(
                           children: [
-                            Text("qsdfqsdf"),
+                            TextField(
+                              decoration: InputDecoration(
+                                icon: Container(
+                                  margin: const EdgeInsets.only(left: 20),
+                                  width: 10,
+                                  height: 10,
+                                  child: const Icon(
+                                    Icons.edit,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                hintText: "Name of sender",
+                                border: InputBorder.none,
+                                contentPadding:
+                                    const EdgeInsets.only(left: 8.0, top: 16.0),
+                              ),
+                              controller: nameemetteur,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            TextField(
+                              decoration: InputDecoration(
+                                icon: Container(
+                                  margin: const EdgeInsets.only(left: 20),
+                                  width: 10,
+                                  height: 10,
+                                  child: const Icon(
+                                    Icons.edit,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                hintText: "Email of sender",
+                                border: InputBorder.none,
+                                contentPadding:
+                                    const EdgeInsets.only(left: 8.0, top: 16.0),
+                              ),
+                              controller: emailemetteur,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            TextField(
+                              decoration: InputDecoration(
+                                icon: Container(
+                                  margin: const EdgeInsets.only(left: 20),
+                                  width: 10,
+                                  height: 10,
+                                  child: const Icon(
+                                    Icons.edit,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                hintText: "Contact of sender",
+                                border: InputBorder.none,
+                                contentPadding:
+                                    const EdgeInsets.only(left: 8.0, top: 16.0),
+                              ),
+                              controller: contactemetteur,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Civilité',
+                              style: GoogleFonts.poppins(fontSize: 14),
+                              //textAlign: TextAlign.start,
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                  value: 1,
+                                  groupValue: _value3,
+                                  onChanged: (value) {
+                                    setState(
+                                      () {
+                                        _value3 = value as int;
+                                      },
+                                    );
+                                  },
+                                ),
+                                Text(
+                                  'Masculin',
+                                  style: GoogleFonts.poppins(fontSize: 13),
+                                ),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                Radio(
+                                  value: 2,
+                                  groupValue: _value3,
+                                  onChanged: (value) {
+                                    setState(
+                                      () {
+                                        _value3 = value as int;
+                                      },
+                                    );
+                                  },
+                                ),
+                                Text(
+                                  'Feminin',
+                                  style: GoogleFonts.poppins(fontSize: 13),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              "Localisation",
+                              style: GoogleFonts.poppins(fontSize: 14),
+                              //textAlign: TextAlign.start,
+                            ),
                           ],
                         ),
+                      ),
+                      LocationInput(
+                        controller: localisationE,
+                        text: localisationRamassage,
                       ),
                     ],
                   ),
@@ -808,8 +914,8 @@ class _Page2State extends State<Page2> {
                       onPressed: () => setState(() {
                         isCompleted = false;
                         currentStep = 0;
-                        email.clear();
-                        numero.clear();
+                        /*email.clear();
+                        numero.clear();*/
                       }),
                     ),
                   ],

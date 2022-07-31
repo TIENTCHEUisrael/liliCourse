@@ -1,4 +1,5 @@
 class AdressRam {
+  int? adressRamId;
   String localisationRam;
   String nameEmetteur;
   int contactEmetteur;
@@ -8,7 +9,8 @@ class AdressRam {
   String? updatedAt;
 
   AdressRam(
-      {required this.localisationRam,
+      {this.adressRamId,
+      required this.localisationRam,
       required this.nameEmetteur,
       required this.contactEmetteur,
       required this.emailEmetteur,
@@ -18,6 +20,7 @@ class AdressRam {
 
   factory AdressRam.fromJson(dynamic json) {
     return AdressRam(
+      adressRamId: json['adresse_ram_id'] as int,
       localisationRam: json['localisationRam'] as String,
       nameEmetteur: json['name_emetteur'] as String,
       contactEmetteur: json['contact_emetteur'] as int,
@@ -44,6 +47,6 @@ class AdressRam {
 
   @override
   String toString() {
-    return 'AdressRam {localisationRam: $localisationRam, name_recepteur: $nameEmetteur, contact_recepteur: $contactEmetteur, email_recepteur: $emailEmetteur,civilite_recepteur:$civiliteEmetteur, planification:$planification, updated_at!$updatedAt}';
+    return 'AdressRam {adresse_ram_id:$adressRamId,localisationRam: $localisationRam, name_recepteur: $nameEmetteur, contact_recepteur: $contactEmetteur, email_recepteur: $emailEmetteur,civilite_recepteur:$civiliteEmetteur, planification:$planification, updated_at!$updatedAt}';
   }
 }

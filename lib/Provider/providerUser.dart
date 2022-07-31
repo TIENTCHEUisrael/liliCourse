@@ -84,6 +84,19 @@ class AuthProvider extends ChangeNotifier {
     _updateStatus = value;
   }
 
+  static Future<List<User>> getUsers() async {
+    var url = Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/users');
+    final response = await http.get(url);
+
+    var data = jsonDecode(response.body);
+    List _temp = [];
+
+    for (var i in data) {
+      _temp.add(i);
+    }
+    return User.usersFromSnapshot(_temp);
+  }
+
   Future<Map<String, dynamic>?> loginUser(String mail, String pass) async {
     var result;
     var urlLogin = Uri.parse(
@@ -159,28 +172,12 @@ class AuthProvider extends ChangeNotifier {
         //UserPreferences().saveUser(_user!);
         notifyListeners();
 
-        var urlToken = Uri.parse(
-            '${Api_services.httpbaseUrl2}/lilicourse/user/generate?mail=${_user!.email}');
-        final responseToken = await http.post(urlToken);
-        if (responseToken.statusCode == 200) {
-          var data1 = jsonDecode(responseToken.body);
-          _token = data1['token'];
-          UserPreferences().saveToken(_token!);
-          notifyListeners();
-
-          result = {
-            "statut": true,
-            "message": "User enregistrer",
-            "user": _user!,
-            "token": _token!,
-          };
-        } else {
-          result = {
-            "statut": true,
-            "message": "Erreur de token",
-            "user": _user!
-          };
-        }
+        loginUser(_user!.email, _user!.password);
+        result = {
+          "statut": true,
+          "message": "User is registed",
+          "user": _user!
+        };
       } else {
         _logStatus = Statut.notregisted;
         notifyListeners();
@@ -226,6 +223,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future<Map<String, dynamic>?> update_User(String email, User user) async {
     var result;
+    print('.............................');
     final urlId = Uri.parse(
         '${Api_services.httpbaseUrl2}/lilicourse/user/getId?mail=$email');
     final headers = {"Content-type": "application/json"};

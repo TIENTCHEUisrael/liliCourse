@@ -1,4 +1,5 @@
 class User {
+  final int? id;
   final String first_name;
   final String last_name;
   final String email;
@@ -9,6 +10,7 @@ class User {
   final String? updated_At;
 
   User({
+    this.id,
     required this.first_name,
     required this.last_name,
     required this.email,
@@ -21,6 +23,7 @@ class User {
 
   factory User.fromJson(dynamic json) {
     return User(
+      id: json['user_id'] as int,
       first_name: json['first_name'] as String,
       last_name: json['last_name'] as String,
       email: json['email'] as String,
@@ -53,6 +56,6 @@ class User {
 
   @override
   String toString() {
-    return 'User {first_name: $first_name, last_name: $last_name, email: $email, phone_number: $phone_number,password:$password, commentaire:$commentaire, image!$image,updated_at!$updated_At}';
+    return 'User {user_id:$id,first_name: $first_name, last_name: $last_name, email: $email, phone_number: $phone_number,password:$password, commentaire:$commentaire, image!$image,updated_at!$updated_At}';
   }
 }

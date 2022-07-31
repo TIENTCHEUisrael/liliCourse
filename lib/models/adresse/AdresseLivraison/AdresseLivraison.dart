@@ -1,4 +1,5 @@
 class AdressLiv {
+  int? adressLivId;
   String localisationLiv;
   String nameRecepteur;
   int contactRecepteur;
@@ -8,7 +9,8 @@ class AdressLiv {
   String? updatedAt;
 
   AdressLiv(
-      {required this.localisationLiv,
+      {this.adressLivId,
+      required this.localisationLiv,
       required this.nameRecepteur,
       required this.contactRecepteur,
       required this.emailRecepteur,
@@ -18,6 +20,7 @@ class AdressLiv {
 
   factory AdressLiv.fromJson(dynamic json) {
     return AdressLiv(
+      adressLivId: json['adresse_liv_id'] as int,
       localisationLiv: json['localisationLiv'] as String,
       nameRecepteur: json['name_recepteur'] as String,
       contactRecepteur: json['contact_recepteur'] as int,
@@ -44,6 +47,6 @@ class AdressLiv {
 
   @override
   String toString() {
-    return 'AdressRam {localisationLiv: $localisationLiv, name_recepteur: $nameRecepteur, contact_recepteur: $contactRecepteur, email_recepteur: $emailRecepteur,civilite_recepteur:$civiliteRecepteur, instruction:$instruction, updated_at!$updatedAt}';
+    return 'AdressRam {adresse_liv_id:$adressLivId,localisationLiv: $localisationLiv, name_recepteur: $nameRecepteur, contact_recepteur: $contactRecepteur, email_recepteur: $emailRecepteur,civilite_recepteur:$civiliteRecepteur, instruction:$instruction, updated_at!$updatedAt}';
   }
 }

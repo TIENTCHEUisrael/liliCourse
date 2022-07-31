@@ -49,10 +49,10 @@ async def get_one_user(id: int):
     retour =await UserIn_Pydantic.from_queryset_single(User.get(user_id=id))
     return retour
 
-@app.get("/lilicourse/user/login", response_model=UserIn_Pydantic, responses={404: {"model": HTTPNotFoundError}})
+@app.get("/lilicourse/user/login", response_model=User_Pydantic, responses={404: {"model": HTTPNotFoundError}})
 async def Simplelogin(mail: str,passw:str):
     obj=User.get(password=passw,email=mail)
-    retour =await UserIn_Pydantic.from_queryset_single(obj)
+    retour =await User_Pydantic.from_queryset_single(obj)
     return retour
 
 
@@ -137,5 +137,39 @@ async def generate_token(mail:str):
 #..................................COURSIER.............................................;
 #..................................ADRESSE .............................................;
 #..................................ADRESSE_RAM..........................................;
+#get
+@app.get("/lilicourse/adressRam/{id}",response_model=Adresse_ram_Pydantic,responses={404: {"model": HTTPNotFoundError}})
+async def getAdressRamById(id:int):
+    model=await Adresse_ram_Pydantic.from_queryset_single(Adresse_ram.get(adresse_ram_id=id))
+    return model
+
+@app.get("/lilicourse/aressRam/",response_model=List[Adresse_ram_Pydantic])
+async def getAdressRams():
+    model=await Adresse_ram_Pydantic.from_queryset(User.all)
+    return model
+
+#post
+@app.post("/lilicourse/adressRam/add",response_model=Adresse_ramIn_Pydantic)
+async def addAdressRam(adres:Adresse_ramIn_Pydantic):
+    obj=await Adresse_ram.create(**adres.dict(exclude_unset=True))
+    return obj
+
+#put
+@app.put("/lilicourse/adressRam/put",response_model=Adresse_ram_Pydantic)
+async def putAdressRam(id:int,adres:Adresse_ramIn_Pydantic):
+    await Adresse_ram.filter(adresse_ram_id=id).update(**adres.dict(exclude_unset=True))
+    obj=await Adresse_ram_Pydantic.from_queryset_single(Adresse_ram.get(adresse_ram_id=id))
+    return obj
+
+#delete
+@app.delete("/lilicourse/adressRam/{id}", response_model=Message, responses={404: {"model": HTTPNotFoundError}})
+async def delete_restaurant(id: int):
+    delete_obj = await Adresse_ram.filter(adresse_ram_id=id).delete()
+    if not delete_obj:
+        raise HTTPException(status_code=404, detail="this restaurant, is not found")
+    return Message(message="Succesfully deleted")
+
 #..................................ADRESSE_LIV..........................................;
+
+
 #..................................COMMANDE.............................................;

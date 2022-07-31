@@ -8,6 +8,7 @@ class PlaceLocation {
 }
 
 class Adresse {
+  int? adressId;
   int adresslivid;
   int adressramid;
   String poids;
@@ -16,6 +17,7 @@ class Adresse {
   String? updatedAt;
 
   Adresse({
+    this.adressId,
     required this.adresslivid,
     required this.adressramid,
     required this.poids,
@@ -26,6 +28,7 @@ class Adresse {
 
   factory Adresse.fromJson(dynamic json) {
     return Adresse(
+      adressId: json['adresse_id'],
       adresslivid: json['adresse_liv_id'],
       adressramid: json['adresse_ram_id'],
       poids: json['poids'],
@@ -50,6 +53,6 @@ class Adresse {
 
   @override
   String toString() {
-    return 'AdressRam {adresse_liv_id: $adresslivid, adresse_ram_id: $adressramid, poids: $poids, taille: $taille,type:$type, updated_at!$updatedAt}';
+    return 'AdressRam {adresse_id:$adressId,adresse_liv_id: $adresslivid, adresse_ram_id: $adressramid, poids: $poids, taille: $taille,type:$type, updated_at!$updatedAt}';
   }
 }
