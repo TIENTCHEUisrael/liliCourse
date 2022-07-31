@@ -1,6 +1,6 @@
+from datetime import datetime
 from re import S
 from typing import Optional,TypeVar
-from xmlrpc.client import DateTime
 from pydantic import BaseModel
 
 T=TypeVar('T')
@@ -20,7 +20,7 @@ class AdressSchema(BaseModel):
     taille:str
     poids:str
     price:int
-    createdAt:DateTime
+    createdAt:datetime
     updatedAt:str
     adressLiv:Optional[T]=None
     adressRam:Optional[T]=None
@@ -28,9 +28,10 @@ class AdressSchema(BaseModel):
 class CommandeSchema(BaseModel):
     id:int
     userId:int
-    adressId:Optional[T]=None
-    createdAt:DateTime
+    createdAt:datetime
     updatedAt:str
+    adressId:Optional[T]=None
+   
 
 
 
