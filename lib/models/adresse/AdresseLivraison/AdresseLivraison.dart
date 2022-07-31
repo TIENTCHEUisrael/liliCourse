@@ -1,5 +1,5 @@
 class AdressLiv {
-  String localisation;
+  String localisationLiv;
   String nameRecepteur;
   int contactRecepteur;
   String emailRecepteur;
@@ -8,7 +8,7 @@ class AdressLiv {
   String? updatedAt;
 
   AdressLiv(
-      {required this.localisation,
+      {required this.localisationLiv,
       required this.nameRecepteur,
       required this.contactRecepteur,
       required this.emailRecepteur,
@@ -18,7 +18,7 @@ class AdressLiv {
 
   factory AdressLiv.fromJson(dynamic json) {
     return AdressLiv(
-      localisation: json['localisation'] as String,
+      localisationLiv: json['localisationLiv'] as String,
       nameRecepteur: json['name_recepteur'] as String,
       contactRecepteur: json['contact_recepteur'] as int,
       emailRecepteur: json['email_recepteur'] as String,
@@ -29,7 +29,7 @@ class AdressLiv {
   }
 
   Map<String, dynamic> toJson() => {
-        "localisation": localisation,
+        "localisationLiv": localisationLiv,
         "name_recepteur": nameRecepteur,
         "contact_recepteur": contactRecepteur,
         "email_recepteur": emailRecepteur,
@@ -44,6 +44,6 @@ class AdressLiv {
 
   @override
   String toString() {
-    return 'AdressRam {localisation: $localisation, name_recepteur: $nameRecepteur, contact_recepteur: $contactRecepteur, email_recepteur: $emailRecepteur,civilite_recepteur:$civiliteRecepteur, instruction:$instruction, updated_at!$updatedAt}';
+    return 'AdressRam {localisationLiv: $localisationLiv, name_recepteur: $nameRecepteur, contact_recepteur: $contactRecepteur, email_recepteur: $emailRecepteur,civilite_recepteur:$civiliteRecepteur, instruction:$instruction, updated_at!$updatedAt}';
   }
 }

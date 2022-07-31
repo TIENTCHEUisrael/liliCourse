@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lilicourse/main.dart';
 import '../../Animations/DelayedAnimation.dart';
-import '../../../main.dart';
 import '../../../widgets/appBar.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as syspaths;
@@ -101,7 +101,7 @@ class _EditPageState extends State<EditProfile> {
                     bottomLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20),
                   ),
-                  border: Border.all(color: Colors.grey),
+                  border: Border.all(color: Colors.transparent),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -136,23 +136,23 @@ class _EditPageState extends State<EditProfile> {
                           Container(
                             height: 45,
                             alignment: Alignment.center,
-                            child: Expanded(
+                            child: Container(
                               child: FlatButton.icon(
                                 icon: const Icon(Icons.camera),
-                                label: const Text('Gallery'),
-                                textColor: Theme.of(context).primaryColor,
-                                onPressed: () => pickImage(ImageSource.gallery),
+                                label: const Text('Camera'),
+                                textColor: blue_button,
+                                onPressed: () => pickImage(ImageSource.camera),
                               ),
                             ),
                           ),
                           Container(
                             height: 45,
                             alignment: Alignment.center,
-                            child: Expanded(
+                            child: Container(
                               child: FlatButton.icon(
                                 icon: const Icon(Icons.camera),
                                 label: const Text('Gallery'),
-                                textColor: Theme.of(context).primaryColor,
+                                textColor: blue_button,
                                 onPressed: () => pickImage(ImageSource.gallery),
                               ),
                             ),

@@ -106,7 +106,7 @@ AdresseIn_Pydantic=pydantic_model_creator(Adresse,name="AdresseIn",exclude_reado
 
 class Adresse_ram(Model):
     adresse_ram_id=fields.IntField(pk=True)
-    localisation=fields.CharField(max_length=255)
+    localisationRam=fields.CharField(max_length=255)
     name_emetteur=fields.CharField(max_length=255)
     contact_emetteur=fields.IntField()
     email_emetteur=fields.CharField(max_length=255)
@@ -127,7 +127,7 @@ Adresse_ramIn_Pydantic=pydantic_model_creator(Adresse_ram,name="Adresse_ramIn",e
 
 class Adresse_liv(Model):
     adresse_liv_id=fields.IntField(pk=True)    
-    localisation=fields.CharField(max_length=255)
+    localisationLiv=fields.CharField(max_length=255)
     name_recepteur=fields.CharField(max_length=255)
     contactrecepteur=fields.IntField()
     email_recepteur=fields.CharField(max_length=255)
