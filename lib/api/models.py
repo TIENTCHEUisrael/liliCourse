@@ -91,6 +91,7 @@ class Adresse(Model):
     poids=fields.CharField(max_length=255)
     taille=fields.CharField(max_length=255)
     type=fields.CharField(max_length=255)
+    planification=fields.CharField(max_length=255)
     updated_at=fields.CharField(max_length=255)
     created_at=fields.DatetimeField(auto_now_add=True)
 
@@ -111,7 +112,7 @@ class Adresse_ram(Model):
     contact_emetteur=fields.IntField()
     email_emetteur=fields.CharField(max_length=255)
     civilite_emetteur=fields.CharField(max_length=255)
-    planification=fields.CharField(max_length=255)
+    instruction=fields.CharField(max_length=255)
     updated_at=fields.CharField(max_length=255)
     created_at=fields.DatetimeField(auto_now_add=True)
 

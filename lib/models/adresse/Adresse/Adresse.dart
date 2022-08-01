@@ -12,6 +12,7 @@ class Adresse {
   String poids;
   String taille;
   String type;
+  String planification;
   String? updatedAt;
 
   Adresse({
@@ -21,6 +22,7 @@ class Adresse {
     required this.poids,
     required this.taille,
     required this.type,
+    required this.planification,
     this.updatedAt,
   });
 
@@ -32,6 +34,7 @@ class Adresse {
       poids: json['poids'],
       taille: json['taille'],
       type: json['type'],
+      planification: json['planification'],
       updatedAt: json['updated_at'],
     );
   }
@@ -42,6 +45,7 @@ class Adresse {
         "poids": poids,
         "taille": taille,
         "type": type,
+        "planification": planification,
         "updated_at": updatedAt,
       };
 
@@ -51,6 +55,6 @@ class Adresse {
 
   @override
   String toString() {
-    return 'AdressRam {adresse_id:$adressId,adresse_liv_id: $adresslivid, adresse_ram_id: $adressramid, poids: $poids, taille: $taille,type:$type, updated_at!$updatedAt}';
+    return 'AdressRam {adresse_id:$adressId,adresse_liv_id: $adresslivid, adresse_ram_id: $adressramid, poids: $poids, taille: $taille,type:$type,planification:$planification updated_at!$updatedAt}';
   }
 }
