@@ -5,6 +5,7 @@ import 'package:lilicourse/Provider/ProviderAdressLiv.dart';
 import 'package:lilicourse/Provider/ProviderCommande.dart';
 import 'package:lilicourse/main.dart';
 import 'package:lilicourse/models/adresse/AdresseRamassage/AdresseRamassage.dart';
+import 'package:lilicourse/widgets/TextFieldwidget.dart';
 import 'package:lilicourse/widgets/locationInput.dart';
 import 'package:provider/provider.dart';
 import '../../Animations/DelayedAnimation.dart';
@@ -40,23 +41,24 @@ class _Page2State extends State<Page2> {
   String? type;
   String taille = "Taille M";
   double? poids;
+  String? planification;
+  PlaceLocation? _pickedLocation;
 
   String? localisationrecepteur;
   final localisationR = TextEditingController();
   final namerecepteur = TextEditingController();
   final contactrecepteur = TextEditingController();
   final emailrecepteur = TextEditingController();
+  final instructionrecepteur = TextEditingController();
   String? civiliterecepteur;
-  String? planification;
 
   String? localisationRamassage;
   final localisationE = TextEditingController();
   final nameemetteur = TextEditingController();
   final contactemetteur = TextEditingController();
   final emailemetteur = TextEditingController();
+  final instructionemetteur = TextEditingController();
   String? civiliteemetteur;
-  String? instructionemetteur;
-  PlaceLocation? _pickedLocation;
 
   @override
   void initState() {
@@ -125,12 +127,11 @@ class _Page2State extends State<Page2> {
               ),
               child: Stepper(
                 type: StepperType.horizontal,
-                steps: getSteps(adL, adR),
+                steps: getSteps(),
                 currentStep: currentStep,
                 //lorsque on reparr en avant d'un step
                 onStepContinue: () {
-                  final isLastStep =
-                      currentStep == getSteps(adL, adR).length - 1;
+                  final isLastStep = currentStep == getSteps().length - 1;
                   if (isLastStep) {
                     setState(() {
                       isCompleted = true;
@@ -158,8 +159,7 @@ class _Page2State extends State<Page2> {
                   });
                 },
                 controlsBuilder: (context, ControlsDetails details) {
-                  final isLastStep =
-                      currentStep == getSteps(adL, adR).length - 1;
+                  final isLastStep = currentStep == getSteps().length - 1;
                   return Container(
                     margin: const EdgeInsets.only(top: 20),
                     child: Row(
@@ -202,7 +202,7 @@ class _Page2State extends State<Page2> {
     );
   }
 
-  List<Step> getSteps(AdLProvider l, AdRProvider r) => [
+  List<Step> getSteps() => [
         Step(
           state: currentStep > 0 ? StepState.complete : StepState.indexed,
           isActive: currentStep >= 0,
@@ -523,7 +523,7 @@ class _Page2State extends State<Page2> {
                       Container(
                         padding: const EdgeInsets.all(15),
                         child: Text(
-                          'Details du ramassage(1)',
+                          'Details du ramassage',
                           style: GoogleFonts.poppins(fontSize: 15),
                           textAlign: TextAlign.center,
                         ),
@@ -645,6 +645,20 @@ class _Page2State extends State<Page2> {
                       LocationInput(
                         controller: localisationE,
                         onselectPlace: _selectPlaceR,
+                      ),
+                      Text(
+                        'Instruction',
+                        style: GoogleFonts.poppins(),
+                      ),
+                      TextField(
+                        controller: instructionemetteur,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            hintText: 'Your instruction'),
+                        style: GoogleFonts.poppins(fontSize: 12),
+                        maxLines: 2,
                       ),
                     ],
                   ),

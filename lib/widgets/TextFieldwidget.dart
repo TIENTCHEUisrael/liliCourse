@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 class TextFieldWidget extends StatefulWidget {
   final String label;
-  final String text;
   final int maxLines;
   final TextEditingController controller;
 
@@ -11,7 +10,6 @@ class TextFieldWidget extends StatefulWidget {
       {Key? key,
       required this.controller,
       required this.label,
-      required this.text,
       this.maxLines = 1})
       : super(key: key);
 

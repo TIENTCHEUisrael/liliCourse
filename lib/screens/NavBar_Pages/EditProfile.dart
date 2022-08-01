@@ -177,7 +177,6 @@ class _EditPageState extends State<EditProfile> {
                     TextFieldWidget(
                       controller: nom,
                       label: 'Nom',
-                      text: nom.text,
                     ),
                     const SizedBox(
                       height: 20,
@@ -185,7 +184,6 @@ class _EditPageState extends State<EditProfile> {
                     TextFieldWidget(
                       controller: prenom,
                       label: 'Prenom',
-                      text: prenom.text,
                     ),
                     const SizedBox(
                       height: 20,
@@ -193,7 +191,6 @@ class _EditPageState extends State<EditProfile> {
                     TextFieldWidget(
                       controller: phone,
                       label: 'Telephone',
-                      text: phone.text,
                     ),
                     const SizedBox(
                       height: 20,
@@ -201,7 +198,6 @@ class _EditPageState extends State<EditProfile> {
                     TextFieldWidget(
                       controller: email,
                       label: 'Email',
-                      text: email.text,
                     ),
                     const SizedBox(
                       height: 20,
@@ -209,7 +205,6 @@ class _EditPageState extends State<EditProfile> {
                     TextFieldWidget(
                       controller: adress,
                       label: 'Adresse',
-                      text: 'Adresse',
                     ),
                     const SizedBox(
                       height: 20,
@@ -217,7 +212,6 @@ class _EditPageState extends State<EditProfile> {
                     TextFieldWidget(
                       controller: comentaire,
                       label: 'About you',
-                      text: comentaire.text,
                       maxLines: 5,
                     ),
                     const SizedBox(
