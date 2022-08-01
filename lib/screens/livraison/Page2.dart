@@ -6,6 +6,7 @@ import 'package:lilicourse/Provider/ProviderCommande.dart';
 import 'package:lilicourse/main.dart';
 import 'package:lilicourse/models/adresse/AdresseRamassage/AdresseRamassage.dart';
 import 'package:lilicourse/widgets/TextFieldwidget.dart';
+import 'package:lilicourse/widgets/dataTable.dart';
 import 'package:lilicourse/widgets/locationInput.dart';
 import 'package:provider/provider.dart';
 import '../../Animations/DelayedAnimation.dart';
@@ -523,7 +524,7 @@ class _Page2State extends State<Page2> {
                       Container(
                         padding: const EdgeInsets.all(15),
                         child: Text(
-                          'Details du ramassage',
+                          'Pickup Details',
                           style: GoogleFonts.poppins(fontSize: 15),
                           textAlign: TextAlign.center,
                         ),
@@ -606,8 +607,10 @@ class _Page2State extends State<Page2> {
                                     setState(
                                       () {
                                         _value3 = value as int;
+                                        civiliteemetteur = "Masculin";
                                       },
                                     );
+                                    print(civiliteemetteur);
                                   },
                                 ),
                                 Text(
@@ -624,8 +627,10 @@ class _Page2State extends State<Page2> {
                                     setState(
                                       () {
                                         _value3 = value as int;
+                                        civiliteemetteur = "Feminin";
                                       },
                                     );
+                                    print(civiliteemetteur);
                                   },
                                 ),
                                 Text(
@@ -650,15 +655,20 @@ class _Page2State extends State<Page2> {
                         'Instruction',
                         style: GoogleFonts.poppins(),
                       ),
-                      TextField(
-                        controller: instructionemetteur,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            hintText: 'Your instruction'),
-                        style: GoogleFonts.poppins(fontSize: 12),
-                        maxLines: 2,
+                      Container(
+                        padding: const EdgeInsets.only(
+                            left: 5, right: 5, bottom: 10),
+                        child: TextField(
+                          controller: instructionemetteur,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              hintText:
+                                  'Your instruction fo the delivery man about the transmitter of the course'),
+                          style: GoogleFonts.poppins(fontSize: 12),
+                          maxLines: 3,
+                        ),
                       ),
                     ],
                   ),
@@ -680,20 +690,158 @@ class _Page2State extends State<Page2> {
                     text: 'Demander une livraison'),
                 Card(
                   elevation: 8,
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(15),
-                          child: Text(
-                            'Details du ramassage',
-                            style: GoogleFonts.poppins(fontSize: 15),
-                            textAlign: TextAlign.center,
-                          ),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          'Deposit Details',
+                          style: GoogleFonts.poppins(fontSize: 15),
+                          textAlign: TextAlign.center,
                         ),
-                      ],
-                    ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Column(
+                          children: [
+                            TextField(
+                              decoration: InputDecoration(
+                                icon: Container(
+                                  margin: const EdgeInsets.only(left: 20),
+                                  width: 10,
+                                  height: 10,
+                                  child: const Icon(
+                                    Icons.edit,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                hintText: "Name of receiver",
+                                border: InputBorder.none,
+                                contentPadding:
+                                    const EdgeInsets.only(left: 8.0, top: 16.0),
+                              ),
+                              controller: namerecepteur,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            TextField(
+                              decoration: InputDecoration(
+                                icon: Container(
+                                  margin: const EdgeInsets.only(left: 20),
+                                  width: 10,
+                                  height: 10,
+                                  child: const Icon(
+                                    Icons.mail,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                hintText: "Email of receiver",
+                                border: InputBorder.none,
+                                contentPadding:
+                                    const EdgeInsets.only(left: 8.0, top: 16.0),
+                              ),
+                              controller: emailrecepteur,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            TextField(
+                              decoration: InputDecoration(
+                                icon: Container(
+                                  margin: const EdgeInsets.only(left: 20),
+                                  width: 10,
+                                  height: 10,
+                                  child: const Icon(
+                                    Icons.phone_android,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                hintText: "Contact of receiver",
+                                border: InputBorder.none,
+                                contentPadding:
+                                    const EdgeInsets.only(left: 8.0, top: 16.0),
+                              ),
+                              controller: contactrecepteur,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Civility',
+                              style: GoogleFonts.poppins(fontSize: 14),
+                              //textAlign: TextAlign.start,
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                  value: 1,
+                                  groupValue: _value3,
+                                  onChanged: (value) {
+                                    setState(
+                                      () {
+                                        _value3 = value as int;
+                                        civiliterecepteur = "Masculin";
+                                      },
+                                    );
+                                    print(civiliterecepteur);
+                                  },
+                                ),
+                                Text(
+                                  'Masculin',
+                                  style: GoogleFonts.poppins(fontSize: 13),
+                                ),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                Radio(
+                                  value: 2,
+                                  groupValue: _value3,
+                                  onChanged: (value) {
+                                    setState(
+                                      () {
+                                        _value3 = value as int;
+                                        civiliterecepteur = "Feminin";
+                                      },
+                                    );
+                                    print(civiliterecepteur);
+                                  },
+                                ),
+                                Text(
+                                  'Feminin',
+                                  style: GoogleFonts.poppins(fontSize: 13),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              "Localisation of receiver",
+                              style: GoogleFonts.poppins(fontSize: 14),
+                              //textAlign: TextAlign.start,
+                            ),
+                          ],
+                        ),
+                      ),
+                      LocationInput(
+                        controller: localisationR,
+                        onselectPlace: _selectPlaceL,
+                      ),
+                      Text(
+                        'Instruction of receiver',
+                        style: GoogleFonts.poppins(),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(
+                            left: 5, right: 5, bottom: 10),
+                        child: TextField(
+                          controller: instructionrecepteur,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              hintText:
+                                  'Give the instruction about the receiver of your course'),
+                          style: GoogleFonts.poppins(fontSize: 12),
+                          maxLines: 3,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -720,10 +868,119 @@ class _Page2State extends State<Page2> {
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(15),
                         child: Text(
-                          'Details du recepteur',
+                          'Delivery planning',
                           style: GoogleFonts.poppins(fontSize: 15),
                           textAlign: TextAlign.center,
                         ),
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Radio(
+                                value: 1,
+                                groupValue: _value,
+                                onChanged: (value) {
+                                  setState(
+                                    () {
+                                      _value = value as int;
+                                    },
+                                  );
+                                },
+                              ),
+                              Text('Aussitot que possible',
+                                  style: GoogleFonts.poppins(fontSize: 15)),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Radio(
+                                value: 2,
+                                groupValue: _value,
+                                onChanged: (value) {
+                                  setState(
+                                    () {
+                                      _value = value as int;
+                                    },
+                                  );
+                                },
+                              ),
+                              Text('1h:00',
+                                  style: GoogleFonts.poppins(fontSize: 15)),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Radio(
+                                value: 3,
+                                groupValue: _value,
+                                onChanged: (value) {
+                                  setState(
+                                    () {
+                                      _value = value as int;
+                                    },
+                                  );
+                                },
+                              ),
+                              Text('2h:00',
+                                  style: GoogleFonts.poppins(fontSize: 15)),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Radio(
+                                value: 4,
+                                groupValue: _value,
+                                onChanged: (value) {
+                                  setState(
+                                    () {
+                                      _value = value as int;
+                                    },
+                                  );
+                                },
+                              ),
+                              Text('30 min',
+                                  style: GoogleFonts.poppins(fontSize: 15)),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Radio(
+                                value: 4,
+                                groupValue: _value,
+                                onChanged: (value) {
+                                  setState(
+                                    () {
+                                      _value = value as int;
+                                    },
+                                  );
+                                },
+                              ),
+                              Text('Rien',
+                                  style: GoogleFonts.poppins(fontSize: 15)),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Center(
+                        child: Text(
+                          'Give as much time as you want',
+                          style: GoogleFonts.poppins(color: Colors.grey),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Center(
+                        child: Text(
+                          'This will be taken into account in the fees',
+                          style: GoogleFonts.poppins(color: Colors.grey),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
                       ),
                     ],
                   ),
@@ -752,83 +1009,49 @@ class _Page2State extends State<Page2> {
                           alignment: Alignment.center,
                           padding: const EdgeInsets.all(15),
                           child: Text(
-                            'Planification de ramassage du colis',
+                            'Summary',
                             style: GoogleFonts.poppins(fontSize: 15),
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                Radio(
-                                  value: 1,
-                                  groupValue: _value,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _value = value as int;
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  'Aussitot que possible',
-                                  style: GoogleFonts.poppins(fontSize: 15),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Radio(
-                                    value: 2,
-                                    groupValue: _value,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _value = value as int;
-                                      });
-                                    }),
-                                Text('1h:00',
-                                    style: GoogleFonts.poppins(fontSize: 15)),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Radio(
-                                  value: 3,
-                                  groupValue: _value,
-                                  onChanged: (value) {
-                                    setState(
-                                      () {
-                                        _value = value as int;
-                                      },
-                                    );
-                                  },
-                                ),
-                                Text(
-                                  '2h:00',
-                                  style: GoogleFonts.poppins(fontSize: 15),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Radio(
-                                  value: 4,
-                                  groupValue: _value,
-                                  onChanged: (value) {
-                                    setState(
-                                      () {
-                                        _value = value as int;
-                                      },
-                                    );
-                                  },
-                                ),
-                                Text(
-                                  '30 min',
-                                  style: GoogleFonts.poppins(fontSize: 15),
-                                ),
-                              ],
-                            ),
-                          ],
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Center(child: Text("Delivery information")),
+                        Container(
+                          child: const Text('...............;'),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Center(child: Text("Pickup information")),
+                        DataTableWidget(
+                          name: nameemetteur.text,
+                          email: emailemetteur.text,
+                          contact: contactemetteur.text,
+                          civility: civiliteemetteur == null
+                              ? " "
+                              : civiliteemetteur!,
+                          localisation: localisationRamassage == null
+                              ? " "
+                              : localisationRamassage!,
+                          instruction: instructionemetteur.text,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Center(child: Text("Deposit information")),
+                        DataTableWidget(
+                          name: namerecepteur.text,
+                          email: emailrecepteur.text,
+                          contact: contactrecepteur.text,
+                          civility: civiliterecepteur == null
+                              ? " "
+                              : civiliterecepteur!,
+                          localisation: localisationrecepteur == null
+                              ? " "
+                              : localisationrecepteur!,
+                          instruction: instructionrecepteur.text,
                         ),
                       ]),
                 ),

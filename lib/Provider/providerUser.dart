@@ -85,7 +85,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   static Future<List<User>> getUsers() async {
-    var url = Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/users');
+    var url = Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/users');
     final response = await http.get(url);
 
     var data = jsonDecode(response.body);
@@ -100,7 +100,7 @@ class AuthProvider extends ChangeNotifier {
   Future<Map<String, dynamic>?> loginUser(String mail, String pass) async {
     var result;
     var urlLogin = Uri.parse(
-        '${Api_services.httpbaseUrl2}/lilicourse/user/login?mail=$mail&passw=$pass');
+        '${Api_services.httpbaseUrl3}/lilicourse/user/login?mail=$mail&passw=$pass');
 
     try {
       _logStatus = Statut.authenticating;
@@ -114,7 +114,7 @@ class AuthProvider extends ChangeNotifier {
         //UserPreferences().saveUser(_user!);
         notifyListeners();
         var urlToken = Uri.parse(
-            '${Api_services.httpbaseUrl2}/lilicourse/user/generate?mail=${_user!.email}');
+            '${Api_services.httpbaseUrl3}/lilicourse/user/generate?mail=${_user!.email}');
         final responseToken = await http.post(urlToken);
         if (responseToken.statusCode == 200) {
           var data1 = jsonDecode(responseToken.body);
@@ -150,7 +150,7 @@ class AuthProvider extends ChangeNotifier {
   Future<Map<String, dynamic>?> createUser(User us) async {
     var result;
     var urlCreate =
-        Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/user/add_user');
+        Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/user/add_user');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _logStatus = Statut.registing;
@@ -194,14 +194,14 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<Map<String, dynamic>?> deleteUser(User us) async {
-    var urlDelete = Uri.parse('${Api_services.httpbaseUrl7}/lilicourse/user/');
+    var urlDelete = Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/user/');
     try {} catch (e) {}
   }
 
   Future<Map<String, dynamic>?> uploadImage(File image) async {
     var result;
     var urlImage = Uri.parse(
-        '${Api_services.httpbaseUrl2}/lilicourse/user/image?file=$image');
+        '${Api_services.httpbaseUrl3}/lilicourse/user/image?file=$image');
     try {
       final responseImage = await http.post(urlImage);
       if (responseImage.statusCode == 200) {
@@ -225,7 +225,7 @@ class AuthProvider extends ChangeNotifier {
     var result;
     print('.............................');
     final urlId = Uri.parse(
-        '${Api_services.httpbaseUrl2}/lilicourse/user/getId?mail=$email');
+        '${Api_services.httpbaseUrl3}/lilicourse/user/getId?mail=$email');
     final headers = {"Content-type": "application/json"};
     try {
       _logStatus = Statut.updating;
@@ -236,7 +236,7 @@ class AuthProvider extends ChangeNotifier {
         _id = data['user_id'];
         notifyListeners();
         final urlupdate = Uri.parse(
-            '${Api_services.httpbaseUrl2}/lilicourse/user/update_user?id=$_id');
+            '${Api_services.httpbaseUrl3}/lilicourse/user/update_user?id=$_id');
         final respon = await http.put(
           urlupdate,
           headers: headers,

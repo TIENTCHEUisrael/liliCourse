@@ -34,6 +34,7 @@ class _LocationInputState extends State<LocationInput> {
       final locData = await Location().getLocation();
       _showPreview(locData.latitude, locData.longitude);
       widget.onselectPlace(locData.latitude, locData.longitude);
+      print('ok');
     } catch (error) {
       print('Error :' + error.toString());
     }
@@ -74,10 +75,10 @@ class _LocationInputState extends State<LocationInput> {
                 margin: const EdgeInsets.only(left: 20),
                 width: 10,
                 height: 10,
-                child: const Icon(
+                /*child: const Icon(
                   Icons.edit_location,
                   color: Colors.black,
-                ),
+                ),*/
               ),
               hintText: "Check your shipping address",
               border: InputBorder.none,
