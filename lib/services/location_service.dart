@@ -4,6 +4,18 @@ import 'package:http/http.dart' as http;
 
 const GOOGLE_API_KEY = 'AIzaSyDXr-tBvlC_BApCsY8NvZy4rFFss4nlxok';
 
+class Suggestion {
+  final String placeId;
+  final String description;
+
+  Suggestion(this.placeId, this.description);
+
+  @override
+  String toString() {
+    return 'Suggestion(description: $description, placeId: $placeId)';
+  }
+}
+
 class LocationHelper {
   static String generateLocationPreviewImage(
       {required double? latitude, required double? longitude}) {

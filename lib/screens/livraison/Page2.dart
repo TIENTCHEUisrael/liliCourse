@@ -4,10 +4,12 @@ import 'package:lilicourse/Provider/ProviderAdress.dart';
 import 'package:lilicourse/Provider/ProviderAdressLiv.dart';
 import 'package:lilicourse/Provider/ProviderCommande.dart';
 import 'package:lilicourse/main.dart';
+import 'package:lilicourse/models/adresse/AdresseRamassage/AdresseRamassage.dart';
 import 'package:lilicourse/widgets/locationInput.dart';
 import 'package:provider/provider.dart';
 import '../../Animations/DelayedAnimation.dart';
 import '../../Provider/ProviderAdressRam.dart';
+import '../../models/adresse/Adresse/Adresse.dart';
 import '../../widgets/appBar.dart';
 import '../../widgets/containFirst.dart';
 import 'PageMap.dart';
@@ -54,6 +56,7 @@ class _Page2State extends State<Page2> {
   final emailemetteur = TextEditingController();
   String? civiliteemetteur;
   String? instructionemetteur;
+  PlaceLocation? _pickedLocation;
 
   @override
   void initState() {
@@ -65,6 +68,42 @@ class _Page2State extends State<Page2> {
   void addAdressRamassage() {}
 
   void addCommande() {}
+  void _selectPlaceR(double lat, double lng) {
+    _pickedLocation = PlaceLocation(latitude: lat, longitude: lng);
+    if (_pickedLocation!.latitude == null ||
+        _pickedLocation!.longitude == null) {
+    } else {
+      print('ok');
+      var bob = Provider.of<AdRProvider>(context, listen: false)
+          .getPlaceAdress(_pickedLocation!.latitude, _pickedLocation!.longitude)
+          .then((value) {
+        setState(() {
+          localisationE.text = value;
+          localisationRamassage = value;
+        });
+        print(localisationRamassage);
+      });
+    }
+  }
+
+  void _selectPlaceL(double lat, double lng) {
+    _pickedLocation = PlaceLocation(latitude: lat, longitude: lng);
+    if (_pickedLocation!.latitude == null ||
+        _pickedLocation!.longitude == null) {
+      print('Error');
+    } else {
+      print('ok');
+      var bob = Provider.of<AdRProvider>(context, listen: false)
+          .getPlaceAdress(_pickedLocation!.latitude, _pickedLocation!.longitude)
+          .then((value) {
+        setState(() {
+          localisationR.text = value;
+          localisationrecepteur = value;
+        });
+        print(localisationrecepteur);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,11 +125,12 @@ class _Page2State extends State<Page2> {
               ),
               child: Stepper(
                 type: StepperType.horizontal,
-                steps: getSteps(),
+                steps: getSteps(adL, adR),
                 currentStep: currentStep,
                 //lorsque on reparr en avant d'un step
                 onStepContinue: () {
-                  final isLastStep = currentStep == getSteps().length - 1;
+                  final isLastStep =
+                      currentStep == getSteps(adL, adR).length - 1;
                   if (isLastStep) {
                     setState(() {
                       isCompleted = true;
@@ -118,7 +158,8 @@ class _Page2State extends State<Page2> {
                   });
                 },
                 controlsBuilder: (context, ControlsDetails details) {
-                  final isLastStep = currentStep == getSteps().length - 1;
+                  final isLastStep =
+                      currentStep == getSteps(adL, adR).length - 1;
                   return Container(
                     margin: const EdgeInsets.only(top: 20),
                     child: Row(
@@ -161,7 +202,7 @@ class _Page2State extends State<Page2> {
     );
   }
 
-  List<Step> getSteps() => [
+  List<Step> getSteps(AdLProvider l, AdRProvider r) => [
         Step(
           state: currentStep > 0 ? StepState.complete : StepState.indexed,
           isActive: currentStep >= 0,
@@ -603,7 +644,7 @@ class _Page2State extends State<Page2> {
                       ),
                       LocationInput(
                         controller: localisationE,
-                        text: localisationRamassage,
+                        onselectPlace: _selectPlaceR,
                       ),
                     ],
                   ),

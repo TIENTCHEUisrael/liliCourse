@@ -96,6 +96,14 @@ async def update_user(id:int,user:UserIn_Pydantic):
     retour=await UserIn_Pydantic.from_queryset_single(User.get(user_id=id))
     return retour
 
+#delete
+@app.delete("/lilicourse/user/{id}", response_model=Message, responses={404: {"model": HTTPNotFoundError}})
+async def delete_adress(id: int):
+    delete_obj = await Commande.filter(commande_id=id).delete()
+    if not delete_obj:
+        raise HTTPException(status_code=404, detail="this restaurant, is not found")
+    return Message(message="Succesfully deleted")
+
 #essai token
 @app.post('/lilicourse/user/generate')
 async def generate_token(mail:str):
@@ -159,6 +167,14 @@ async def update_user(id:int,cours:CoursierIn_Pydantic):
     retour=await CoursierIn_Pydantic.from_queryset_single(Coursier.get(coursier_id=id))
     return retour
 
+#delete
+@app.delete("/lilicourse/coursier/{id}", response_model=Message, responses={404: {"model": HTTPNotFoundError}})
+async def delete_adress(id: int):
+    delete_obj = await Commande.filter(commande_id=id).delete()
+    if not delete_obj:
+        raise HTTPException(status_code=404, detail="this restaurant, is not found")
+    return Message(message="Succesfully deleted")
+
 #..................................ADRESSE .............................................;
 #........................................................................................
 #get
@@ -167,7 +183,7 @@ async def getAdressById(id:int):
     model=await Adresse_Pydantic.from_queryset_single(Adresse.get(adresse_id=id))
     return model
 
-@app.get("/lilicourse/adressRam/",response_model=List[Adresse_Pydantic])
+@app.get("/lilicourse/adress/",response_model=List[Adresse_Pydantic])
 async def getAdress():
     model=await Adresse_Pydantic.from_queryset(Adresse.all)
     return model
