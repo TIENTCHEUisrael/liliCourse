@@ -6,6 +6,7 @@ import 'package:lilicourse/screens/NavBar_Pages/Apropos.dart';
 import 'package:lilicourse/screens/login/loginPage.dart';
 import 'package:provider/provider.dart';
 import '../screens/NavBar_Pages/profile.dart';
+import '../screens/NavBar_Pages/setting.dart';
 
 class NavBar extends StatefulWidget {
   @override
@@ -80,11 +81,11 @@ class _NavBarState extends State<NavBar> {
                       return;
                     },
                     onTap: () {
-                      /*Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) {
-                      return Parametre();
-                    }),
-                  );*/
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) {
+                          return SettingPage();
+                        }),
+                      );
                     },
                   ),
                   const Divider(),
