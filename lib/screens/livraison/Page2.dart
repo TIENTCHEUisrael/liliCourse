@@ -1003,57 +1003,117 @@ class _Page2State extends State<Page2> {
                 Card(
                   elevation: 8,
                   child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(15),
-                          child: Text(
-                            'Summary',
-                            style: GoogleFonts.poppins(fontSize: 15),
-                            textAlign: TextAlign.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          'Summary',
+                          style: GoogleFonts.poppins(fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Center(
+                        child: Text(
+                          "Delivery information",
+                          style: GoogleFonts.poppins(fontSize: 15),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(
+                            left: 5, right: 5, top: 8, bottom: 5),
+                        padding: const EdgeInsets.only(
+                            left: 3, right: 3, top: 3, bottom: 3),
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(2),
                           ),
                         ),
-                        const SizedBox(
-                          height: 8,
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text("Package size: "),
+                                Text(taille),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text("Package weight: "),
+                                Text("$poids"),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text("Type of package: "),
+                                Text(
+                                  type == null ? " " : type!,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        const Center(child: Text("Delivery information")),
-                        Container(
-                          child: const Text('...............;'),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Center(
+                        child: Text(
+                          "Pickup information: ",
+                          style: GoogleFonts.poppins(fontSize: 15),
                         ),
-                        const SizedBox(
-                          height: 8,
+                      ),
+                      DataTableWidget(
+                        name: nameemetteur.text,
+                        email: emailemetteur.text,
+                        contact: contactemetteur.text,
+                        civility:
+                            civiliteemetteur == null ? " " : civiliteemetteur!,
+                        localisation: localisationRamassage == null
+                            ? " "
+                            : localisationRamassage!,
+                        instruction: instructionemetteur.text,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Center(
+                        child: Text(
+                          "Deposit information",
+                          style: GoogleFonts.poppins(fontSize: 15),
                         ),
-                        const Center(child: Text("Pickup information")),
-                        DataTableWidget(
-                          name: nameemetteur.text,
-                          email: emailemetteur.text,
-                          contact: contactemetteur.text,
-                          civility: civiliteemetteur == null
-                              ? " "
-                              : civiliteemetteur!,
-                          localisation: localisationRamassage == null
-                              ? " "
-                              : localisationRamassage!,
-                          instruction: instructionemetteur.text,
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        const Center(child: Text("Deposit information")),
-                        DataTableWidget(
-                          name: namerecepteur.text,
-                          email: emailrecepteur.text,
-                          contact: contactrecepteur.text,
-                          civility: civiliterecepteur == null
-                              ? " "
-                              : civiliterecepteur!,
-                          localisation: localisationrecepteur == null
-                              ? " "
-                              : localisationrecepteur!,
-                          instruction: instructionrecepteur.text,
-                        ),
-                      ]),
+                      ),
+                      DataTableWidget(
+                        name: namerecepteur.text,
+                        email: emailrecepteur.text,
+                        contact: contactrecepteur.text,
+                        civility: civiliterecepteur == null
+                            ? " "
+                            : civiliterecepteur!,
+                        localisation: localisationrecepteur == null
+                            ? " "
+                            : localisationrecepteur!,
+                        instruction: instructionrecepteur.text,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Center(
+                        child: Text('Recapitulatif'),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

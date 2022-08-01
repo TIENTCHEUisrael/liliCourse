@@ -71,12 +71,18 @@ class _DataTableWidgetState extends State<DataTableWidget> {
                     Text(widget.name),
                   ],
                 ),
+                const SizedBox(
+                  height: 3,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(" Email"),
                     Text(widget.email),
                   ],
+                ),
+                const SizedBox(
+                  height: 3,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,12 +91,18 @@ class _DataTableWidgetState extends State<DataTableWidget> {
                     Text(widget.contact),
                   ],
                 ),
+                const SizedBox(
+                  height: 3,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(" Localisation"),
                     Text(widget.localisation)
                   ],
+                ),
+                const SizedBox(
+                  height: 3,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,12 +111,18 @@ class _DataTableWidgetState extends State<DataTableWidget> {
                     Text(widget.civility),
                   ],
                 ),
+                const SizedBox(
+                  height: 3,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(" Instruction"),
                     Text(widget.instruction)
                   ],
+                ),
+                const SizedBox(
+                  height: 5,
                 ),
               ],
             ),
