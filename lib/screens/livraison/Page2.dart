@@ -4,8 +4,6 @@ import 'package:lilicourse/Provider/ProviderAdress.dart';
 import 'package:lilicourse/Provider/ProviderAdressLiv.dart';
 import 'package:lilicourse/Provider/ProviderCommande.dart';
 import 'package:lilicourse/main.dart';
-import 'package:lilicourse/models/adresse/AdresseRamassage/AdresseRamassage.dart';
-import 'package:lilicourse/widgets/TextFieldwidget.dart';
 import 'package:lilicourse/widgets/dataTable.dart';
 import 'package:lilicourse/widgets/locationInput.dart';
 import 'package:provider/provider.dart';
@@ -27,12 +25,12 @@ class _Page2State extends State<Page2> {
   int currentStep = 0;
   Color? colorIn = Colors.transparent;
   Color? colorOut = Colors.transparent;
-  /*Color t1 = Colors.transparent;
-  Color t2 = Colors.transparent;
-  Color t3 = Colors.transparent;*/
   double t1 = 10;
   double t2 = 10;
   double t3 = 10;
+  double h1 = 15;
+  double h2 = 9;
+  double h3 = 12;
 
   int _value = 1;
   int _value2 = 1;
@@ -946,7 +944,7 @@ class _Page2State extends State<Page2> {
                           Row(
                             children: [
                               Radio(
-                                value: 4,
+                                value: 5,
                                 groupValue: _value,
                                 onChanged: (value) {
                                   setState(
@@ -1137,7 +1135,7 @@ class _Page2State extends State<Page2> {
                       Container(
                         padding: const EdgeInsets.all(15),
                         child: Text(
-                          'Paiyments ',
+                          'Paiements ',
                           style: GoogleFonts.poppins(fontSize: 15),
                           textAlign: TextAlign.center,
                         ),
@@ -1145,25 +1143,67 @@ class _Page2State extends State<Page2> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          GestureDetector(
+                          InkWell(
                             onTap: () {
-                              print('Ok1');
+                              print('Orange Money');
                             },
-                            child: Carte2(
-                                titre: 'Orange Money',
-                                imagePath: 'assets/images/image2.png',
-                                height: 120,
-                                width: 115),
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(h1),
+                                  child: Card(
+                                    elevation: 4,
+                                    child: Image.asset(
+                                      "assets/images/image2.png",
+                                      height: 110,
+                                      width: 100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(12),
+                                  child: Text(
+                                    "Orange money",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: blue_button),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          GestureDetector(
+                          InkWell(
                             onTap: () {
-                              print('ok2');
+                              print('Mobile Money');
                             },
-                            child: Carte2(
-                                titre: 'Mobile Money',
-                                imagePath: 'assets/images/image3.jpg',
-                                height: 120,
-                                width: 115),
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(h2),
+                                  child: Card(
+                                    elevation: 4,
+                                    child: Image.asset(
+                                      "assets/images/image3.jpg",
+                                      height: 110,
+                                      width: 100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(12),
+                                  child: Text(
+                                    "Mobile Money",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: blue_button),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -1172,11 +1212,37 @@ class _Page2State extends State<Page2> {
                       ),
                       Container(
                         alignment: Alignment.center,
-                        child: Carte2(
-                            titre: 'Paypal',
-                            imagePath: 'assets/images/image1.png',
-                            height: 120,
-                            width: 115),
+                        child: InkWell(
+                          onTap: () {
+                            print('PayPal money');
+                          },
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(h3),
+                                child: Card(
+                                  elevation: 4,
+                                  child: Image.asset(
+                                    "assets/images/image1.png",
+                                    height: 110,
+                                    width: 100,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(12),
+                                child: Text(
+                                  "Paypal Money",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: blue_button),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -1265,82 +1331,4 @@ class _Page2State extends State<Page2> {
       ),
     );
   }
-}
-
-Widget Carte({
-  required String titre,
-  required Icon icon,
-  required Color colors,
-}) {
-  return Column(
-    children: [
-      Card(
-        elevation: 4,
-        child: icon,
-      ),
-      Container(
-        decoration: BoxDecoration(border: Border.all(color: colors)),
-        padding: const EdgeInsets.all(15),
-        child: Text(
-          titre,
-          style: GoogleFonts.poppins(
-              fontSize: 12, fontWeight: FontWeight.bold, color: blue_button),
-        ),
-      ),
-    ],
-  );
-}
-
-Widget Carte2({
-  required String titre,
-  required String imagePath,
-  required double height,
-  required double width,
-}) {
-  return Column(
-    children: [
-      Card(
-        elevation: 4,
-        child: Image.asset(
-          imagePath,
-          height: height,
-          width: width,
-        ),
-      ),
-      Container(
-        padding: const EdgeInsets.all(15),
-        child: Text(
-          titre,
-          style: GoogleFonts.poppins(
-              fontSize: 14, fontWeight: FontWeight.bold, color: blue_button),
-        ),
-      ),
-    ],
-  );
-}
-
-Widget Carte3({
-  required String text1,
-  required String text2,
-}) {
-  return Card(
-    elevation: 4,
-    child: Container(
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          Text(
-            '$text1 KG',
-            style: GoogleFonts.poppins(color: blue_button),
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            '$text2 XAF',
-            style: GoogleFonts.poppins(color: blue_button),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    ),
-  );
 }
