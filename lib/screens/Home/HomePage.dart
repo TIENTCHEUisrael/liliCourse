@@ -6,11 +6,10 @@ import 'package:lilicourse/main.dart';
 import 'package:lilicourse/widgets/bas.dart';
 import 'package:lilicourse/widgets/navbar.dart';
 import 'package:provider/provider.dart';
-import '../../models/user/user.dart';
 import '../livraison/LilvraisonPage.dart';
-import './CommandesPage.dart';
+import 'Home.dart';
 import './NotificationPage.dart';
-import './ChatsPage.dart';
+import 'RequestPage.dart';
 import './ProfilPage.dart';
 
 class Home extends StatefulWidget {
@@ -23,13 +22,13 @@ class _HomeState extends State<Home> {
   int currentTab = 3;
 
   final List<Widget> screens = [
-    CommandesPage(),
-    ChatsPage(),
+    HomePage(),
+    RequestPage(),
     NotificationPage(),
     ProfilePage(),
   ];
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentPage = ProfilePage();
+  Widget currentPage = HomePage();
 
   @override
   Widget build(BuildContext context) {
@@ -135,9 +134,9 @@ class _HomeState extends State<Home> {
                         MaterialButton(
                           onPressed: () {
                             setState(() {
-                              currentPage = CommandesPage();
+                              currentPage = HomePage();
                               currentTab = 0;
-                              _texte = 'Orders';
+                              _texte = 'Home';
                             });
                           },
                           minWidth: 40,
@@ -151,7 +150,7 @@ class _HomeState extends State<Home> {
                                 size: currentTab == 0 ? 38 : 29,
                               ),
                               Text(
-                                'Orders',
+                                'Home',
                                 style: GoogleFonts.poppins(
                                     color: currentTab == 0
                                         ? blue_button
@@ -163,9 +162,9 @@ class _HomeState extends State<Home> {
                         MaterialButton(
                           onPressed: () {
                             setState(() {
-                              currentPage = ChatsPage();
+                              currentPage = RequestPage();
                               currentTab = 1;
-                              _texte = 'Chats';
+                              _texte = 'My Request';
                             });
                           },
                           minWidth: 40,
@@ -179,7 +178,7 @@ class _HomeState extends State<Home> {
                                 size: currentTab == 1 ? 38 : 29,
                               ),
                               Text(
-                                'Chats',
+                                'Requests',
                                 style: GoogleFonts.poppins(
                                     color: currentTab == 1
                                         ? blue_button

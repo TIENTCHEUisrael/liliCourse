@@ -12,9 +12,9 @@ from pydantic import BaseModel
 from pydantic.typing import List
 from imagess import *
 from schema import *
+from mtnApi import *
 from PIL import Image
 from passlib.context import CryptContext
-from mtnApi import *
 #encrypt Password
 pwd_context=CryptContext(schemes=["bcrypt"],deprecated="auto")
 
@@ -88,6 +88,10 @@ async def createFileUser(file: UploadFile = File(...)):
         # business = await Business.get(owner)
     file_url = generate_name[1:]
     return {"statut": "ok", "filename": file_url}
+
+@app.post('/lilicourse/paiementMtn')
+async def paiement(phone:str,somme:str):
+    return requesttopay(phone_number=phone,amount=somme)
 
 #put
 @app.put("/lilicourse/user/update_user",response_model=UserIn_Pydantic,responses={404: {"model": HTTPNotFoundError}})

@@ -1,17 +1,10 @@
+
+
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 import json
 import requests
 import sys
 
-phone = "12333"
-amound ="123333"
-
-
-
-content_type = 'application/json'
-x_reference_id = '80d310f2-fe7d-4f3c-9e3a-184b49a29935'
-ocp_Apim_subscription_Key = 'a2b909d218e1477ba010515c92562a47'
-x_target_environment = 'sandbox'
 
 
 #Authanticate User
@@ -24,9 +17,12 @@ def authenticate_user(content_type, x_reference_id, ocp_Apim_subscription_Key):
     }
 
     body = {"providerCallbackHost": "google.com"}
+    
 
     try:
         response = requests.post("https://sandbox.momodeveloper.mtn.com/v1_0/apiuser?",headers = headers, data=json.dumps(body))
+        print("stape1")
+        print(str(response.status_code) + str(body))
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
@@ -50,15 +46,19 @@ def generate_api_key(x_reference_id, ocp_Apim_subscription_Key):
         key = key['apiKey']
         key = base64.b64encode('{}:{}'.format(x_reference_id,key).encode('utf-8'))
         key = 'Basic {}'.format(key.decode("utf-8"))
+        print("stape2")
+        print(str(response.status_code) + key)
         conn.close()
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        print('dfsdf')
+        #print("[Errno {0}] {1}".format(e.errno, e.strerror))
     return key
 
 
 
 #get Tokent
 def get_token(ocp_Apim_subscription_Key, key):
+    access_tok=""
     headers = {
     # Request headers
     'Authorization': key,
@@ -74,19 +74,22 @@ def get_token(ocp_Apim_subscription_Key, key):
         resp_dict = response.read()
         resp_dict = resp_dict.decode("utf-8")
         resp_dict = json.loads(resp_dict)
-        access_token = resp_dict['access_token']
+        access_tok = resp_dict['access_token']
+        print("stape3")
+        print(str(response.status_code) + access_tok)
         conn.close()
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
-    return access_token
+        #print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        print('fdg')
+    return access_tok
 
 
 
 #Start transaction
 def requesttopay(
-                  content_type,
-                  x_reference_id,
-                  ocp_Apim_subscription_Key,
+                  content_type="application/json",
+                  x_reference_id="c72f517f-7261-4f01-b52c-d8578d26917f",
+                  ocp_Apim_subscription_Key="85d786d5050949d390c8f1cf92e97c29",
                   x_target_environment='sandbox',
                   amount='1000',
                   phone_number='677111143',
@@ -124,9 +127,11 @@ def requesttopay(
 
     try:
         response = requests.post("https://sandbox.momodeveloper.mtn.com/collection/v1_0/requesttopay?",headers = headers, data=json.dumps(body))
-        return response.status_code
+        print("final")
+
+        return str(body)
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        #print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        print('vfdvfd')
 
-
-print(requesttopay(content_type, x_reference_id, ocp_Apim_subscription_Key, x_target_environment,amount=amound,phone_number=phone))
+#print(requesttopay(content_type="application/json", x_reference_id="faab54ac-c3c5-4261-a049-8852c252f8e4", ocp_Apim_subscription_Key="85d786d5050949d390c8f1cf92e97c29", x_target_environment="sandbox",amount="1100",phone_number="655326045"))

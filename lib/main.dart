@@ -4,7 +4,6 @@ import 'package:lilicourse/Provider/ProviderAdressLiv.dart';
 import 'package:lilicourse/Provider/ProviderAdressRam.dart';
 import 'package:lilicourse/Provider/ProviderCommande.dart';
 import 'package:lilicourse/Provider/ProviderCoursier.dart';
-import 'package:lilicourse/screens/livraison/map_screens.dart';
 import 'package:provider/provider.dart';
 import '../screens/splashScreen/SplashPage.dart';
 import 'Provider/providerUser.dart';
