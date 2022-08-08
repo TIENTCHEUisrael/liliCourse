@@ -55,6 +55,8 @@ dependencies:
   shared_preferences: ^2.0.15
   avatar_glow: ^2.0.2
   app_settings: ^4.1.1
+  #carousel_pro: ^1.0.0
+  carousel_slider: ^4.1.1
   #google_places_flutter: ^2.0.5
   #uuid: ^3.0.6
 
@@ -94,6 +96,13 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/homes/accepter.json
+    - assets/images/homes/Attente.json
+    - assets/images/homes/attenteClient.json
+    - assets/images/homes/give.json
+    - assets/images/homes/recuperer.json
+    - assets/images/homes/request.json
+    - assets/images/homes/transport.json
     - assets/images/splash1/23741-home-delivery-man.json
     - assets/images/okk.json
     - assets/images/splash1/delivery2.json

@@ -130,14 +130,14 @@ async def get_all_coursier():
     retour= await Coursier_Pydantic.from_queryset(Coursier.all())
     return retour
 
-@app.get("/lilicourse/coursier", response_model=CoursierIn_Pydantic, responses={404: {"model": HTTPNotFoundError}})
+@app.get("/lilicourse/coursier", response_model=Coursier_Pydantic, responses={404: {"model": HTTPNotFoundError}})
 async def get_one_coursier(id: int):
-    retour =await CoursierIn_Pydantic.from_queryset_single(Coursier.get(coursier_id=id))
+    retour =await Coursier_Pydantic.from_queryset_single(Coursier.get(coursier_id=id))
     return retour
 
 #post
 @app.post("/lilicourse/coursier/add_coursier",response_model=Coursier_Pydantic)
-async def simple_create_user(cours:CoursierIn_Pydantic):
+async def simple_create_coursier(cours:CoursierIn_Pydantic):
     obj=await Coursier.create(**cours.dict(exclude_unset=True))
     return await Coursier_Pydantic.from_tortoise_orm(obj)
 
@@ -166,17 +166,17 @@ async def create_Image_coursier(file: UploadFile = File(...)):
 
 #put
 @app.put("/lilicourse/coursier/update_coursier",response_model=CoursierIn_Pydantic,responses={404: {"model": HTTPNotFoundError}})
-async def update_user(id:int,cours:CoursierIn_Pydantic):
+async def update_coursier(id:int,cours:CoursierIn_Pydantic):
     await Coursier.filter(coursier_id=id).update(**cours.dict(exclude_unset=True))
     retour=await CoursierIn_Pydantic.from_queryset_single(Coursier.get(coursier_id=id))
     return retour
 
 #delete
-@app.delete("/lilicourse/coursier/{id}", response_model=Message, responses={404: {"model": HTTPNotFoundError}})
-async def delete_adress(id: int):
-    delete_obj = await Commande.filter(commande_id=id).delete()
+@app.delete("/lilicourse/coursier/", response_model=Message, responses={404: {"model": HTTPNotFoundError}})
+async def delete_Coursier(id: int):
+    delete_obj = await Coursier.filter(coursier_id=id).delete()
     if not delete_obj:
-        raise HTTPException(status_code=404, detail="this restaurant, is not found")
+        raise HTTPException(status_code=404, detail="this coursier, is not found")
     return Message(message="Succesfully deleted")
 
 #..................................ADRESSE .............................................;

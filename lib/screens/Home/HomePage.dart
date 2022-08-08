@@ -19,7 +19,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String _texte = 'Home';
-  int currentTab = 3;
+  int currentTab = 0;
 
   final List<Widget> screens = [
     HomePage(),

@@ -1,3 +1,8 @@
+from email.mime import image
+from email.policy import default
+from enum import unique
+
+from sqlalchemy import null
 from TokenGenerate import *
 from token import *
 from tortoise import fields
@@ -28,11 +33,11 @@ UserIn_Pydantic=pydantic_model_creator(User,name="UserIn",exclude_readonly=True)
 
 class Coursier(Model):
     coursier_id=fields.IntField(pk=True)
-    user_id=fields.ForeignKeyField("models.User",related_name="fk_user_coursier",null=False)
-    comande_id=fields.ForeignKeyField("models.Commande",related_name="fk_coursier_com",null=True)
+    user_id=fields.IntField()
+    comande_id=fields.IntField(null=True)
     transport=fields.CharField(max_length=255)
-    rating=fields.FloatField()
-    updated_at=fields.CharField(max_length=255)
+    rating=fields.CharField(max_length=255)
+    updated_at=fields.CharField(max_length=255,default=" ")
     created_at=fields.DatetimeField(auto_now_add=True)
 
 
@@ -49,7 +54,7 @@ CoursierIn_Pydantic=pydantic_model_creator(Coursier,name="CoursierIn",exclude_re
 
 class Partenaire(Model):
     partenaire_id=fields.IntField(pk=True)
-    user_id=fields.ForeignKeyField("models.User",related_name="fk_user_partenaire",null=False)
+    user_id=fields.IntField()
     name_societe=fields.CharField(max_length=255)
     secteurs=fields.CharField(max_length=255)
     country=fields.CharField(max_length=255)
@@ -69,8 +74,8 @@ PartenaireIn_Pydantic=pydantic_model_creator(Partenaire,name="PartenaireIn",excl
 
 class Commande(Model):
     commande_id=fields.IntField(pk=True)
-    user_id=fields.ForeignKeyField("models.User",related_name="fk_commande_user",null=False)
-    adresse_id=fields.ForeignKeyField("models.Adresse",related_name="fk_commande_adresse",null=False)
+    user_id=fields.IntField()
+    adresse_id=fields.IntField()
     updated_at=fields.CharField(max_length=255)
     created_at=fields.DatetimeField(auto_now_add=True)
 
@@ -86,8 +91,8 @@ CommandeIn_Pydantic=pydantic_model_creator(Commande,name="CommandeIn",exclude_re
 
 class Adresse(Model):
     adresse_id=fields.IntField(pk=True)
-    adresse_liv_id=fields.ForeignKeyField("models.Adresse_liv",related_name="fk_adres_liv",null=True)
-    adresse_ram_id=fields.ForeignKeyField("models.Adresse_ram",related_name="fk_adres_ram",null=True)
+    adresse_liv_id=fields.IntField()
+    adresse_ram_id=fields.IntField()
     poids=fields.CharField(max_length=255)
     taille=fields.CharField(max_length=255)
     type=fields.CharField(max_length=255)
@@ -149,10 +154,10 @@ Adresse_livIn_Pydantic=pydantic_model_creator(Adresse_liv,name="Adresse_livIn",e
 
 
 class Paiement(Model):
-    paiementt_id=fields.IntField(pk=True)
+    paiement_id=fields.IntField(pk=True)
     user_id=fields.IntField()
-    comande_id=fields.CharField(max_length=255)
-    montant=fields.FloatField()
+    comande_id=fields.IntField()
+    montant=fields.CharField(max_length=255)
     mode=fields.CharField(max_length=255)
     code=fields.CharField(max_length=255)
     updated_at=fields.CharField(max_length=255)

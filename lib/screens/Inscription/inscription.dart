@@ -1,9 +1,9 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lilicourse/Animations/DelayedAnimation.dart';
 import 'package:lilicourse/main.dart';
+import 'package:lilicourse/widgets/appBar.dart';
 import 'package:lilicourse/widgets/bas.dart';
 import 'package:provider/provider.dart';
 import '../../Provider/providerUser.dart';
@@ -44,214 +44,296 @@ class _InscriptionState extends State<Inscription> {
   Widget build(BuildContext context) {
     AuthProvider auth = Provider.of<AuthProvider>(context);
     return Scaffold(
+      appBar: buildAppBar(context, const Text('')),
       body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-          child: Column(
+          physics: const BouncingScrollPhysics(),
+          child: Stack(
             children: [
-              Image.asset(
-                "assets/images/d.png",
-                height: 250,
-                width: 300,
-                fit: BoxFit.cover,
-              ),
-              Text(
-                "Sign up",
-                style: GoogleFonts.poppins(fontSize: 20),
-                textAlign: TextAlign.center,
-              ),
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: nom,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                          color: Colors.grey[400],
-                          decoration: TextDecoration.none,
-                        ),
-                        labelText: 'Votre first name',
-                        prefixIcon: const Icon(
-                          Icons.edit,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your Name';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    TextFormField(
-                      controller: prenom,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                          color: Colors.grey[400],
-                          decoration: TextDecoration.none,
-                        ),
-                        labelText: 'Votre last name',
-                        prefixIcon: const Icon(
-                          Icons.edit,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your Last name';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    TextFormField(
-                      controller: email,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                          color: Colors.grey[400],
-                          decoration: TextDecoration.none,
-                        ),
-                        labelText: 'Enter your email',
-                        prefixIcon: const Icon(
-                          Icons.mail,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your mail';
-                        } else if (!EmailValidator.validate(value)) {
-                          return 'Enter valid mail';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 10.0),
-                    TextFormField(
-                      controller: numero,
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                          color: Colors.grey[400],
-                          decoration: TextDecoration.none,
-                        ),
-                        labelText: 'Votre phone number',
-                        prefixIcon: const Icon(
-                          Icons.phone,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter phone number';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 10.0),
-                    TextFormField(
-                      controller: pass,
-                      obscureText: _obscureText,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                          color: Colors.grey[400],
-                          decoration: TextDecoration.none,
-                        ),
-                        labelText: 'Enter your  password',
-                        prefixIcon: const Icon(Icons.lock),
-                        suffixIcon: IconButton(
-                          icon: const Icon(
-                            Icons.visibility,
-                            color: Colors.black,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _obscureText = !_obscureText;
-                            });
-                          },
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter password';
-                        } else if (value.length < 6) {
-                          return 'Please enter minimun 6 caracteres';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 10.0),
-                    TextFormField(
-                      controller: confirm,
-                      obscureText: _obscureText,
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                          color: Colors.grey[400],
-                          decoration: TextDecoration.none,
-                        ),
-                        labelText: 'confirm your pass',
-                        prefixIcon: const Icon(Icons.lock),
-                        suffixIcon: IconButton(
-                          icon: const Icon(
-                            Icons.visibility,
-                            color: Colors.black,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _obscureText = !_obscureText;
-                            });
-                          },
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter the pass';
-                        } else if (value != pass.text) {
-                          return 'Enter the same carateres with your pass';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 12.0,
-                    ),
-                    Text(
-                      'About you',
-                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    TextFormField(
-                      controller: comment,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      style: GoogleFonts.poppins(color: Colors.grey),
-                      maxLines: 3,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your comment';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 40.0, top: 10),
+                      child: Text(
+                        'Sign Up',
+                        style: GoogleFonts.cardo(
+                            fontSize: 35,
+                            color: blue_button,
+                            fontWeight: FontWeight.w900),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 52, top: 5.0),
+                      child: Text(
+                        'Sign Up with ',
+                        style: GoogleFonts.nunitoSans(
+                          fontSize: 15,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 50),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 30.0),
+                            child: Text(
+                              'Name',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14, color: blue_button),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(40, 0, 40, 15),
+                          child: MyWidget(
+                            controller: nom,
+                            label: 'First Name',
+                            icon: const Icon(Icons.edit),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 30.0),
+                            child: Text(
+                              'Last Name',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14, color: blue_button),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(40, 0, 40, 15),
+                          child: MyWidget(
+                            controller: prenom,
+                            label: 'Last Name',
+                            icon: const Icon(Icons.edit),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 30.0),
+                            child: Text(
+                              'Email',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14, color: blue_button),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(40, 0, 40, 15),
+                          child: MyWidget(
+                            controller: email,
+                            label: 'Email',
+                            icon: const Icon(Icons.email),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 30.0),
+                            child: Text(
+                              'Phone Number',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14, color: blue_button),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(40, 0, 40, 15),
+                          child: MyWidget(
+                            controller: numero,
+                            label: 'Phone Number',
+                            icon: const Icon(Icons.phone_android),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 30.0),
+                            child: Text(
+                              'Password',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14, color: blue_button),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(40, 0, 40, 15),
+                          child: TextFormField(
+                            obscureText: _obscureText,
+                            controller: pass,
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.lock),
+                              suffixIcon: IconButton(
+                                icon: const Icon(
+                                  Icons.visibility,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                              ),
+                              hintText: 'Password',
+                              hintStyle: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.grey[360],
+                                  fontWeight: FontWeight.w600),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 17, horizontal: 25),
+                              focusColor: blue_button,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(27),
+                                borderSide:
+                                    const BorderSide(color: blue_button),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(27),
+                                borderSide:
+                                    const BorderSide(color: Colors.grey),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your password';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 30.0),
+                            child: Text(
+                              'Confirm password',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14, color: blue_button),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(40, 0, 40, 15),
+                          child: TextFormField(
+                            obscureText: _obscureText,
+                            controller: confirm,
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.lock),
+                              suffixIcon: IconButton(
+                                icon: const Icon(
+                                  Icons.visibility,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                              ),
+                              hintText: 'Confirmation',
+                              hintStyle: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.grey[360],
+                                  fontWeight: FontWeight.w600),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 17, horizontal: 25),
+                              focusColor: blue_button,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(27),
+                                borderSide:
+                                    const BorderSide(color: blue_button),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(27),
+                                borderSide:
+                                    const BorderSide(color: Colors.grey),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your confirm password';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8.0,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 30.0),
+                            child: Text(
+                              'About you',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 12, color: blue_button),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: TextFormField(
+                            controller: comment,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            style: GoogleFonts.poppins(color: Colors.grey),
+                            maxLines: 3,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your comment';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15.0,
+                        ),
+                      ],
+                    ),
+                  ),
                   DelayedAnimation(
                     delay: 400,
                     child: Container(
+                      width: 250,
+                      height: 70,
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -310,26 +392,48 @@ class _InscriptionState extends State<Inscription> {
                       ),
                     ),
                   ),
-                  DelayedAnimation(
-                    delay: 400,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text('Back',
-                            style: GoogleFonts.poppins(color: red_button)),
-                      ),
-                    ),
-                  ),
+                  bas()
                 ],
               ),
-              bas()
             ],
-          ),
+          )),
+    );
+  }
+}
+
+class MyWidget extends StatelessWidget {
+  final TextEditingController controller;
+  final Icon icon;
+  final String label;
+  MyWidget({required this.controller, required this.label, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        prefixIcon: icon,
+        hintText: label,
+        hintStyle: TextStyle(
+            fontSize: 10, color: Colors.grey[360], fontWeight: FontWeight.w600),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 17, horizontal: 25),
+        focusColor: blue_button,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(27),
+          borderSide: const BorderSide(color: blue_button),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(27),
+          borderSide: const BorderSide(color: Colors.grey),
         ),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your $label';
+        }
+        return null;
+      },
     );
   }
 }
