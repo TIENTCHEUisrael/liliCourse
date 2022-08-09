@@ -108,6 +108,13 @@ flutter:
     - assets/images/splash1/delivery2.json
     - assets/images/splash1/delivery3.json
     - assets/images/timer.json
+    - assets/images/delivery/svg/deposit.svg
+    - assets/images/delivery/svg/info.svg
+    - assets/images/delivery/svg/information.svg
+    - assets/images/delivery/svg/paiement.svg
+    - assets/images/delivery/svg/pickup.svg
+    - assets/images/delivery/svg/request.svg
+    - assets/images/delivery/svg/w.svg
     - assets/images/splash1/svg/undraw_deliveries_2r4y.svg
     - assets/images/splash1/svg/undraw_delivery_address_re_cjca (1).svg
     - assets/images/splash1/svg/undraw_mobile_interface_re_1vv9.svg

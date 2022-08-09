@@ -211,7 +211,7 @@ class _Page2State extends State<Page2> {
             child: Column(
               children: [
                 containFirst(
-                    imagePath: 'assets/images/delivery/svg/delivery.svg',
+                    imagePath: 'assets/images/delivery/svg/request.svg',
                     text: 'Demander une livraison'),
                 Card(
                   elevation: 8,
@@ -234,7 +234,7 @@ class _Page2State extends State<Page2> {
                             child: InkWell(
                               onTap: () {
                                 setState(() {
-                                  type = "All type of Object";
+                                  type = "Colis";
                                   colorIn = Colors.blueGrey;
                                   colorOut = Colors.transparent;
                                 });
@@ -259,7 +259,7 @@ class _Page2State extends State<Page2> {
                                         border: Border.all(color: colorIn!)),
                                     padding: const EdgeInsets.all(15),
                                     child: Text(
-                                      'All type of Object',
+                                      'Colis',
                                       style: GoogleFonts.poppins(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
@@ -329,7 +329,7 @@ class _Page2State extends State<Page2> {
             child: Column(
               children: [
                 containFirst(
-                    imagePath: 'assets/images/delivery/svg/delivery.svg',
+                    imagePath: 'assets/images/delivery/svg/info.svg',
                     text: 'Demander une livraison'),
                 Card(
                   elevation: 8,
@@ -513,18 +513,27 @@ class _Page2State extends State<Page2> {
             child: Column(
               children: [
                 containFirst(
-                    imagePath: 'assets/images/delivery/svg/delivery.svg',
-                    text: 'Demander une livraison'),
+                    imagePath: 'assets/images/delivery/svg/pickup.svg',
+                    text: 'Pickup Details'),
                 Card(
                   elevation: 8,
                   child: Column(
                     children: [
                       Container(
                         padding: const EdgeInsets.all(15),
-                        child: Text(
-                          'Pickup Details',
-                          style: GoogleFonts.poppins(fontSize: 15),
-                          textAlign: TextAlign.center,
+                        child: Row(
+                          children: [
+                            const Icon(Icons.info,
+                                size: 25, color: blue_button),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              'Information transmitter',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 15, color: Colors.blue),
+                            ),
+                          ],
                         ),
                       ),
                       Container(
@@ -538,12 +547,12 @@ class _Page2State extends State<Page2> {
                                   width: 10,
                                   height: 10,
                                   child: const Icon(
-                                    Icons.edit,
+                                    Icons.info,
                                     color: Colors.black,
                                   ),
                                 ),
                                 hintText: "Name of sender",
-                                border: InputBorder.none,
+                                //border: InputBorder.none,
                                 contentPadding:
                                     const EdgeInsets.only(left: 8.0, top: 16.0),
                               ),
@@ -557,12 +566,12 @@ class _Page2State extends State<Page2> {
                                   width: 10,
                                   height: 10,
                                   child: const Icon(
-                                    Icons.edit,
+                                    Icons.email,
                                     color: Colors.black,
                                   ),
                                 ),
                                 hintText: "Email of sender",
-                                border: InputBorder.none,
+                                //border: InputBorder.none,
                                 contentPadding:
                                     const EdgeInsets.only(left: 8.0, top: 16.0),
                               ),
@@ -576,12 +585,11 @@ class _Page2State extends State<Page2> {
                                   width: 10,
                                   height: 10,
                                   child: const Icon(
-                                    Icons.edit,
+                                    Icons.phone,
                                     color: Colors.black,
                                   ),
                                 ),
                                 hintText: "Contact of sender",
-                                border: InputBorder.none,
                                 contentPadding:
                                     const EdgeInsets.only(left: 8.0, top: 16.0),
                               ),
@@ -589,12 +597,27 @@ class _Page2State extends State<Page2> {
                               style: const TextStyle(fontSize: 12),
                             ),
                             const SizedBox(
-                              height: 10,
+                              height: 15,
                             ),
-                            Text(
-                              'Civilité',
-                              style: GoogleFonts.poppins(fontSize: 14),
-                              //textAlign: TextAlign.start,
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 3,
+                                ),
+                                const Icon(Icons.info,
+                                    size: 25, color: blue_button),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  'Civility transmitter',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 15, color: Colors.blue),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
                             ),
                             Row(
                               children: [
@@ -1279,36 +1302,37 @@ class _Page2State extends State<Page2> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: blue_button,
-                          textStyle: GoogleFonts.poppins(fontSize: 18),
-                        ),
-                        child: Text(
-                          'Confirm',
-                          style: GoogleFonts.poppins(),
-                        ),
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder:
-                                  (context, animation, secondaryAnimation) {
-                                return const TimeWaiting();
-                              },
-                              transitionsBuilder: (context, animation,
-                                  secondaryAnimation, child) {
-                                //Premiere animation de bas en haut
-                                var begin = const Offset(1.0, 0.0);
-                                var end = Offset.zero;
-                                var tween = Tween(begin: begin, end: end);
-                                return SlideTransition(
-                                  position: animation.drive(tween),
-                                  child: child,
-                                );
-                              },
-                            ),
-                          );
-                        }),
+                      style: ElevatedButton.styleFrom(
+                        primary: blue_button,
+                        textStyle: GoogleFonts.poppins(fontSize: 18),
+                      ),
+                      child: Text(
+                        'Confirm',
+                        style: GoogleFonts.poppins(),
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
+                              return const TimeWaiting();
+                            },
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              //Premiere animation de bas en haut
+                              var begin = const Offset(1.0, 0.0);
+                              var end = Offset.zero;
+                              var tween = Tween(begin: begin, end: end);
+                              return SlideTransition(
+                                position: animation.drive(tween),
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Colors.black,

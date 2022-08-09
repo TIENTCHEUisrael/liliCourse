@@ -34,7 +34,7 @@ class _Page1State extends State<Page1> {
             alignment: Alignment.center,
             padding: const EdgeInsets.all(15),
             child: Text(
-              'Vous voulez ?',
+              "Profiter d'un service de demande de livraison dont le prix s'eleve a 1500frc de base.Voulez-vous?",
               textAlign: TextAlign.center,
               style: GoogleFonts.poppins(color: blue_button, fontSize: 18),
             ),
@@ -44,7 +44,7 @@ class _Page1State extends State<Page1> {
           ),
           animatedButton(),
           const SizedBox(
-            height: 130,
+            height: 80,
           ),
           bas()
         ],

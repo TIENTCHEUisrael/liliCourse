@@ -16,8 +16,8 @@ class containFirst extends StatelessWidget {
         Center(
           child: SvgPicture.asset(
             imagePath,
-            height: 185,
-            width: 140,
+            height: 180,
+            width: 135,
           ),
         ),
         Container(
