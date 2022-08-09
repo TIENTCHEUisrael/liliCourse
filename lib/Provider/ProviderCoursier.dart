@@ -82,7 +82,6 @@ class CoursProvider extends ChangeNotifier {
         var data = jsonDecode(responseget.body);
         CoursierPreferenced.saveCoursierToSharePreferences(data);
         notifyListeners();
-        print('$data.......................................');
 
         _coursier = Coursier.fromJson(data);
         notifyListeners();
