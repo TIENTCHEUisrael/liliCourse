@@ -19,24 +19,24 @@ class Api_services {
   static String imageUrlUser1 = "$httpbaseUrl1/static/user/";
   static String imageUrlCoursier1 = "$httpbaseUrl1/static/coursier/";
 
-  static String imageUrlUser2 = "$httpbaseUrl2/static/user/";
-  static String imageUrlCoursier2 = "$httpbaseUrl2/static/coursier/";
+  static String imageUrlUser2 = "$httpbaseUrl2/static/user";
+  static String imageUrlCoursier2 = "$httpbaseUrl2/static/coursier";
 
-  static String imageUrlUser3 = "$httpbaseUrl3/static/user/";
-  static String imageUrlCoursier3 = "$httpbaseUrl3/static/coursier/";
+  static String imageUrlUser3 = "$httpbaseUrl3/static/user";
+  static String imageUrlCoursier3 = "$httpbaseUrl3/static/coursier";
 
-  static String imageUrlUser4 = "$httpbaseUrl4/static/user/";
-  static String imageUrlCoursier4 = "$httpbaseUrl4/static/coursier/";
+  static String imageUrlUser4 = "$httpbaseUrl4/static/user";
+  static String imageUrlCoursier4 = "$httpbaseUrl4/static/coursier";
 
-  static String imageUrlUser5 = "$httpbaseUrl5/static/user/";
-  static String imageUrlCoursier5 = "$httpbaseUrl5/static/coursier/";
+  static String imageUrlUser5 = "$httpbaseUrl5/static/user";
+  static String imageUrlCoursier5 = "$httpbaseUrl5/static/coursier";
 
-  static String imageUrlUser6 = "$httpbaseUrl6/static/user/";
-  static String imageUrlCoursier6 = "$httpbaseUrl6/static/coursier/";
+  static String imageUrlUser6 = "$httpbaseUrl6/static/user";
+  static String imageUrlCoursier6 = "$httpbaseUrl6/static/coursier";
 
-  static String imageUrlUser7 = "$httpbaseUrl7/static/user/";
-  static String imageUrlCoursier7 = "$httpbaseUrl7/static/coursier/";
+  static String imageUrlUser7 = "$httpbaseUrl7/static/user";
+  static String imageUrlCoursier7 = "$httpbaseUrl7/static/coursier";
 
-  static String imageUrlUser8 = "$httpbaseUrl8/static/user/";
-  static String imageUrlCoursier8 = "$httpbaseUrl8/static/coursier/";
+  static String imageUrlUser8 = "$httpbaseUrl8/static/user";
+  static String imageUrlCoursier8 = "$httpbaseUrl8/static/coursier";
 }

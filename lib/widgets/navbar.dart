@@ -5,6 +5,7 @@ import 'package:lilicourse/Provider/providerUser.dart';
 import 'package:lilicourse/screens/NavBar_Pages/Apropos.dart';
 import 'package:lilicourse/screens/login/loginPage.dart';
 import 'package:provider/provider.dart';
+import '../screens/NavBar_Pages/deliveryMan.dart';
 import '../screens/NavBar_Pages/profile.dart';
 import '../screens/NavBar_Pages/setting.dart';
 
@@ -66,11 +67,11 @@ class _NavBarState extends State<NavBar> {
                     leading: const Icon(Icons.person_search_sharp),
                     title: const Text('Delivery man'),
                     onTap: () {
-                      /*Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) {
-                      return Coursier();
-                    }),
-                  );*/
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) {
+                          return DeliveryMan();
+                        }),
+                      );
                     },
                   ),
                   const Divider(),

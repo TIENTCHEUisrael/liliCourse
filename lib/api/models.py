@@ -33,10 +33,16 @@ UserIn_Pydantic=pydantic_model_creator(User,name="UserIn",exclude_readonly=True)
 
 class Coursier(Model):
     coursier_id=fields.IntField(pk=True)
-    user_id=fields.IntField()
     comande_id=fields.IntField(null=True)
+    first_name=fields.CharField(null=False,max_length=255)
+    last_name=fields.CharField(null=False,max_length=255)
+    email=fields.CharField(null=False,unique=True,max_length=255)
+    phone_number=fields.IntField()
+    password=fields.CharField(null=False,max_length=255)
+    image=fields.CharField(null=True,max_length=250,default=" ")
     transport=fields.CharField(max_length=255)
     rating=fields.CharField(max_length=255)
+    occupation=fields.CharField(max_length=255,default="true")
     updated_at=fields.CharField(max_length=255,default=" ")
     created_at=fields.DatetimeField(auto_now_add=True)
 
@@ -76,6 +82,7 @@ class Commande(Model):
     commande_id=fields.IntField(pk=True)
     user_id=fields.IntField()
     adresse_id=fields.IntField()
+    statut=fields.CharField(max_length=255,default="false")
     updated_at=fields.CharField(max_length=255)
     created_at=fields.DatetimeField(auto_now_add=True)
 

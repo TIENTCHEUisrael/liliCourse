@@ -54,7 +54,7 @@ class _HomeState extends State<Home> {
               icon: const Icon(
                 Icons.menu,
                 color: Colors.black,
-                size: 40,
+                size: 35,
               ),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
@@ -144,7 +144,7 @@ class _HomeState extends State<Home> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
-                                Icons.library_books,
+                                Icons.home,
                                 color:
                                     currentTab == 0 ? blue_button : Colors.grey,
                                 size: currentTab == 0 ? 38 : 29,
@@ -172,7 +172,7 @@ class _HomeState extends State<Home> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
-                                Icons.chat,
+                                Icons.request_page,
                                 color:
                                     currentTab == 1 ? blue_button : Colors.grey,
                                 size: currentTab == 1 ? 38 : 29,

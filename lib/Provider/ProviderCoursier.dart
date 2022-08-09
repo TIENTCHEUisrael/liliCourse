@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:lilicourse/models/coursier/coursierPreference.dart';
 
 import '../models/coursier/coursier.dart';
+import '../models/user/user.dart';
 import '../services/service.dart';
 
 enum Statut {
@@ -26,7 +27,9 @@ enum Statut {
 
 class CoursProvider extends ChangeNotifier {
   Coursier? _coursier;
+  User? _user;
   int? _id;
+  int? _userId;
   Statut _registerStatus = Statut.notregisted;
   Statut _deleteStatus = Statut.notdeleted;
   Statut _updateStatus = Statut.notupdated;
@@ -38,6 +41,10 @@ class CoursProvider extends ChangeNotifier {
 
   int get id {
     return _id!;
+  }
+
+  int get userId {
+    return _userId!;
   }
 
   Statut get registerStatus => _registerStatus;
@@ -60,22 +67,10 @@ class CoursProvider extends ChangeNotifier {
     _getStatus = value;
   }
 
-  static Future<List<Coursier>> getCoursiers() async {
-    var url = Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/coursiers');
-    final response = await http.get(url);
-
-    var data = jsonDecode(response.body);
-    List _temp = [];
-
-    for (var i in data) {
-      _temp.add(i);
-    }
-    return Coursier.recipesFromSnapshot(_temp);
-  }
-
   Future<Map<String, dynamic>> getCoursier(int id) async {
     var result;
-    var urlget = Uri.parse('$Api_services.baseUrl3/lilicourse/coursier?id=$id');
+    var urlget =
+        Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/coursier?id=$id');
     try {
       _getStatus = Statut.getting;
       notifyListeners();
@@ -94,8 +89,8 @@ class CoursProvider extends ChangeNotifier {
 
         result = {
           "statut": true,
-          "message": "Coursier getted",
-          "coursier": _coursier!
+          "message": "Coursier not getted",
+          "coursier": _coursier!,
         };
       } else {
         _getStatus = Statut.notget;
@@ -114,7 +109,8 @@ class CoursProvider extends ChangeNotifier {
 
   Future<Map<String, dynamic>> deleteCoursier(int id) async {
     var result;
-    var urldel = Uri.parse('$Api_services.baseUrl3/lilicourse/coursier?id=$id');
+    var urldel =
+        Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/coursier?id=$id');
     try {
       _getStatus = Statut.deleting;
       notifyListeners();
