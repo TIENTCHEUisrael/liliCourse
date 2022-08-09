@@ -89,15 +89,11 @@ async def createFileUser(file: UploadFile = File(...)):
     file_url = generate_name[1:]
     return {"statut": "ok", "filename": file_url}
 
-@app.post('/lilicourse/paiementMtn')
-async def paiement(phone:str,somme:str):
-    return requesttopay(phone_number=phone,amount=somme)
-
 #put
-@app.put("/lilicourse/user/update_user",response_model=UserIn_Pydantic,responses={404: {"model": HTTPNotFoundError}})
+@app.put("/lilicourse/user/update_user",response_model=User_Pydantic,responses={404: {"model": HTTPNotFoundError}})
 async def update_user(id:int,user:UserIn_Pydantic):
     await User.filter(user_id=id).update(**user.dict(exclude_unset=True))
-    retour=await UserIn_Pydantic.from_queryset_single(User.get(user_id=id))
+    retour=await User_Pydantic.from_queryset_single(User.get(user_id=id))
     return retour
 
 #delete
@@ -165,10 +161,10 @@ async def create_Image_coursier(file: UploadFile = File(...)):
 
 
 #put
-@app.put("/lilicourse/coursier/update_coursier",response_model=CoursierIn_Pydantic,responses={404: {"model": HTTPNotFoundError}})
+@app.put("/lilicourse/coursier/update_coursier",response_model=Coursier_Pydantic,responses={404: {"model": HTTPNotFoundError}})
 async def update_coursier(id:int,cours:CoursierIn_Pydantic):
     await Coursier.filter(coursier_id=id).update(**cours.dict(exclude_unset=True))
-    retour=await CoursierIn_Pydantic.from_queryset_single(Coursier.get(coursier_id=id))
+    retour=await Coursier_Pydantic.from_queryset_single(Coursier.get(coursier_id=id))
     return retour
 
 #delete
@@ -222,12 +218,12 @@ async def getAdressRamById(id:int):
     return model
 
 @app.get("/lilicourse/adressRam/",response_model=List[Adresse_ram_Pydantic])
-async def getAdressRams():
+async def getAdressRam():
     model=await Adresse_ram_Pydantic.from_queryset(Adresse_ram.all)
     return model
 
 #post
-@app.post("/lilicourse/adressRam/add",response_model=Adresse_ramIn_Pydantic)
+@app.post("/lilicourse/adressRam/add",response_model=Adresse_ram_Pydantic)
 async def addAdressRam(adres:Adresse_ramIn_Pydantic):
     obj=await Adresse_ram.create(**adres.dict(exclude_unset=True))
     return obj
@@ -268,7 +264,7 @@ async def addAdressLiv(adres:Adresse_livIn_Pydantic):
 
 #put
 @app.put("/lilicourse/adressLiv/put",response_model=Adresse_liv_Pydantic)
-async def putAdressLiv(id:int,adres:Adresse_livIn_Pydantic):
+async def updateAdressLiv(id:int,adres:Adresse_livIn_Pydantic):
     await Adresse_liv.filter(adresse_ram_id=id).update(**adres.dict(exclude_unset=True))
     obj=await Adresse_liv_Pydantic.from_queryset_single(Adresse_liv.get(adresse_liv_id=id))
     return obj
@@ -314,3 +310,27 @@ async def delete_commande(id: int):
     if not delete_obj:
         raise HTTPException(status_code=404, detail="this restaurant, is not found")
     return Message(message="Succesfully deleted")
+
+#.................................PAIEMENT...................................
+#............................................................................
+
+
+@app.post('/lilicourse/paiementMtn')
+async def paiement(phone:str,somme:str):
+    return requesttopay(phone_number=phone,amount=somme)
+
+
+@app.post('/lilicourse/paiementOrange')
+async def paiement(phone:str,somme:str):
+    return {"Good":"OK"}
+
+
+@app.post('/lilicourse/paiementPaypal')
+async def paiement(phone:str,somme:str):
+    return {"Good":"OK"}
+
+
+@app.post("/lilicourse/paiement/add",response_model=Paiement_Pydantic)
+async def addpaiement(pm:PaiementIn_Pydantic):
+    obj=await Paiement.create(**pm.dict(exclude_unset=True))
+    return obj

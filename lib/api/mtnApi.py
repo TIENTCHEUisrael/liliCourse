@@ -1,5 +1,3 @@
-
-
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 import json
 import requests
@@ -24,7 +22,7 @@ def authenticate_user(content_type, x_reference_id, ocp_Apim_subscription_Key):
         print("stape1")
         print(str(response.status_code) + str(body))
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        print('Error')
 
 
 
@@ -50,7 +48,7 @@ def generate_api_key(x_reference_id, ocp_Apim_subscription_Key):
         print(str(response.status_code) + key)
         conn.close()
     except Exception as e:
-        print('dfsdf')
+        print('Error')
         #print("[Errno {0}] {1}".format(e.errno, e.strerror))
     return key
 
@@ -80,7 +78,7 @@ def get_token(ocp_Apim_subscription_Key, key):
         conn.close()
     except Exception as e:
         #print("[Errno {0}] {1}".format(e.errno, e.strerror))
-        print('fdg')
+        print('Error')
     return access_tok
 
 
@@ -132,6 +130,6 @@ def requesttopay(
         return str(body)
     except Exception as e:
         #print("[Errno {0}] {1}".format(e.errno, e.strerror))
-        print('vfdvfd')
+        print('Error')
 
 #print(requesttopay(content_type="application/json", x_reference_id="faab54ac-c3c5-4261-a049-8852c252f8e4", ocp_Apim_subscription_Key="85d786d5050949d390c8f1cf92e97c29", x_target_environment="sandbox",amount="1100",phone_number="655326045"))

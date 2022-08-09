@@ -176,5 +176,5 @@ class Paiement(Model):
     class Meta:
         table:str='Paiement'
 
-APaiement_Pydantic=pydantic_model_creator(Paiement,name="Paiement")
+Paiement_Pydantic=pydantic_model_creator(Paiement,name="Paiement")
 PaiementIn_Pydantic=pydantic_model_creator(Paiement,name="PaiementIn",exclude_readonly=True)

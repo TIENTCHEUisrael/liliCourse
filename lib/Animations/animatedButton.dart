@@ -29,7 +29,7 @@ class _animatedButtonState extends State<animatedButton> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              blue_button,
+              Colors.blueAccent,
               Colors.blue,
             ],
           ),
