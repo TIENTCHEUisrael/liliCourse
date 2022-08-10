@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
-import 'package:lilicourse/models/coursier/coursierPreference.dart';
+import 'package:lilicourse/models/coursier/sharedCoursier.dart';
 
 import '../models/coursier/coursier.dart';
 import '../models/user/user.dart';
@@ -70,7 +70,7 @@ class CoursProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> getCoursier(int id) async {
     var result;
     var urlget =
-        Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/coursier?id=$id');
+        Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/coursier?id=$id');
     try {
       _getStatus = Statut.getting;
       notifyListeners();
@@ -109,7 +109,7 @@ class CoursProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> deleteCoursier(int id) async {
     var result;
     var urldel =
-        Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/coursier?id=$id');
+        Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/coursier?id=$id');
     try {
       _getStatus = Statut.deleting;
       notifyListeners();

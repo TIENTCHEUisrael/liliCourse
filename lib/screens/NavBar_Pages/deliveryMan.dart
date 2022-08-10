@@ -90,7 +90,7 @@ class _DeliveryManState extends State<DeliveryMan> {
                         child: Image(
                           fit: BoxFit.cover,
                           image: NetworkImage(
-                              '${Api_services.imageUrlCoursier3}/${_coursiers![index].image}'),
+                              '${Api_services.imageUrlCoursier2}/${_coursiers![index].image}'),
                         ),
                       ),
                     ),

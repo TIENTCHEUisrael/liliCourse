@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lilicourse/Provider/ProviderAdress.dart';
 import 'package:lilicourse/Provider/ProviderAdressLiv.dart';
 import 'package:lilicourse/Provider/ProviderCommande.dart';
 import 'package:lilicourse/main.dart';
+import 'package:lilicourse/models/adresse/AdresseLivraison/AdresseLivraison.dart';
+import 'package:lilicourse/models/adresse/AdresseRamassage/AdresseRamassage.dart';
 import 'package:lilicourse/widgets/dataTable.dart';
 import 'package:lilicourse/widgets/locationInput.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import '../../Animations/DelayedAnimation.dart';
 import '../../Provider/ProviderAdressRam.dart';
+import '../../Provider/providerUser.dart';
 import '../../models/adresse/Adresse/Adresse.dart';
+import '../../models/commande/commande.dart';
+import '../../models/paiement/Paiement.dart';
 import '../../widgets/appBar.dart';
+import '../../widgets/bas.dart';
 import '../../widgets/containFirst.dart';
 import 'PageMap.dart';
+import 'PaiementPage.dart';
 
 class Page2 extends StatefulWidget {
   const Page2({Key? key}) : super(key: key);
@@ -22,6 +31,11 @@ class Page2 extends StatefulWidget {
 }
 
 class _Page2State extends State<Page2> {
+  bool isLoading = false;
+  AdressLiv? adressLiv;
+  AdressRam? adressRam;
+  Adresse? adresse;
+  Commande? commande;
   int currentStep = 0;
   Color? colorIn = Colors.transparent;
   Color? colorOut = Colors.transparent;
@@ -64,11 +78,148 @@ class _Page2State extends State<Page2> {
     super.initState();
   }
 
-  void addAdresse() {}
-  void addAdressLivraison() {}
-  void addAdressRamassage() {}
+  AdressLiv addAdressLivraison(BuildContext ctx) {
+    var adL = AdressLiv(
+        localisationLiv: localisationrecepteur!,
+        nameRecepteur: namerecepteur.text,
+        contactRecepteur: int.parse(contactrecepteur.text),
+        emailRecepteur: emailrecepteur.text,
+        civiliteRecepteur: civiliterecepteur!,
+        instruction: instructionrecepteur.text);
+    setState(
+      () {
+        adressLiv = adL;
+      },
+    );
+    AdLProvider proAdl = Provider.of<AdLProvider>(ctx);
+    proAdl.createAdresseLiv(adressLiv!).then((value) {
+      if (value['statut'] == true) {
+        setState(
+          () {
+            adressLiv = value['adressLiv'];
+          },
+        );
+        Provider.of<AdLProvider>(context, listen: false)
+            .setAdressLiv(adressLiv!);
+        print('succesfully.................................ii');
+        Fluttertoast.showToast(
+          msg: "Message:${value['message']}",
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: "Error:${value['message']}",
+        );
+      }
+    });
+    return adressLiv!;
+  }
 
-  void addCommande() {}
+  Commande addCommande(BuildContext ctx) {
+    AuthProvider auth = Provider.of<AuthProvider>(ctx);
+    AdProvider ad = Provider.of<AdProvider>(ctx);
+    var us = auth.user;
+    var adre = ad.adresse;
+    var com = Commande(client_id: us.id!, adresse_id: ad.id, statut: false);
+    setState(
+      () {
+        commande = com;
+        isLoading = false;
+      },
+    );
+    CommProvider proAdl = Provider.of<CommProvider>(ctx);
+    proAdl.createAdress(commande!).then((value) {
+      if (value['statut'] == true) {
+        setState(
+          () {
+            commande = value['commande'];
+          },
+        );
+        Provider.of<CommProvider>(context, listen: false)
+            .setCommande(commande!);
+        print('succesfully..........................................');
+        Fluttertoast.showToast(
+          msg: "Message:${value['message']}",
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: "Error:${value['message']}",
+        );
+      }
+    });
+    return commande!;
+  }
+
+  Adresse addAdress(BuildContext ctx) {
+    var ad = Adresse(
+        adresslivid: adressLiv!.adressLivId!,
+        adressramid: adressRam!.adressRamId!,
+        poids: poids.toString(),
+        taille: taille,
+        type: type!,
+        planification: planification!);
+    setState(
+      () {
+        adresse = ad;
+      },
+    );
+    AdProvider proAdl = Provider.of<AdProvider>(ctx);
+    proAdl.createAdress(adresse!).then((value) {
+      if (value['statut'] == true) {
+        setState(
+          () {
+            adresse = value['adresse'];
+          },
+        );
+        Provider.of<AdProvider>(context, listen: false).setAdress(adresse!);
+        print('succesfully.................................ii');
+        Fluttertoast.showToast(
+          msg: "Message:${value['message']}",
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: "Error:${value['message']}",
+        );
+      }
+    });
+    return adresse!;
+  }
+
+  AdressRam addAdressRamassage(BuildContext ctx) {
+    var adR = AdressRam(
+        localisationRam: localisationRamassage!,
+        nameEmetteur: nameemetteur.text,
+        contactEmetteur: int.parse(contactemetteur.text),
+        emailEmetteur: emailemetteur.text,
+        civiliteEmetteur: civiliteemetteur!,
+        instruction: instructionemetteur.text);
+    setState(
+      () {
+        adressRam = adR;
+      },
+    );
+    AdRProvider proAdl = Provider.of<AdRProvider>(ctx);
+    proAdl.createAdresseRam(adressRam!).then((value) {
+      if (value['statut'] == true) {
+        setState(
+          () {
+            adressRam = value['adresseRam'];
+          },
+        );
+        Provider.of<AdRProvider>(context, listen: false)
+            .setAdressRam(adressRam!);
+        print('succesfully.................................ii');
+        Fluttertoast.showToast(
+          msg: "Message:${value['message']}",
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: "Error:${value['message']}",
+        );
+      }
+    });
+    return adressRam!;
+  }
+
   void _selectPlaceR(double lat, double lng) {
     _pickedLocation = PlaceLocation(latitude: lat, longitude: lng);
     if (_pickedLocation!.latitude == null ||
@@ -77,13 +228,15 @@ class _Page2State extends State<Page2> {
       print('ok');
       var bob = Provider.of<AdRProvider>(context, listen: false)
           .getPlaceAdress(_pickedLocation!.latitude, _pickedLocation!.longitude)
-          .then((value) {
-        setState(() {
-          localisationE.text = value;
-          localisationRamassage = value;
-        });
-        print(localisationRamassage);
-      });
+          .then(
+        (value) {
+          setState(() {
+            localisationE.text = value;
+            localisationRamassage = value;
+          });
+          print(localisationRamassage);
+        },
+      );
     }
   }
 
@@ -96,30 +249,27 @@ class _Page2State extends State<Page2> {
       print('ok');
       var bob = Provider.of<AdRProvider>(context, listen: false)
           .getPlaceAdress(_pickedLocation!.latitude, _pickedLocation!.longitude)
-          .then((value) {
-        setState(() {
-          localisationR.text = value;
-          localisationrecepteur = value;
-        });
-        print(localisationrecepteur);
-      });
+          .then(
+        (value) {
+          setState(() {
+            localisationR.text = value;
+            localisationrecepteur = value;
+          });
+          print(localisationrecepteur);
+        },
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    CommProvider com = Provider.of<CommProvider>(context);
-    AdProvider ad = Provider.of<AdProvider>(context);
-    AdRProvider adR = Provider.of<AdRProvider>(context);
-    AdLProvider adL = Provider.of<AdLProvider>(context);
-
     return Scaffold(
       appBar: buildAppBar(
         context,
         Text('Delivery Page', style: GoogleFonts.poppins(color: Colors.black)),
       ),
       body: isCompleted
-          ? buildCompleted()
+          ? buildCompleted(context)
           : Theme(
               data: Theme.of(context).copyWith(
                 colorScheme: const ColorScheme.light(primary: Colors.blue),
@@ -660,10 +810,22 @@ class _Page2State extends State<Page2> {
                                 ),
                               ],
                             ),
-                            Text(
-                              "Localisation",
-                              style: GoogleFonts.poppins(fontSize: 14),
-                              //textAlign: TextAlign.start,
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const Icon(Icons.maps_home_work,
+                                    size: 25, color: blue_button),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text("Localisation",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 15, color: Colors.blue)
+                                    //textAlign: TextAlign.start,
+                                    ),
+                              ],
                             ),
                           ],
                         ),
@@ -672,9 +834,22 @@ class _Page2State extends State<Page2> {
                         controller: localisationE,
                         onselectPlace: _selectPlaceR,
                       ),
-                      Text(
-                        'Instruction',
-                        style: GoogleFonts.poppins(),
+                      Row(
+                        children: [
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          const Icon(Icons.comment,
+                              size: 25, color: blue_button),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text("Instruction",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 15, color: Colors.blue)
+                              //textAlign: TextAlign.start,
+                              ),
+                        ],
                       ),
                       Container(
                         padding: const EdgeInsets.only(
@@ -707,18 +882,30 @@ class _Page2State extends State<Page2> {
             child: Column(
               children: [
                 containFirst(
-                    imagePath: 'assets/images/delivery/svg/delivery.svg',
-                    text: 'Demander une livraison'),
+                    imagePath: 'assets/images/delivery/svg/deposit.svg',
+                    text: 'Deposit Details'),
                 Card(
                   elevation: 8,
                   child: Column(
                     children: [
                       Container(
                         padding: const EdgeInsets.all(15),
-                        child: Text(
-                          'Deposit Details',
-                          style: GoogleFonts.poppins(fontSize: 15),
-                          textAlign: TextAlign.center,
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            const Icon(Icons.info,
+                                size: 25, color: blue_button),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Instruction receiver",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 15, color: Colors.blue),
+                            ),
+                          ],
                         ),
                       ),
                       Container(
@@ -737,7 +924,7 @@ class _Page2State extends State<Page2> {
                                   ),
                                 ),
                                 hintText: "Name of receiver",
-                                border: InputBorder.none,
+                                //border: InputBorder.none,
                                 contentPadding:
                                     const EdgeInsets.only(left: 8.0, top: 16.0),
                               ),
@@ -756,7 +943,7 @@ class _Page2State extends State<Page2> {
                                   ),
                                 ),
                                 hintText: "Email of receiver",
-                                border: InputBorder.none,
+                                //border: InputBorder.none,
                                 contentPadding:
                                     const EdgeInsets.only(left: 8.0, top: 16.0),
                               ),
@@ -775,7 +962,7 @@ class _Page2State extends State<Page2> {
                                   ),
                                 ),
                                 hintText: "Contact of receiver",
-                                border: InputBorder.none,
+                                //border: InputBorder.none,
                                 contentPadding:
                                     const EdgeInsets.only(left: 8.0, top: 16.0),
                               ),
@@ -785,10 +972,22 @@ class _Page2State extends State<Page2> {
                             const SizedBox(
                               height: 10,
                             ),
-                            Text(
-                              'Civility',
-                              style: GoogleFonts.poppins(fontSize: 14),
-                              //textAlign: TextAlign.start,
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 30,
+                                ),
+                                const Icon(Icons.note,
+                                    size: 25, color: blue_button),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text("Civility",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 15, color: Colors.blue)
+                                    //textAlign: TextAlign.start,
+                                    ),
+                              ],
                             ),
                             Row(
                               children: [
@@ -831,10 +1030,22 @@ class _Page2State extends State<Page2> {
                                 ),
                               ],
                             ),
-                            Text(
-                              "Localisation of receiver",
-                              style: GoogleFonts.poppins(fontSize: 14),
-                              //textAlign: TextAlign.start,
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 30,
+                                ),
+                                const Icon(Icons.info,
+                                    size: 25, color: blue_button),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text("Localisation of receiver",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 15, color: Colors.blue)
+                                    //textAlign: TextAlign.start,
+                                    ),
+                              ],
                             ),
                           ],
                         ),
@@ -843,9 +1054,22 @@ class _Page2State extends State<Page2> {
                         controller: localisationR,
                         onselectPlace: _selectPlaceL,
                       ),
-                      Text(
-                        'Instruction of receiver',
-                        style: GoogleFonts.poppins(),
+                      Row(
+                        children: [
+                          const SizedBox(
+                            width: 40,
+                          ),
+                          const Icon(Icons.comment,
+                              size: 25, color: blue_button),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text("Instruction",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 15, color: Colors.blue)
+                              //textAlign: TextAlign.start,
+                              ),
+                        ],
                       ),
                       Container(
                         padding: const EdgeInsets.only(
@@ -878,7 +1102,7 @@ class _Page2State extends State<Page2> {
             child: Column(
               children: [
                 containFirst(
-                    imagePath: 'assets/images/delivery/svg/delivery.svg',
+                    imagePath: 'assets/images/delivery/svg/w.svg',
                     text: 'Demander une livraison'),
                 Card(
                   elevation: 8,
@@ -1019,7 +1243,7 @@ class _Page2State extends State<Page2> {
             child: Column(
               children: [
                 containFirst(
-                    imagePath: 'assets/images/delivery/svg/delivery.svg',
+                    imagePath: 'assets/images/delivery/svg/information.svg',
                     text: 'Demander une livraison'),
                 Card(
                   elevation: 8,
@@ -1041,7 +1265,8 @@ class _Page2State extends State<Page2> {
                       Center(
                         child: Text(
                           "Delivery information",
-                          style: GoogleFonts.poppins(fontSize: 15),
+                          style: GoogleFonts.poppins(
+                              fontSize: 15, color: Colors.blue),
                         ),
                       ),
                       Container(
@@ -1089,7 +1314,8 @@ class _Page2State extends State<Page2> {
                       Center(
                         child: Text(
                           "Pickup information: ",
-                          style: GoogleFonts.poppins(fontSize: 15),
+                          style: GoogleFonts.poppins(
+                              fontSize: 15, color: Colors.blue),
                         ),
                       ),
                       DataTableWidget(
@@ -1109,7 +1335,8 @@ class _Page2State extends State<Page2> {
                       Center(
                         child: Text(
                           "Deposit information",
-                          style: GoogleFonts.poppins(fontSize: 15),
+                          style: GoogleFonts.poppins(
+                              fontSize: 15, color: Colors.blue),
                         ),
                       ),
                       DataTableWidget(
@@ -1140,7 +1367,120 @@ class _Page2State extends State<Page2> {
             ),
           ),
         ),
-        Step(
+      ];
+
+  Widget buildCompleted(BuildContext ctx) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Column(
+            children: [
+              Center(
+                  child: Lottie.asset(
+                      'assets/images/delivery/lotties/regis.json',
+                      fit: BoxFit.cover)),
+            ],
+          ),
+          Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(15),
+                child: Text(
+                  'Do you want to save your request?',
+                  style: GoogleFonts.poppins(fontSize: 17),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(5),
+                      primary: blue_button,
+                      textStyle: GoogleFonts.poppins(fontSize: 18),
+                    ),
+                    child: isLoading
+                        ? const CircularProgressIndicator()
+                        : Text(
+                            'Confirm',
+                            style: GoogleFonts.poppins(),
+                          ),
+                    onPressed: () {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      var one = addAdressRamassage(ctx);
+                      var two = addAdressLivraison(ctx);
+                      var three = addAdress(ctx);
+                      var fourth = addCommande(ctx);
+
+                      if (one == null ||
+                          two == null ||
+                          three == null ||
+                          fourth == null) {
+                        Fluttertoast.showToast(
+                          msg: "Value is null",
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
+                              return PaiementPage(
+                                ad: three,
+                                adL: two,
+                                adR: one,
+                                com: fourth,
+                              );
+                            },
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              //Premiere animation de bas en haut
+                              var begin = const Offset(1.0, 0.0);
+                              var end = Offset.zero;
+                              var tween = Tween(begin: begin, end: end);
+                              return SlideTransition(
+                                position: animation.drive(tween),
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: GoogleFonts.poppins(fontSize: 18),
+                    ),
+                    child: const Text(
+                      'Reset',
+                      style: TextStyle(color: red_button),
+                    ),
+                    onPressed: () => setState(() {
+                      isCompleted = false;
+                      currentStep = 0;
+                      /*email.clear();
+                      numero.clear();*/
+                    }),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 150),
+          bas(),
+        ],
+      ),
+    );
+  }
+}
+/**Step(
           state: currentStep > 6 ? StepState.complete : StepState.indexed,
           isActive: currentStep >= 6,
           title: const Text(''),
@@ -1149,7 +1489,7 @@ class _Page2State extends State<Page2> {
             child: Column(
               children: [
                 containFirst(
-                    imagePath: 'assets/images/delivery/svg/delivery.svg',
+                    imagePath: 'assets/images/delivery/svg/paiement.svg',
                     text: 'Demander une livraison'),
                 Card(
                   elevation: 5,
@@ -1273,86 +1613,4 @@ class _Page2State extends State<Page2> {
               ],
             ),
           ),
-        ),
-      ];
-
-  Widget buildCompleted() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          containFirst(
-              imagePath: 'assets/images/delivery/svg/delivery.svg',
-              text: 'Demander une livraison'),
-          Card(
-            elevation: 5,
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(15),
-                  child: Text(
-                    'Recapitulatif',
-                    style: GoogleFonts.poppins(fontSize: 15),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Row(
-                  children: [],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: blue_button,
-                        textStyle: GoogleFonts.poppins(fontSize: 18),
-                      ),
-                      child: Text(
-                        'Confirm',
-                        style: GoogleFonts.poppins(),
-                      ),
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) {
-                              return const TimeWaiting();
-                            },
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
-                              //Premiere animation de bas en haut
-                              var begin = const Offset(1.0, 0.0);
-                              var end = Offset.zero;
-                              var tween = Tween(begin: begin, end: end);
-                              return SlideTransition(
-                                position: animation.drive(tween),
-                                child: child,
-                              );
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.black,
-                        textStyle: GoogleFonts.poppins(fontSize: 18),
-                      ),
-                      child: const Text('Reset'),
-                      onPressed: () => setState(() {
-                        isCompleted = false;
-                        currentStep = 0;
-                        /*email.clear();
-                        numero.clear();*/
-                      }),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+        ), */

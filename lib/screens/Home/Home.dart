@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                                         image: Image(
                                           fit: BoxFit.cover,
                                           image: NetworkImage(
-                                              '${Api_services.imageUrlCoursier3}/${_coursiers![index].image}'),
+                                              '${Api_services.imageUrlCoursier2}/${_coursiers![index].image}'),
                                         ),
                                         name: _coursiers![index].first_name,
                                         contact: _coursiers![index]
@@ -348,7 +348,7 @@ Widget ShowDialogueFunc(
                     child: ClipOval(
                       child: Image(
                         image: NetworkImage(
-                            '${Api_services.imageUrlCoursier3}/$image'),
+                            '${Api_services.imageUrlCoursier2}/$image'),
                         fit: BoxFit.cover,
                       ),
                     ),

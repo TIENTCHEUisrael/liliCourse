@@ -72,7 +72,7 @@ class AdLProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> createAdresseLiv(AdressLiv adressLi) async {
     var result;
     var ulrcreate =
-        Uri.parse('${Api_services.baseUrl3}/lilicourse/adressLiv/add');
+        Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/adressLiv/add');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _registerStatus = Statut.registing;
@@ -94,7 +94,7 @@ class AdLProvider extends ChangeNotifier {
         result = {
           "statut": true,
           'message': "Adress Livraison Added",
-          "AdressLiv": _adressLiv!
+          "adressLiv": _adressLiv!
         };
       } else {
         result = {"statut": false, 'message': "Adress Livraison error"};
@@ -108,7 +108,7 @@ class AdLProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> updateAdressLiv(AdressLiv adressLi) async {
     var result;
     var ulrput = Uri.parse(
-        '${Api_services.baseUrl3}/lilicourse/adressLiv/put?id=${adressLi.adressLivId}');
+        '${Api_services.httpbaseUrl2}/lilicourse/adressLiv/put?id=${adressLi.adressLivId}');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _updateStatus = Statut.updating;

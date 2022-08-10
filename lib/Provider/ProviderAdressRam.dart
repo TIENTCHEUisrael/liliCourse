@@ -72,7 +72,7 @@ class AdRProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> createAdresseRam(AdressRam adressRa) async {
     var result;
     var ulrcreate =
-        Uri.parse('${Api_services.baseUrl3}/lilicourse/adressRam/add');
+        Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/adressRam/add');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _registerStatus = Statut.registing;
@@ -88,13 +88,13 @@ class AdRProvider extends ChangeNotifier {
         var data = jsonDecode(response.body);
         print('$data ..............................');
         _adressRam = AdressRam.fromJson(data);
-        _id = data['adresse_liv_id'];
+        _id = data['adresse_ram_id'];
         _registerStatus = Statut.registed;
         notifyListeners();
         result = {
           "statut": true,
           'message': "Adress Ramassage Added",
-          "AdressLiv": _adressRam!
+          "adressRam": _adressRam!
         };
       } else {
         result = {"statut": false, 'message': "Adress Livraison error"};
@@ -108,7 +108,7 @@ class AdRProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> updateAdressRam(AdressRam adressRa) async {
     var result;
     var ulrput = Uri.parse(
-        '${Api_services.baseUrl3}/lilicourse/adressLiv/put?id=${adressRa.adressRamId}');
+        '${Api_services.httpbaseUrl2}/lilicourse/adressLiv/put?id=${adressRa.adressRamId}');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _updateStatus = Statut.updating;
@@ -124,14 +124,14 @@ class AdRProvider extends ChangeNotifier {
         var data = jsonDecode(responseput.body);
         print('$data .....................................;');
         _updateStatus = Statut.updated;
-        _id = data['adresse_liv_id'];
+        _id = data['adresse_ram_id'];
         _adressRam = AdressRam.fromJson(data);
         notifyListeners();
 
         result = {
           "statut": true,
           "message": "Adress updated",
-          "adressLiv": _adressRam!
+          "adressRam": _adressRam!
         };
       } else {
         _updateStatus = Statut.notupdated;

@@ -114,7 +114,7 @@ class AuthProvider extends ChangeNotifier {
         //UserPreferences().saveUser(_user!);
         notifyListeners();
         var urlToken = Uri.parse(
-            '${Api_services.httpbaseUrl3}/lilicourse/user/generate?mail=${_user!.email}');
+            '${Api_services.httpbaseUrl2}/lilicourse/user/generate?mail=${_user!.email}');
         final responseToken = await http.post(urlToken);
         if (responseToken.statusCode == 200) {
           var data1 = jsonDecode(responseToken.body);
@@ -150,7 +150,7 @@ class AuthProvider extends ChangeNotifier {
   Future<Map<String, dynamic>?> createUser(User us) async {
     var result;
     var urlCreate =
-        Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/user/add_user');
+        Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/user/add_user');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _logStatus = Statut.registing;
@@ -194,7 +194,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<Map<String, dynamic>?> deleteUser(User us) async {
-    var urlDelete = Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/user/');
+    var urlDelete = Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/user/');
     try {} catch (e) {}
   }
 
@@ -225,7 +225,7 @@ class AuthProvider extends ChangeNotifier {
     var result;
     print('.............................');
     final urlId = Uri.parse(
-        '${Api_services.httpbaseUrl3}/lilicourse/user/getId?mail=$email');
+        '${Api_services.httpbaseUrl2}/lilicourse/user/getId?mail=$email');
     final headers = {"Content-type": "application/json"};
     try {
       _logStatus = Statut.updating;
@@ -236,7 +236,7 @@ class AuthProvider extends ChangeNotifier {
         _id = data['user_id'];
         notifyListeners();
         final urlupdate = Uri.parse(
-            '${Api_services.httpbaseUrl3}/lilicourse/user/update_user?id=$_id');
+            '${Api_services.httpbaseUrl2}/lilicourse/user/update_user?id=$_id');
         final respon = await http.put(
           urlupdate,
           headers: headers,

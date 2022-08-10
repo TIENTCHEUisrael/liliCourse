@@ -43,7 +43,7 @@ class PaiementProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> createPaiement(Paiement paie) async {
     var result;
     var ulrcreate =
-        Uri.parse('${Api_services.baseUrl3}/lilicourse/paiement/add');
+        Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/paiement/add');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _registerStatus = Statut.registing;
@@ -78,7 +78,7 @@ class PaiementProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> PaiementMtn(Paiement paie) async {
     var result;
     var urlpaie = Uri.parse(
-        '${Api_services.httpbaseUrl3}/lilicourse/paiementMtn?phone=${_paiement!.phone}&&somme=${_paiement!.montant}');
+        '${Api_services.httpbaseUrl2}/lilicourse/paiementMtn?phone=${_paiement!.phone}&&somme=${_paiement!.montant}');
     try {
       _registerStatus = Statut.registing;
       notifyListeners();
@@ -100,7 +100,7 @@ class PaiementProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> PaiementPaypal(Paiement paie) async {
     var result;
     var urlpaie = Uri.parse(
-        '${Api_services.httpbaseUrl3}/lilicourse/paiementPaypal?phone=${_paiement!.phone}&&somme=${_paiement!.montant}');
+        '${Api_services.httpbaseUrl2}/lilicourse/paiementPaypal?phone=${_paiement!.phone}&&somme=${_paiement!.montant}');
     try {
       _registerStatus = Statut.registing;
       notifyListeners();
@@ -126,7 +126,7 @@ class PaiementProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> PaiementOrange(Paiement paie) async {
     var result;
     var urlpaie = Uri.parse(
-        '${Api_services.httpbaseUrl3}/lilicourse/paiementOrange?phone=${_paiement!.phone}&&somme=${_paiement!.montant}');
+        '${Api_services.httpbaseUrl2}/lilicourse/paiementOrange?phone=${_paiement!.phone}&&somme=${_paiement!.montant}');
     try {
       _registerStatus = Statut.registing;
       notifyListeners();

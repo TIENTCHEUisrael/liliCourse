@@ -40,7 +40,7 @@ class CommProvider extends ChangeNotifier {
     return _name!;
   }
 
-  void setAdressLiv(Commande co) {
+  void setCommande(Commande co) {
     co = _commande!;
     notifyListeners();
   }
@@ -62,7 +62,8 @@ class CommProvider extends ChangeNotifier {
 
   Future<Map<String, dynamic>> createAdress(Commande com) async {
     var result;
-    var urlcre = Uri.parse('${Api_services.baseUrl3}/lilicourse/adress/add');
+    var urlcre =
+        Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/adress/add');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _registerStatus = Statut.registing;
@@ -85,8 +86,8 @@ class CommProvider extends ChangeNotifier {
 
         result = {
           "statut": true,
-          "message": "Adress added",
-          "adress": _commande!
+          "message": "Commande added",
+          "commande": _commande!
         };
       } else {
         _registerStatus = Statut.notregisted;
@@ -102,7 +103,7 @@ class CommProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> updateAdress(Commande com) async {
     var result;
     var urlput = Uri.parse(
-        '${Api_services.baseUrl3}/lilicourse/adress/put?id=${com.commandeId}');
+        '${Api_services.httpbaseUrl2}/lilicourse/adress/put?id=${com.commandeId}');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _registerStatus = Statut.updating;
@@ -125,8 +126,8 @@ class CommProvider extends ChangeNotifier {
 
         result = {
           "statut": true,
-          "message": "Adress updated",
-          "adress": _commande!
+          "message": "Commande updated",
+          "commande": _commande!
         };
       } else {
         _registerStatus = Statut.notupdated;

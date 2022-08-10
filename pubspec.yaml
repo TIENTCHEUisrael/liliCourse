@@ -103,6 +103,8 @@ flutter:
     - assets/images/homes/recuperer.json
     - assets/images/homes/request.json
     - assets/images/homes/transport.json
+    - assets/images/delivery/lotties/register.json
+    - assets/images/delivery/lotties/regis.json
     - assets/images/splash1/23741-home-delivery-man.json
     - assets/images/okk.json
     - assets/images/splash1/delivery2.json

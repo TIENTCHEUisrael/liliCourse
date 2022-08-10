@@ -39,7 +39,7 @@ class AdProvider extends ChangeNotifier {
     return _name!;
   }
 
-  void setAdressLiv(Adresse ad) {
+  void setAdress(Adresse ad) {
     ad = _adresse!;
     notifyListeners();
   }
@@ -61,7 +61,8 @@ class AdProvider extends ChangeNotifier {
 
   Future<Map<String, dynamic>> createAdress(Adresse ad) async {
     var result;
-    var urlcre = Uri.parse('${Api_services.baseUrl3}/lilicourse/adress/add');
+    var urlcre =
+        Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/adress/add');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _registerStatus = Statut.registing;
@@ -85,7 +86,7 @@ class AdProvider extends ChangeNotifier {
         result = {
           "statut": true,
           "message": "Adress added",
-          "adress": _adresse!
+          "adresse": _adresse!
         };
       } else {
         _registerStatus = Statut.notregisted;
@@ -101,7 +102,7 @@ class AdProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> updateAdress(Adresse ad) async {
     var result;
     var urlput = Uri.parse(
-        '${Api_services.baseUrl3}/lilicourse/adress/put?id=${ad.adressId}');
+        '${Api_services.httpbaseUrl2}/lilicourse/adress/put?id=${ad.adressId}');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _registerStatus = Statut.updating;
@@ -125,7 +126,7 @@ class AdProvider extends ChangeNotifier {
         result = {
           "statut": true,
           "message": "Adress updated",
-          "adress": _adresse!
+          "adresse": _adresse!
         };
       } else {
         _registerStatus = Statut.notupdated;
