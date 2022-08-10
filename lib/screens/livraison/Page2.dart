@@ -85,7 +85,8 @@ class _Page2State extends State<Page2> {
         contactRecepteur: int.parse(contactrecepteur.text),
         emailRecepteur: emailrecepteur.text,
         civiliteRecepteur: civiliterecepteur!,
-        instruction: instructionrecepteur.text);
+        instruction: instructionrecepteur.text,
+        updatedAt: DateTime.now().toString());
     setState(
       () {
         adressLiv = adL;
@@ -119,7 +120,11 @@ class _Page2State extends State<Page2> {
     AdProvider ad = Provider.of<AdProvider>(ctx);
     var us = auth.user;
     var adre = ad.adresse;
-    var com = Commande(client_id: us.id!, adresse_id: ad.id, statut: false);
+    var com = Commande(
+        client_id: us.id!,
+        adresse_id: ad.id,
+        statut: false,
+        updated_at: DateTime.now().toString());
     setState(
       () {
         commande = com;
@@ -156,7 +161,8 @@ class _Page2State extends State<Page2> {
         poids: poids.toString(),
         taille: taille,
         type: type!,
-        planification: planification!);
+        planification: planification!,
+        updatedAt: DateTime.now().toString());
     setState(
       () {
         adresse = ad;
@@ -191,7 +197,8 @@ class _Page2State extends State<Page2> {
         contactEmetteur: int.parse(contactemetteur.text),
         emailEmetteur: emailemetteur.text,
         civiliteEmetteur: civiliteemetteur!,
-        instruction: instructionemetteur.text);
+        instruction: instructionemetteur.text,
+        updatedAt: DateTime.now().toString());
     setState(
       () {
         adressRam = adR;
