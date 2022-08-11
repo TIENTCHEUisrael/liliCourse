@@ -51,13 +51,14 @@ dependencies:
   sqflite: ^2.0.3
   location: ^4.2.0
   google_maps_flutter: ^2.1.8
-  #address_search_field: ^5.0.1
+  flutter_polyline_points: ^1.0.0
   fluttertoast: ^8.0.9
   shared_preferences: ^2.0.15
   avatar_glow: ^2.0.2
   app_settings: ^4.1.1
-  #carousel_pro: ^1.0.0
   carousel_slider: ^4.1.1
+  #carousel_pro: ^1.0.0
+  #address_search_field: ^5.0.1
   #google_places_flutter: ^2.0.5
   #uuid: ^3.0.6
 
@@ -97,6 +98,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/tim.svg
     - assets/images/homes/accepter.json
     - assets/images/homes/Attente.json
     - assets/images/homes/attenteClient.json

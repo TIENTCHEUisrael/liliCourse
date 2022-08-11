@@ -27,7 +27,6 @@ import '../../models/user/user.dart';
 import '../../widgets/appBar.dart';
 import '../../widgets/bas.dart';
 import '../../widgets/containFirst.dart';
-import 'PageMap.dart';
 import 'PaiementPage.dart';
 
 class Page2 extends StatefulWidget {

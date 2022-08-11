@@ -24,9 +24,11 @@ class _LocationInputState extends State<LocationInput> {
         latitude: lat!, longitude: lng!);
     print(lat);
     print(lng);
-    setState(() {
-      _previewimageUrl = staticMapImageUrl;
-    });
+    setState(
+      () {
+        _previewimageUrl = staticMapImageUrl;
+      },
+    );
   }
 
   Future<void> _getCurrentUserLocation() async {

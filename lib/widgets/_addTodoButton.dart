@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../Animations/custum.dart';
 import '../main.dart';
+import '../screens/livraison/PageMap.dart';
 
 /// Tag-value used for the add todo popup button.
 const String heroAddTodo = 'add-todo-hero';
@@ -117,6 +118,14 @@ class _AddTodoPopupCardState extends State<AddTodoPopupCard> {
                                   () {
                                     _isLoading = false;
                                   },
+                                );
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (ctx) {
+                                      return const AttentePage();
+                                    },
+                                  ),
                                 );
                               } else {
                                 Fluttertoast.showToast(
@@ -254,6 +263,14 @@ class _PaiementOrangeState extends State<PaiementOrange> {
                                     _isLoading = false;
                                   },
                                 );
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (ctx) {
+                                      return const AttentePage();
+                                    },
+                                  ),
+                                );
                               } else {
                                 Fluttertoast.showToast(
                                   msg: "Error:${value['message']}",
@@ -388,6 +405,14 @@ class _PaiementPayPalState extends State<PaiementPayPal> {
                                   () {
                                     _isLoading = false;
                                   },
+                                );
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (ctx) {
+                                      return const AttentePage();
+                                    },
+                                  ),
                                 );
                               } else {
                                 Fluttertoast.showToast(

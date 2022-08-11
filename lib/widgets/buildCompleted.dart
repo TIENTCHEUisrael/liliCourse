@@ -63,7 +63,7 @@ class _buildCompletedState extends State<buildCompleted> {
                             PageRouteBuilder(
                               pageBuilder:
                                   (context, animation, secondaryAnimation) {
-                                return const TimeWaiting();
+                                return const AttentePage();
                               },
                               transitionsBuilder: (context, animation,
                                   secondaryAnimation, child) {
