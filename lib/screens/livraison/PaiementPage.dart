@@ -5,10 +5,13 @@ import 'package:lilicourse/models/adresse/Adresse/Adresse.dart';
 import 'package:lilicourse/models/adresse/AdresseLivraison/AdresseLivraison.dart';
 import 'package:lilicourse/models/adresse/AdresseRamassage/AdresseRamassage.dart';
 import 'package:lilicourse/models/commande/commande.dart';
+import 'package:lilicourse/widgets/pageRoute.dart';
 import 'package:lilicourse/widgets/appBar.dart';
 
+import '../../Animations/custum.dart';
 import '../../main.dart';
 import '../../models/user/user.dart';
+import '../../widgets/_addTodoButton.dart';
 import '../../widgets/bas.dart';
 import '../../widgets/containFirst.dart';
 
@@ -34,6 +37,7 @@ class _PaiementPageState extends State<PaiementPage> {
   double _price = 1500.000;
   void calculatePrice() {
     var price;
+
     setState(
       () {
         _price = price;
@@ -135,46 +139,37 @@ class _PaiementPageState extends State<PaiementPage> {
               Container(
                 child: Column(children: [
                   InkWell(
-                    child: Card(
-                      elevation: 1,
-                      child: ListTile(
-                        leading: Image.asset(
-                          height: 50,
-                          width: 50,
-                          'assets/images/image3.jpg',
-                          fit: BoxFit.cover,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        HeroDialogRoute(
+                          builder: (context) {
+                            return AddTodoPopupCard();
+                          },
                         ),
-                        title: Text(
-                          'Mobile Money',
-                          style: GoogleFonts.poppins(color: blue_button),
-                        ),
-                        subtitle: Text(
-                          'Make your payment with Mtn money',
-                          style: TextStyle(color: Colors.grey[400]),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  InkWell(
-                    child: Card(
-                      elevation: 1,
-                      child: ListTile(
-                        leading: Image.asset(
-                          height: 50,
-                          width: 50,
-                          'assets/images/image2.png',
-                          fit: BoxFit.cover,
-                        ),
-                        title: Text(
-                          'Orange Money',
-                          style: GoogleFonts.poppins(color: blue_button),
-                        ),
-                        subtitle: Text(
-                          'Make your payment with Orange money',
-                          style: TextStyle(color: Colors.grey[400]),
+                      );
+                    },
+                    child: Hero(
+                      tag: heroAddTodo,
+                      createRectTween: (begin, end) {
+                        return CustomRectTween(begin: begin!, end: end!);
+                      },
+                      child: Card(
+                        elevation: 1,
+                        child: ListTile(
+                          leading: Image.asset(
+                            height: 50,
+                            width: 50,
+                            'assets/images/image3.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                          title: Text(
+                            'Mobile Money',
+                            style: GoogleFonts.poppins(color: blue_button),
+                          ),
+                          subtitle: Text(
+                            'Make your payment with Mtn money',
+                            style: TextStyle(color: Colors.grey[400]),
+                          ),
                         ),
                       ),
                     ),
@@ -183,22 +178,76 @@ class _PaiementPageState extends State<PaiementPage> {
                     height: 10,
                   ),
                   InkWell(
-                    child: Card(
-                      elevation: 1,
-                      child: ListTile(
-                        leading: Image.asset(
-                          height: 50,
-                          width: 50,
-                          'assets/images/image1.png',
-                          fit: BoxFit.cover,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        HeroDialogRoute(
+                          builder: (context) {
+                            return PaiementOrange();
+                          },
                         ),
-                        title: Text(
-                          'Paypal',
-                          style: GoogleFonts.poppins(color: blue_button),
+                      );
+                    },
+                    child: Hero(
+                      tag: otherHero,
+                      createRectTween: (begin, end) {
+                        return CustomRectTween(begin: begin!, end: end!);
+                      },
+                      child: Card(
+                        elevation: 1,
+                        child: ListTile(
+                          leading: Image.asset(
+                            height: 50,
+                            width: 50,
+                            'assets/images/image2.png',
+                            fit: BoxFit.cover,
+                          ),
+                          title: Text(
+                            'Orange Money',
+                            style: GoogleFonts.poppins(color: blue_button),
+                          ),
+                          subtitle: Text(
+                            'Make your payment with Orange money',
+                            style: TextStyle(color: Colors.grey[400]),
+                          ),
                         ),
-                        subtitle: Text(
-                          'Make your payment with paypal',
-                          style: TextStyle(color: Colors.grey[400]),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        HeroDialogRoute(
+                          builder: (context) {
+                            return PaiementPayPal();
+                          },
+                        ),
+                      );
+                    },
+                    child: Hero(
+                      tag: otherHero2,
+                      createRectTween: (begin, end) {
+                        return CustomRectTween(begin: begin!, end: end!);
+                      },
+                      child: Card(
+                        elevation: 1,
+                        child: ListTile(
+                          leading: Image.asset(
+                            height: 50,
+                            width: 50,
+                            'assets/images/image1.png',
+                            fit: BoxFit.cover,
+                          ),
+                          title: Text(
+                            'Paypal',
+                            style: GoogleFonts.poppins(color: blue_button),
+                          ),
+                          subtitle: Text(
+                            'Make your payment with paypal',
+                            style: TextStyle(color: Colors.grey[400]),
+                          ),
                         ),
                       ),
                     ),

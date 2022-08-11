@@ -66,7 +66,7 @@ class PaiementProvider extends ChangeNotifier {
         result = {
           "statut": true,
           'message': "Paiement Added",
-          "AdressLiv": _paiement!
+          "paiement": _paiement!
         };
       } else {
         result = {"statut": false, 'message': "Paiement error"};
@@ -89,7 +89,11 @@ class PaiementProvider extends ChangeNotifier {
         var data = jsonDecode(response.body);
         print('$data ..............................');
         notifyListeners();
-        result = {"statut": true, 'message': "Paiement confirm", "data": data};
+        result = {
+          "statut": true,
+          'message': "Paiement Mtn confirm",
+          "data": data
+        };
       } else {
         result = {"statut": false, 'message': "Paiement error"};
       }
