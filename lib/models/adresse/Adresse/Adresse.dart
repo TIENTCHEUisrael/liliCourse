@@ -28,14 +28,14 @@ class Adresse {
 
   factory Adresse.fromJson(dynamic json) {
     return Adresse(
-      adressId: json['adresse_id'],
-      adresslivid: json['adresse_liv_id'],
-      adressramid: json['adresse_ram_id'],
-      poids: json['poids'],
-      taille: json['taille'],
-      type: json['type'],
-      planification: json['planification'],
-      updatedAt: json['updated_at'],
+      adressId: json['adresse_id'] as int,
+      adresslivid: json['adresse_liv_id'] as int,
+      adressramid: json['adresse_ram_id'] as int,
+      poids: json['poids'] as String,
+      taille: json['taille'] as String,
+      type: json['type'] as String,
+      planification: json['planification'] as String,
+      updatedAt: json['updated_at'] as String,
     );
   }
 

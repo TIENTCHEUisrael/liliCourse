@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:lilicourse/models/adresse/Adresse/Adresse.dart';
 import 'package:lilicourse/services/service.dart';
 
+import '../models/adresse/Adresse/sharedAdress.dart';
+
 enum Statut {
   registing,
   registed,
@@ -78,8 +80,8 @@ class AdProvider extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print('$data.......................');
         _registerStatus = Statut.registed;
+        AdressPreferences.saveAdressToSharePreferences(data);
         _adresse = Adresse.fromJson(data);
         notifyListeners();
 
@@ -120,6 +122,7 @@ class AdProvider extends ChangeNotifier {
         var data = jsonDecode(response.body);
         print('$data.......................');
         _registerStatus = Statut.updated;
+        AdressPreferences.saveAdressToSharePreferences(data);
         _adresse = Adresse.fromJson(data);
         notifyListeners();
 

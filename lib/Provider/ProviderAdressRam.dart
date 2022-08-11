@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:lilicourse/models/adresse/AdresseRamassage/AdresseRamassage.dart';
+import 'package:lilicourse/models/adresse/AdresseRamassage/sharedAdressR.dart';
 
 import '../services/location_service.dart';
 import '../services/service.dart';
@@ -86,10 +87,10 @@ class AdRProvider extends ChangeNotifier {
       );
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print('$data ..............................');
         _adressRam = AdressRam.fromJson(data);
         _id = data['adresse_ram_id'];
         _registerStatus = Statut.registed;
+        AdressRamassagePreferences.saveAdressRamassageToSharePreferences(data);
         notifyListeners();
         result = {
           "statut": true,
@@ -126,6 +127,7 @@ class AdRProvider extends ChangeNotifier {
         _updateStatus = Statut.updated;
         _id = data['adresse_ram_id'];
         _adressRam = AdressRam.fromJson(data);
+        AdressRamassagePreferences.saveAdressRamassageToSharePreferences(data);
         notifyListeners();
 
         result = {

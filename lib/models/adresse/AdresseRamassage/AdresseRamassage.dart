@@ -33,10 +33,10 @@ class AdressRam {
 
   Map<String, dynamic> toJson() => {
         "localisationRam": localisationRam,
-        "name_recepteur": nameEmetteur,
-        "contact_recepteur": contactEmetteur,
-        "email_recepteur": emailEmetteur,
-        "civilite_recepteur": civiliteEmetteur,
+        "name_emetteur": nameEmetteur,
+        "contact_emetteur": contactEmetteur,
+        "email_emetteur": emailEmetteur,
+        "civilite_emetteur": civiliteEmetteur,
         "instruction": instruction,
         "updated_at": updatedAt,
       };

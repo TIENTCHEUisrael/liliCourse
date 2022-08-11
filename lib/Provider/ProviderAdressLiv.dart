@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:lilicourse/models/adresse/AdresseLivraison/AdresseLivraison.dart';
+import 'package:lilicourse/models/adresse/AdresseLivraison/sharedAdressL.dart';
 
 import '../services/location_service.dart';
 import '../services/service.dart';
@@ -86,14 +87,15 @@ class AdLProvider extends ChangeNotifier {
       );
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print('$data ..............................');
         _adressLiv = AdressLiv.fromJson(data);
         _id = data['adresse_liv_id'];
+        print(_id);
         _registerStatus = Statut.registed;
+        AdressLivraisonPreferences.saveAdressLivraisonToSharePreferences(data);
         notifyListeners();
         result = {
           "statut": true,
-          'message': "Adress Livraison Added",
+          'message': "Adresse Livraison Added",
           "adressLiv": _adressLiv!
         };
       } else {
@@ -126,6 +128,7 @@ class AdLProvider extends ChangeNotifier {
         _updateStatus = Statut.updated;
         _id = data['adresse_liv_id'];
         _adressLiv = AdressLiv.fromJson(data);
+        AdressLivraisonPreferences.saveAdressLivraisonToSharePreferences(data);
         notifyListeners();
 
         result = {

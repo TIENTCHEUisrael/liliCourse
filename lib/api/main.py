@@ -183,16 +183,16 @@ async def getAdressById(id:int):
     model=await Adresse_Pydantic.from_queryset_single(Adresse.get(adresse_id=id))
     return model
 
-@app.get("/lilicourse/adress/",response_model=List[Adresse_Pydantic])
-async def getAdress():
-    model=await Adresse_Pydantic.from_queryset(Adresse.all)
-    return model
+@app.get("/lilicourse/adress",response_model=List[Adresse_Pydantic])
+async def get_all_Adress():
+    retour= await Adresse_Pydantic.from_queryset(Adresse.all())
+    return retour
 
 #post
 @app.post("/lilicourse/adress/add",response_model=Adresse_Pydantic)
-async def addAdress(adres:AdresseIn_Pydantic):
-    obj=await Adresse_ram.create(**adres.dict(exclude_unset=True))
-    return obj
+async def simple_create_adress(adre:AdresseIn_Pydantic):
+    obj=await Adresse.create(**adre.dict(exclude_unset=True))
+    return await Adresse_Pydantic.from_tortoise_orm(obj)
 
 #put
 @app.put("/lilicourse/adress/put",response_model=Adresse_Pydantic)
@@ -217,16 +217,16 @@ async def getAdressRamById(id:int):
     model=await Adresse_ram_Pydantic.from_queryset_single(Adresse_ram.get(adresse_ram_id=id))
     return model
 
-@app.get("/lilicourse/adressRam/",response_model=List[Adresse_ram_Pydantic])
-async def getAdressRam():
-    model=await Adresse_ram_Pydantic.from_queryset(Adresse_ram.all)
-    return model
+@app.get("/lilicourse/adressRam",response_model=List[Adresse_ram_Pydantic])
+async def get_all_adressRam():
+    retour= await Adresse_ram_Pydantic.from_queryset(Adresse_ram.all())
+    return retour
 
 #post
 @app.post("/lilicourse/adressRam/add",response_model=Adresse_ram_Pydantic)
-async def addAdressRam(adres:Adresse_ramIn_Pydantic):
-    obj=await Adresse_ram.create(**adres.dict(exclude_unset=True))
-    return obj
+async def simple_create_adressRam(adre:Adresse_ramIn_Pydantic):
+    obj=await Adresse_ram.create(**adre.dict(exclude_unset=True))
+    return await Adresse_ram_Pydantic.from_tortoise_orm(obj)
 
 #put
 @app.put("/lilicourse/adressRam/put",response_model=Adresse_ram_Pydantic)
@@ -251,16 +251,16 @@ async def getAdressLivById(id:int):
     model=await Adresse_liv_Pydantic.from_queryset_single(Adresse_liv.get(adresse_liv_id=id))
     return model
 
-@app.get("/lilicourse/adressLiv/",response_model=List[Adresse_liv_Pydantic])
-async def getAdressLiv():
-    model=await Adresse_liv_Pydantic.from_queryset(Adresse_liv.all)
-    return model
+@app.get("/lilicourse/adressLiv",response_model=List[Adresse_liv_Pydantic])
+async def get_all_AdressLiv():
+    retour= await Adresse_liv_Pydantic.from_queryset(Adresse_liv.all())
+    return retour
 
 #post
 @app.post("/lilicourse/adressLiv/add",response_model=Adresse_liv_Pydantic)
-async def addAdressLiv(adres:Adresse_livIn_Pydantic):
-    obj=await Adresse_liv.create(**adres.dict(exclude_unset=True))
-    return obj
+async def simple_create_adressRam(adre:Adresse_livIn_Pydantic):
+    obj=await Adresse_liv.create(**adre.dict(exclude_unset=True))
+    return await Adresse_liv_Pydantic.from_tortoise_orm(obj)
 
 #put
 @app.put("/lilicourse/adressLiv/put",response_model=Adresse_liv_Pydantic)
@@ -285,16 +285,16 @@ async def getcommandeById(id:int):
     model=await Commande_Pydantic.from_queryset_single(Commande.get(commande_id=id))
     return model
 
-@app.get("/lilicourse/commande/",response_model=List[Commande_Pydantic])
-async def getcommandes():
-    model=await Commande_Pydantic.from_queryset(Commande.all)
-    return model
+@app.get("/lilicourse/commande",response_model=List[Commande_Pydantic])
+async def get_all_Commande():
+    retour= await Commande_Pydantic.from_queryset(Commande.all())
+    return retour
 
 #post
 @app.post("/lilicourse/commande/add",response_model=Commande_Pydantic)
 async def addcommande(com:CommandeIn_Pydantic):
     obj=await Commande.create(**com.dict(exclude_unset=True))
-    return obj
+    return await Commande_Pydantic.from_tortoise_orm(obj)
 
 #put
 @app.put("/lilicourse/commande/put",response_model=Commande_Pydantic)
@@ -315,6 +315,11 @@ async def delete_commande(id: int):
 #............................................................................
 
 
+@app.get("/lilicourse/paiement",response_model=List[Paiement_Pydantic])
+async def get_all_Paiement():
+    retour= await Paiement_Pydantic.from_queryset(Paiement.all())
+    return retour 
+
 @app.post('/lilicourse/paiementMtn')
 async def paiement(phone:str,somme:str):
     return requesttopay(phone_number=phone,amount=somme)
@@ -333,4 +338,4 @@ async def paiement(phone:str,somme:str):
 @app.post("/lilicourse/paiement/add",response_model=Paiement_Pydantic)
 async def addpaiement(pm:PaiementIn_Pydantic):
     obj=await Paiement.create(**pm.dict(exclude_unset=True))
-    return obj
+    return await Paiement_Pydantic.from_tortoise_orm(obj)

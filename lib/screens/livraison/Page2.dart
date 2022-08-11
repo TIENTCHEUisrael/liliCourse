@@ -16,7 +16,6 @@ import '../../Provider/ProviderAdressRam.dart';
 import '../../Provider/providerUser.dart';
 import '../../models/adresse/Adresse/Adresse.dart';
 import '../../models/commande/commande.dart';
-import '../../models/paiement/Paiement.dart';
 import '../../widgets/appBar.dart';
 import '../../widgets/bas.dart';
 import '../../widgets/containFirst.dart';
@@ -92,7 +91,7 @@ class _Page2State extends State<Page2> {
         adressLiv = adL;
       },
     );
-    AdLProvider proAdl = Provider.of<AdLProvider>(ctx);
+    var proAdl = Provider.of<AdLProvider>(ctx, listen: false);
     proAdl.createAdresseLiv(adressLiv!).then((value) {
       if (value['statut'] == true) {
         setState(
@@ -100,9 +99,10 @@ class _Page2State extends State<Page2> {
             adressLiv = value['adressLiv'];
           },
         );
-        Provider.of<AdLProvider>(context, listen: false)
-            .setAdressLiv(adressLiv!);
-        print('succesfully.................................ii');
+        print(adressLiv);
+        print(value['adressLiv']);
+        /*Provider.of<AdLProvider>(context, listen: false)
+            .setAdressLiv(adressLiv!);*/
         Fluttertoast.showToast(
           msg: "Message:${value['message']}",
         );
@@ -116,13 +116,13 @@ class _Page2State extends State<Page2> {
   }
 
   Commande addCommande(BuildContext ctx) {
-    AuthProvider auth = Provider.of<AuthProvider>(ctx);
-    AdProvider ad = Provider.of<AdProvider>(ctx);
+    var auth = Provider.of<AuthProvider>(ctx, listen: false);
+    var ad = Provider.of<AdProvider>(ctx, listen: false);
     var us = auth.user;
     var adre = ad.adresse;
     var com = Commande(
         client_id: us.id!,
-        adresse_id: ad.id,
+        adresse_id: adre.adressId!,
         statut: false,
         updated_at: DateTime.now().toString());
     setState(
@@ -131,7 +131,7 @@ class _Page2State extends State<Page2> {
         isLoading = false;
       },
     );
-    CommProvider proAdl = Provider.of<CommProvider>(ctx);
+    var proAdl = Provider.of<CommProvider>(ctx);
     proAdl.createAdress(commande!).then((value) {
       if (value['statut'] == true) {
         setState(
@@ -141,7 +141,7 @@ class _Page2State extends State<Page2> {
         );
         Provider.of<CommProvider>(context, listen: false)
             .setCommande(commande!);
-        print('succesfully..........................................');
+        print('succesfully$commande..........................................');
         Fluttertoast.showToast(
           msg: "Message:${value['message']}",
         );
@@ -155,6 +155,8 @@ class _Page2State extends State<Page2> {
   }
 
   Adresse addAdress(BuildContext ctx) {
+    print('Bonjour');
+    print(adressLiv);
     var ad = Adresse(
         adresslivid: adressLiv!.adressLivId!,
         adressramid: adressRam!.adressRamId!,
@@ -168,7 +170,7 @@ class _Page2State extends State<Page2> {
         adresse = ad;
       },
     );
-    AdProvider proAdl = Provider.of<AdProvider>(ctx);
+    var proAdl = Provider.of<AdProvider>(ctx, listen: false);
     proAdl.createAdress(adresse!).then((value) {
       if (value['statut'] == true) {
         setState(
@@ -177,7 +179,8 @@ class _Page2State extends State<Page2> {
           },
         );
         Provider.of<AdProvider>(context, listen: false).setAdress(adresse!);
-        print('succesfully.................................ii');
+        print('....................................................');
+        print('succesfully$adresse.................................');
         Fluttertoast.showToast(
           msg: "Message:${value['message']}",
         );
@@ -192,19 +195,20 @@ class _Page2State extends State<Page2> {
 
   AdressRam addAdressRamassage(BuildContext ctx) {
     var adR = AdressRam(
-        localisationRam: localisationRamassage!,
-        nameEmetteur: nameemetteur.text,
-        contactEmetteur: int.parse(contactemetteur.text),
-        emailEmetteur: emailemetteur.text,
-        civiliteEmetteur: civiliteemetteur!,
-        instruction: instructionemetteur.text,
-        updatedAt: DateTime.now().toString());
+      localisationRam: localisationRamassage!,
+      nameEmetteur: nameemetteur.text,
+      contactEmetteur: int.parse(contactemetteur.text),
+      emailEmetteur: emailemetteur.text,
+      civiliteEmetteur: civiliteemetteur!,
+      instruction: instructionemetteur.text,
+      updatedAt: DateTime.now().toString(),
+    );
     setState(
       () {
         adressRam = adR;
       },
     );
-    AdRProvider proAdl = Provider.of<AdRProvider>(ctx);
+    var proAdl = Provider.of<AdRProvider>(ctx, listen: false);
     proAdl.createAdresseRam(adressRam!).then((value) {
       if (value['statut'] == true) {
         setState(
@@ -214,7 +218,7 @@ class _Page2State extends State<Page2> {
         );
         Provider.of<AdRProvider>(context, listen: false)
             .setAdressRam(adressRam!);
-        print('succesfully.................................ii');
+        print('..................................................');
         Fluttertoast.showToast(
           msg: "Message:${value['message']}",
         );
@@ -232,7 +236,6 @@ class _Page2State extends State<Page2> {
     if (_pickedLocation!.latitude == null ||
         _pickedLocation!.longitude == null) {
     } else {
-      print('ok');
       var bob = Provider.of<AdRProvider>(context, listen: false)
           .getPlaceAdress(_pickedLocation!.latitude, _pickedLocation!.longitude)
           .then(
@@ -253,7 +256,6 @@ class _Page2State extends State<Page2> {
         _pickedLocation!.longitude == null) {
       print('Error');
     } else {
-      print('ok');
       var bob = Provider.of<AdRProvider>(context, listen: false)
           .getPlaceAdress(_pickedLocation!.latitude, _pickedLocation!.longitude)
           .then(
@@ -869,7 +871,8 @@ class _Page2State extends State<Page2> {
                               ),
                               hintText:
                                   'Your instruction fo the delivery man about the transmitter of the course'),
-                          style: GoogleFonts.poppins(fontSize: 12),
+                          style: GoogleFonts.poppins(
+                              fontSize: 12, color: Colors.grey),
                           maxLines: 3,
                         ),
                       ),
@@ -1136,8 +1139,10 @@ class _Page2State extends State<Page2> {
                                   setState(
                                     () {
                                       _value = value as int;
+                                      planification = "Aussitot que possiibe";
                                     },
                                   );
+                                  print(planification);
                                 },
                               ),
                               Text('Aussitot que possible',
@@ -1153,8 +1158,10 @@ class _Page2State extends State<Page2> {
                                   setState(
                                     () {
                                       _value = value as int;
+                                      planification = "Dans 1 heure";
                                     },
                                   );
+                                  print(planification);
                                 },
                               ),
                               Text('1h:00',
@@ -1170,8 +1177,10 @@ class _Page2State extends State<Page2> {
                                   setState(
                                     () {
                                       _value = value as int;
+                                      planification = "Dans 2 heures";
                                     },
                                   );
+                                  print(planification);
                                 },
                               ),
                               Text('2h:00',
@@ -1187,8 +1196,10 @@ class _Page2State extends State<Page2> {
                                   setState(
                                     () {
                                       _value = value as int;
+                                      planification = "Dans 30 minutes";
                                     },
                                   );
+                                  print(planification);
                                 },
                               ),
                               Text('30 min',
@@ -1204,8 +1215,10 @@ class _Page2State extends State<Page2> {
                                   setState(
                                     () {
                                       _value = value as int;
+                                      planification = "Comme vous voulez";
                                     },
                                   );
+                                  print(planification);
                                 },
                               ),
                               Text('Rien',
@@ -1300,7 +1313,7 @@ class _Page2State extends State<Page2> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const Text("Package weight: "),
-                                Text("$poids"),
+                                Text(poids == null ? " " : poids.toString()),
                               ],
                             ),
                             Row(
@@ -1308,8 +1321,17 @@ class _Page2State extends State<Page2> {
                               children: [
                                 const Text("Type of package: "),
                                 Text(
-                                  type == null ? " " : type!,
+                                  type == null ? " " : type.toString(),
                                 ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text("Planification: "),
+                                Text(planification == null
+                                    ? " "
+                                    : planification.toString()),
                               ],
                             ),
                           ],
@@ -1420,10 +1442,16 @@ class _Page2State extends State<Page2> {
                       setState(() {
                         isLoading = true;
                       });
+                      print('.......................................');
                       var one = addAdressRamassage(ctx);
+                      print(one);
                       var two = addAdressLivraison(ctx);
+                      print(two);
                       var three = addAdress(ctx);
+                      print(three);
                       var fourth = addCommande(ctx);
+                      print(fourth);
+                      print('.............................................');
 
                       if (one == null ||
                           two == null ||

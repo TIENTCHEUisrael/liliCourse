@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:lilicourse/models/commande/commande.dart';
+import 'package:lilicourse/models/commande/sharedCommande.dart';
 
 import '../services/service.dart';
 
@@ -82,6 +83,7 @@ class CommProvider extends ChangeNotifier {
         print('$data.......................');
         _registerStatus = Statut.registed;
         _commande = Commande.fromJson(data);
+        CommandePreference.saveCommandeToSharePreferences(data);
         notifyListeners();
 
         result = {
@@ -122,6 +124,7 @@ class CommProvider extends ChangeNotifier {
         print('$data.......................');
         _registerStatus = Statut.updated;
         _commande = Commande.fromJson(data);
+        CommandePreference.saveCommandeToSharePreferences(data);
         notifyListeners();
 
         result = {

@@ -23,7 +23,7 @@ class AdressLiv {
       adressLivId: json['adresse_liv_id'] as int,
       localisationLiv: json['localisationLiv'] as String,
       nameRecepteur: json['name_recepteur'] as String,
-      contactRecepteur: json['contact_recepteur'] as int,
+      contactRecepteur: json['contactrecepteur'] as int,
       emailRecepteur: json['email_recepteur'] as String,
       civiliteRecepteur: json['civilite_recepteur'] as String,
       instruction: json['instruction'] as String,
@@ -34,7 +34,7 @@ class AdressLiv {
   Map<String, dynamic> toJson() => {
         "localisationLiv": localisationLiv,
         "name_recepteur": nameRecepteur,
-        "contact_recepteur": contactRecepteur,
+        "contactrecepteur": contactRecepteur,
         "email_recepteur": emailRecepteur,
         "civilite_recepteur": civiliteRecepteur,
         "instruction": instruction,

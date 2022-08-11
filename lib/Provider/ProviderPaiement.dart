@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:lilicourse/models/paiement/Paiement.dart';
+import 'package:lilicourse/models/paiement/sharedPaiement.dart';
 import '../services/service.dart';
 
 enum Statut {
@@ -60,6 +61,7 @@ class PaiementProvider extends ChangeNotifier {
         print('$data ..............................');
         _paiement = Paiement.fromJson(data);
         _id = data['paiement_id'];
+        PaiementPreference.savePaiementToSharePreferences(data);
         notifyListeners();
         result = {
           "statut": true,
