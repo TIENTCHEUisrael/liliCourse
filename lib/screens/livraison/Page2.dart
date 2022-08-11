@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lilicourse/Provider/ProviderAdress.dart';
 import 'package:lilicourse/Provider/ProviderAdressLiv.dart';
 import 'package:lilicourse/Provider/ProviderCommande.dart';
@@ -60,10 +63,10 @@ class _Page2State extends State<Page2> {
   int _value3 = 1;
   bool isCompleted = false;
 
-  String? type;
-  String taille = "Taille M";
-  double? poids;
-  String? planification;
+  String type = "Colis";
+  String taille = "Taille XS";
+  double poids = 2;
+  String planification = "Rien";
   PlaceLocation? _pickedLocation;
 
   String? localisationrecepteur;
@@ -191,8 +194,8 @@ class _Page2State extends State<Page2> {
         adressramid: adressRam!.adressRamId!,
         poids: poids.toString(),
         taille: taille,
-        type: type!,
-        planification: planification!,
+        type: type,
+        planification: planification,
         updatedAt: DateTime.now().toString());
     var proAdl = Provider.of<AdProvider>(ctx, listen: false);
     proAdl.createAdresse(ad).then((value) {
@@ -547,42 +550,7 @@ class _Page2State extends State<Page2> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      '0-3 KG',
-                                      style: GoogleFonts.poppins(
-                                          color: blue_button),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      '+0 XAF',
-                                      style: GoogleFonts.poppins(
-                                          color: blue_button),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              setState(
-                                () {
-                                  poids = 7;
-                                  t2 = 15;
-                                  t1 = 10;
-                                  t3 = 10;
-                                  print('poids:$poids');
-                                },
-                              );
-                            },
-                            child: Card(
-                              elevation: 4,
-                              child: Container(
-                                padding: EdgeInsets.all(t2),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      '4-7 KG',
+                                      '3-10 KG',
                                       style: GoogleFonts.poppins(
                                           color: blue_button),
                                       textAlign: TextAlign.center,
@@ -602,7 +570,42 @@ class _Page2State extends State<Page2> {
                             onTap: () {
                               setState(
                                 () {
-                                  poids = 10;
+                                  poids = 11;
+                                  t2 = 15;
+                                  t1 = 10;
+                                  t3 = 10;
+                                  print('poids:$poids');
+                                },
+                              );
+                            },
+                            child: Card(
+                              elevation: 4,
+                              child: Container(
+                                padding: EdgeInsets.all(t2),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      '10-20 KG',
+                                      style: GoogleFonts.poppins(
+                                          color: blue_button),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      '+3000 XAF',
+                                      style: GoogleFonts.poppins(
+                                          color: blue_button),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(
+                                () {
+                                  poids = 21;
                                   t3 = 15;
                                   t2 = 10;
                                   t1 = 10;
@@ -618,13 +621,13 @@ class _Page2State extends State<Page2> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      '8-10 KG',
+                                      '>21KG',
                                       style: GoogleFonts.poppins(
                                           color: blue_button),
                                       textAlign: TextAlign.center,
                                     ),
                                     Text(
-                                      '+3000 XAF',
+                                      '+5000',
                                       style: GoogleFonts.poppins(
                                           color: blue_button),
                                       textAlign: TextAlign.center,
@@ -648,13 +651,13 @@ class _Page2State extends State<Page2> {
                                   onChanged: (value) {
                                     setState(() {
                                       _value3 = value as int;
-                                      taille = "Taille M";
+                                      taille = "Taille XS";
                                       print('taille:$taille');
                                     });
                                   },
                                 ),
                                 Text(
-                                  'Taille M',
+                                  'Taille XS (L:200 l:140 H:50)',
                                   style: GoogleFonts.poppins(),
                                 ),
                               ],
@@ -673,7 +676,7 @@ class _Page2State extends State<Page2> {
                                   },
                                 ),
                                 Text(
-                                  'Taille S',
+                                  'Taille S (L:310 l:210 H:80)',
                                   style: GoogleFonts.poppins(),
                                 ),
                               ],
@@ -1477,171 +1480,197 @@ class _Page2State extends State<Page2> {
                             style: TextStyle(color: Colors.white, fontSize: 18),
                           ),
                     onPressed: () {
-                      setState(() {
-                        isLoading = true;
-                      });
-                      print("");
-                      print('..................STARTING.....................');
-                      print("");
-                      var adressRamassage = AdressRam(
-                        localisationRam: localisationE.text,
-                        nameEmetteur: nameemetteur.text,
-                        contactEmetteur: int.parse(contactemetteur.text),
-                        emailEmetteur: emailemetteur.text,
-                        civiliteEmetteur: civiliteemetteur!,
-                        instruction: instructionemetteur.text,
-                        updatedAt: DateTime.now().toString(),
-                      );
-                      auth3.createAdressRam(adressRamassage).then(
-                        (respo) {
-                          if (respo!['statut']) {
-                            AdressRam adR = respo['adressRam'];
-                            print(adR);
-                            Provider.of<AdRProvider>(context, listen: false)
-                                .setAdressRam(adR);
+                      if (localisationE.text.isEmpty ||
+                          nameemetteur.text.isEmpty ||
+                          contactemetteur.text.isEmpty ||
+                          emailemetteur.text.isEmpty ||
+                          civiliteemetteur!.isEmpty ||
+                          instructionemetteur.text.isEmpty ||
+                          localisationR.text.isEmpty ||
+                          namerecepteur.text.isEmpty ||
+                          emailrecepteur.text.isEmpty ||
+                          contactrecepteur.text.isEmpty ||
+                          civiliterecepteur!.isEmpty ||
+                          instructionrecepteur.text.isEmpty ||
+                          poids == null ||
+                          taille.isEmpty) {
+                        Fluttertoast.showToast(
+                          msg: "Error:['One Value is null']}",
+                        );
+                      } else {
+                        setState(
+                          () {
+                            isLoading = true;
+                          },
+                        );
+                        print("");
+                        print(
+                            '..................STARTING.....................');
+                        print("");
+                        var adressRamassage = AdressRam(
+                          localisationRam: localisationE.text,
+                          nameEmetteur: nameemetteur.text,
+                          contactEmetteur: int.parse(contactemetteur.text),
+                          emailEmetteur: emailemetteur.text,
+                          civiliteEmetteur: civiliteemetteur!,
+                          instruction: instructionemetteur.text,
+                          updatedAt: DateTime.now().toString(),
+                        );
+                        auth3.createAdressRam(adressRamassage).then(
+                          (respo) {
+                            if (respo!['statut']) {
+                              AdressRam adR = respo['adressRam'];
+                              print(adR);
+                              Provider.of<AdRProvider>(context, listen: false)
+                                  .setAdressRam(adR);
 
-                            var adressLivraison = AdressLiv(
-                              localisationLiv: localisationR.text,
-                              nameRecepteur: namerecepteur.text,
-                              contactRecepteur:
-                                  int.parse(contactrecepteur.text),
-                              emailRecepteur: emailrecepteur.text,
-                              civiliteRecepteur: civiliterecepteur!,
-                              instruction: instructionrecepteur.text,
-                              updatedAt: DateTime.now().toString(),
-                            );
-                            print("");
-                            print(
-                                '..........................FINISH ADRESSE RAMASSAGE.................');
-                            print("");
-                            auth1.createAdresseLiv(adressLivraison).then(
-                              (value) {
-                                if (value!['statut']) {
-                                  AdressLiv adL = value['adressLiv'];
-                                  print(adL);
-                                  Provider.of<AdLProvider>(context,
-                                          listen: false)
-                                      .setAdressLiv(adL);
-                                  var adress = Adresse(
-                                    adresslivid: adL.adressLivId!,
-                                    adressramid: adR.adressRamId!,
-                                    poids: poids.toString(),
-                                    taille: taille,
-                                    type: type!,
-                                    planification: planification!,
-                                    updatedAt: DateTime.now().toString(),
-                                  );
-                                  print("");
-                                  print(
-                                      '......................FINISH ADRESSE LIVRAISON......................');
-                                  print("");
-                                  auth2.createAdresse(adress).then(
-                                    (other) {
-                                      if (other!['statut'] == true) {
-                                        Adresse ad = other['adress'];
-                                        print(ad);
-                                        Provider.of<AdProvider>(context,
-                                                listen: false)
-                                            .setAdress(ad);
-                                        print("");
-                                        print(
-                                            '.............................FINISH ADRESSE........................');
-                                        print("");
-                                        User us = auth.user;
-                                        print(us);
-                                        var commande = Commande(
-                                          client_id: us.id!,
-                                          adresse_id: ad.adressId!,
-                                          statut: "true",
-                                          updated_at: DateTime.now().toString(),
-                                        );
+                              var adressLivraison = AdressLiv(
+                                localisationLiv: localisationR.text,
+                                nameRecepteur: namerecepteur.text,
+                                contactRecepteur:
+                                    int.parse(contactrecepteur.text),
+                                emailRecepteur: emailrecepteur.text,
+                                civiliteRecepteur: civiliterecepteur!,
+                                instruction: instructionrecepteur.text,
+                                updatedAt: DateTime.now().toString(),
+                              );
+                              print("");
+                              print(
+                                  '..........................FINISH ADRESSE RAMASSAGE.................');
+                              print("");
+                              auth1.createAdresseLiv(adressLivraison).then(
+                                (value) {
+                                  if (value!['statut']) {
+                                    AdressLiv adL = value['adressLiv'];
+                                    print(adL);
+                                    Provider.of<AdLProvider>(context,
+                                            listen: false)
+                                        .setAdressLiv(adL);
+                                    var adress = Adresse(
+                                      adresslivid: adL.adressLivId!,
+                                      adressramid: adR.adressRamId!,
+                                      poids: poids.toString(),
+                                      taille: taille,
+                                      type: type,
+                                      planification: planification,
+                                      updatedAt: DateTime.now().toString(),
+                                    );
+                                    print("");
+                                    print(
+                                        '......................FINISH ADRESSE LIVRAISON......................');
+                                    print("");
+                                    auth2.createAdresse(adress).then(
+                                      (other) {
+                                        if (other!['statut'] == true) {
+                                          Adresse ad = other['adress'];
+                                          print(ad);
+                                          Provider.of<AdProvider>(context,
+                                                  listen: false)
+                                              .setAdress(ad);
+                                          print("");
+                                          print(
+                                              '.............................FINISH ADRESSE........................');
+                                          print("");
+                                          User us = auth.user;
+                                          print(us);
+                                          var commande = Commande(
+                                            client_id: us.id!,
+                                            adresse_id: ad.adressId!,
+                                            statut: "true",
+                                            updated_at:
+                                                DateTime.now().toString(),
+                                          );
 
-                                        auth4.createACommande(commande).then(
-                                          (or) {
-                                            if (or['statut']) {
-                                              Commande co = or['commande'];
-                                              print(co);
-                                              Fluttertoast.showToast(
-                                                msg:
-                                                    "Message: Commande,Adresse, AdressLiv and AdressRam are Added",
-                                              );
-                                              Provider.of<CommProvider>(context,
-                                                      listen: false)
-                                                  .setCommande(co);
-                                              print(
-                                                  '....................FINISH COMMANDE.....................');
-                                              print("");
-                                              setState(() {
-                                                isLoading = false;
-                                              });
-                                              print("");
-                                              print(
-                                                  "...................................FINISH");
-                                              print("");
+                                          auth4.createACommande(commande).then(
+                                            (or) {
+                                              if (or['statut']) {
+                                                Commande co = or['commande'];
+                                                print(co);
+                                                Fluttertoast.showToast(
+                                                  msg:
+                                                      "Message: Commande,Adresse, AdressLiv and AdressRam are Added",
+                                                );
+                                                Provider.of<CommProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .setCommande(co);
+                                                print(
+                                                    '....................FINISH COMMANDE.....................');
+                                                print("");
+                                                setState(() {
+                                                  isLoading = false;
+                                                });
+                                                print("");
+                                                print(
+                                                    "...................................FINISH............................");
+                                                print("");
 
-                                              Navigator.pushReplacement(
-                                                context,
-                                                PageRouteBuilder(
-                                                  pageBuilder: (context,
-                                                      animation,
-                                                      secondaryAnimation) {
-                                                    return PaiementPage(
-                                                      us: us,
-                                                      ad: ad,
-                                                      adL: adL,
-                                                      adR: adR,
-                                                      com: co,
-                                                    );
-                                                  },
-                                                  transitionsBuilder: (context,
-                                                      animation,
-                                                      secondaryAnimation,
-                                                      child) {
-                                                    //Premiere animation de bas en haut
-                                                    var begin =
-                                                        const Offset(1.0, 0.0);
-                                                    var end = Offset.zero;
-                                                    var tween = Tween(
-                                                        begin: begin, end: end);
-                                                    return SlideTransition(
-                                                      position: animation
-                                                          .drive(tween),
-                                                      child: child,
-                                                    );
-                                                  },
-                                                ),
-                                              );
-                                            } else {
-                                              Fluttertoast.showToast(
-                                                msg: "Error:${or['message']}",
-                                              );
-                                            }
-                                          },
-                                        );
-                                      } else {
-                                        Fluttertoast.showToast(
-                                          msg: "Error:${other['message']}",
-                                        );
-                                      }
-                                    },
-                                  );
-                                } else {
-                                  Fluttertoast.showToast(
-                                    msg: "Error:${value['message']}",
-                                  );
-                                }
-                              },
-                            );
-                          } else {
+                                                Navigator.pushReplacement(
+                                                  context,
+                                                  PageRouteBuilder(
+                                                    pageBuilder: (context,
+                                                        animation,
+                                                        secondaryAnimation) {
+                                                      return PaiementPage(
+                                                        us: us,
+                                                        ad: ad,
+                                                        adL: adL,
+                                                        adR: adR,
+                                                        com: co,
+                                                      );
+                                                    },
+                                                    transitionsBuilder:
+                                                        (context,
+                                                            animation,
+                                                            secondaryAnimation,
+                                                            child) {
+                                                      //Premiere animation de bas en haut
+                                                      var begin = const Offset(
+                                                          1.0, 0.0);
+                                                      var end = Offset.zero;
+                                                      var tween = Tween(
+                                                          begin: begin,
+                                                          end: end);
+                                                      return SlideTransition(
+                                                        position: animation
+                                                            .drive(tween),
+                                                        child: child,
+                                                      );
+                                                    },
+                                                  ),
+                                                );
+                                              } else {
+                                                Fluttertoast.showToast(
+                                                  msg: "Error:${or['message']}",
+                                                );
+                                              }
+                                            },
+                                          );
+                                        } else {
+                                          Fluttertoast.showToast(
+                                            msg: "Error:${other['message']}",
+                                          );
+                                        }
+                                      },
+                                    );
+                                  } else {
+                                    Fluttertoast.showToast(
+                                      msg: "Error:${value['message']}",
+                                    );
+                                  }
+                                },
+                              );
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: "Error:${respo['message']}",
+                              );
+                            }
                             Fluttertoast.showToast(
-                              msg: "Error:${respo['message']}",
+                              msg: "Message:${respo['message']}",
                             );
-                          }
-                          Fluttertoast.showToast(
-                            msg: "Message:${respo['message']}",
-                          );
-                        },
-                      );
+                          },
+                        );
+                      }
                     },
                   ),
                   TextButton(

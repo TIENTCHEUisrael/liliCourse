@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lilicourse/models/adresse/Adresse/Adresse.dart';
 import 'package:lilicourse/models/adresse/AdresseLivraison/AdresseLivraison.dart';
@@ -34,15 +34,54 @@ class PaiementPage extends StatefulWidget {
 }
 
 class _PaiementPageState extends State<PaiementPage> {
-  double _price = 1500.000;
+  double _price = 1250.000;
+  double pN = 0;
+  double tL = 0;
   void calculatePrice() {
-    var price;
+    if (widget.ad.poids == "3") {
+      setState(
+        () {
+          _price += 1000;
+        },
+      );
+    } else if (widget.ad.poids == "11") {
+      setState(
+        () {
+          _price += 3000;
+        },
+      );
+    } else if (widget.ad.poids == "21") {
+      setState(
+        () {
+          _price += 5000;
+        },
+      );
+    } else {
+      print('Error');
+      Fluttertoast.showToast(
+        msg: "Error:['One Poids is null']}",
+      );
+    }
 
-    setState(
-      () {
-        _price = price;
-      },
-    );
+    if (widget.ad.taille == "Taille XS") {
+      setState(
+        () {
+          _price += 500;
+        },
+      );
+    } else if (widget.ad.taille == "Taille S") {
+      setState(
+        () {
+          _price += 1000;
+        },
+      );
+    } else {
+      print('Error');
+      Fluttertoast.showToast(
+        msg: "Error:['One Taille is null']}",
+      );
+    }
+    print(_price);
   }
 
   @override
@@ -107,8 +146,8 @@ class _PaiementPageState extends State<PaiementPage> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: Text(
-                            "\$*****.**** FCFA",
-                            style: TextStyle(
+                            "\$$_price FCFA",
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 30,
                               fontStyle: FontStyle.italic,
@@ -143,7 +182,8 @@ class _PaiementPageState extends State<PaiementPage> {
                       Navigator.of(context).push(
                         HeroDialogRoute(
                           builder: (context) {
-                            return AddTodoPopupCard();
+                            return AddTodoPopupCard(
+                                price: _price, com: widget.com);
                           },
                         ),
                       );
@@ -182,7 +222,8 @@ class _PaiementPageState extends State<PaiementPage> {
                       Navigator.of(context).push(
                         HeroDialogRoute(
                           builder: (context) {
-                            return PaiementOrange();
+                            return PaiementOrange(
+                                price: _price, com: widget.com);
                           },
                         ),
                       );
@@ -221,7 +262,8 @@ class _PaiementPageState extends State<PaiementPage> {
                       Navigator.of(context).push(
                         HeroDialogRoute(
                           builder: (context) {
-                            return PaiementPayPal();
+                            return PaiementPayPal(
+                                price: _price, com: widget.com);
                           },
                         ),
                       );
