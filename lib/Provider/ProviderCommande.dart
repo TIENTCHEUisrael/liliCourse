@@ -61,10 +61,10 @@ class CommProvider extends ChangeNotifier {
     _updateStatus = value;
   }
 
-  Future<Map<String, dynamic>> createAdress(Commande com) async {
+  Future<Map<String, dynamic>> createACommande(Commande com) async {
     var result;
     var urlcre =
-        Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/adress/add');
+        Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/commande/add');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _registerStatus = Statut.registing;
@@ -80,7 +80,6 @@ class CommProvider extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print('$data.......................');
         _registerStatus = Statut.registed;
         _commande = Commande.fromJson(data);
         CommandePreference.saveCommandeToSharePreferences(data);
@@ -94,7 +93,7 @@ class CommProvider extends ChangeNotifier {
       } else {
         _registerStatus = Statut.notregisted;
         notifyListeners();
-        result = {"statut": false, "message": "Adress not added"};
+        result = {"statut": false, "message": "Commande not added"};
       }
     } catch (e) {
       print(e);

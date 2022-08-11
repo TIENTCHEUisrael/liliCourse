@@ -61,39 +61,39 @@ class AdProvider extends ChangeNotifier {
     _updateStatus = value;
   }
 
-  Future<Map<String, dynamic>> createAdress(Adresse ad) async {
+  Future<Map<String, dynamic>?> createAdresse(Adresse us) async {
     var result;
-    var urlcre =
+    var urlCreate =
         Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/adress/add');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _registerStatus = Statut.registing;
       notifyListeners();
-
-      final response = await http.post(
-        urlcre,
+      final reponse = await http.post(
+        urlCreate,
         headers: header,
-        body: jsonEncode(
-          ad.toJson(),
+        body: json.encode(
+          us.toJson(),
         ),
       );
-
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
+      if (reponse.statusCode == 200) {
         _registerStatus = Statut.registed;
+        notifyListeners();
+        var data = jsonDecode(reponse.body);
         AdressPreferences.saveAdressToSharePreferences(data);
         _adresse = Adresse.fromJson(data);
-        notifyListeners();
 
+        //UserPreferences().saveUser(_user!);
+        notifyListeners();
         result = {
           "statut": true,
-          "message": "Adress added",
-          "adresse": _adresse!
+          "message": "Adress is registed",
+          "adress": _adresse!
         };
       } else {
         _registerStatus = Statut.notregisted;
         notifyListeners();
-        result = {"statut": false, "message": "Adress not added"};
+        result = {"statut": false, "message": "User is not registed"};
       }
     } catch (e) {
       print(e);

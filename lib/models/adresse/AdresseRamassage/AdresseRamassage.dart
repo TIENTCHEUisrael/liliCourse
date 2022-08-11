@@ -47,6 +47,6 @@ class AdressRam {
 
   @override
   String toString() {
-    return 'AdressRam {adresse_ram_id:$adressRamId,localisationRam: $localisationRam, name_recepteur: $nameEmetteur, contact_recepteur: $contactEmetteur, email_recepteur: $emailEmetteur,civilite_recepteur:$civiliteEmetteur, instruction:$instruction, updated_at!$updatedAt}';
+    return 'Adresse_ram {adresse_ram_id:$adressRamId,localisationRam: $localisationRam, name_emetteur: $nameEmetteur, contact_emetteur: $contactEmetteur, email_emetteur: $emailEmetteur,civilite_emetteur:$civiliteEmetteur, instruction:$instruction, updated_at:$updatedAt}';
   }
 }

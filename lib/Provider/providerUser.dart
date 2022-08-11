@@ -85,7 +85,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   static Future<List<User>> getUsers() async {
-    var url = Uri.parse('${Api_services.httpbaseUrl3}/lilicourse/users');
+    var url = Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/users');
     final response = await http.get(url);
 
     var data = jsonDecode(response.body);
@@ -98,13 +98,16 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<Map<String, dynamic>?> loginUser(String mail, String pass) async {
+    print('................................................................;');
     var result;
     var urlLogin = Uri.parse(
-        '${Api_services.httpbaseUrl3}/lilicourse/user/login?mail=$mail&passw=$pass');
+        '${Api_services.httpbaseUrl2}/lilicourse/user/login?mail=$mail&passw=$pass');
 
     try {
+      print('Entrer');
       _logStatus = Statut.authenticating;
       notifyListeners();
+      print('Ok');
       final response = await http.get(urlLogin);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
@@ -127,7 +130,8 @@ class AuthProvider extends ChangeNotifier {
           result = {
             "statut": true,
             "message": "User authenticated",
-            "user": _user!
+            "user": _user!,
+            "token": _token!
           };
         } else {
           result = {"statut": true, "message": "Error token", "user": _user!};
@@ -273,7 +277,7 @@ class AuthProvider extends ChangeNotifier {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final bool result;
 
-    if (prefs.getString('token') == null &&
+    if (prefs.getString('token') == null ||
         prefs.getString('currentUser') == null) {
       print('...........NOT LOGGING..............');
       result = false;

@@ -49,12 +49,12 @@ class Adresse {
         "updated_at": updatedAt,
       };
 
-  static List<Adresse> adressRamFromSnapshot(List snapshot) {
+  static List<Adresse> adressFromSnapshot(List snapshot) {
     return snapshot.map((data) => Adresse.fromJson(data)).toList();
   }
 
   @override
   String toString() {
-    return 'AdressRam {adresse_id:$adressId,adresse_liv_id: $adresslivid, adresse_ram_id: $adressramid, poids: $poids, taille: $taille,type:$type,planification:$planification updated_at!$updatedAt}';
+    return 'Adresse {adresse_id:$adressId,adresse_liv_id: $adresslivid, adresse_ram_id: $adressramid, poids: $poids, taille: $taille,type:$type,planification:$planification updated_at:$updatedAt}';
   }
 }

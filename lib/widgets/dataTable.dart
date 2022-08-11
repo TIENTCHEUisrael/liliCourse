@@ -98,7 +98,16 @@ class _DataTableWidgetState extends State<DataTableWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(" Localisation"),
-                    Text(widget.localisation)
+                    Expanded(
+                        child: SizedBox(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Text(
+                          widget.localisation,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ))
                   ],
                 ),
                 const SizedBox(
@@ -118,7 +127,17 @@ class _DataTableWidgetState extends State<DataTableWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(" Instruction"),
-                    Text(widget.instruction)
+                    Expanded(
+                      child: SizedBox(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Text(
+                            widget.instruction,
+                            maxLines: 1,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(

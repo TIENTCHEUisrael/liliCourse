@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lilicourse/Animations/DelayedAnimation.dart';
@@ -164,6 +165,7 @@ class _InscriptionState extends State<Inscription> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(40, 0, 40, 15),
                           child: MyWidget(
+                            keys: TextInputType.phone,
                             controller: numero,
                             label: 'Phone Number',
                             icon: const Icon(Icons.phone_android),
@@ -348,7 +350,7 @@ class _InscriptionState extends State<Inscription> {
                             phone_number: int.parse(numero.text),
                             password: pass.text,
                             commentaire: comment.text,
-                            image: "",
+                            image: "israel.jpeg",
                             updated_At: DateTime.now().toString(),
                           );
                           auth.createUser(us).then(
@@ -402,10 +404,15 @@ class _InscriptionState extends State<Inscription> {
 }
 
 class MyWidget extends StatelessWidget {
+  TextInputType? keys;
   final TextEditingController controller;
   final Icon icon;
   final String label;
-  MyWidget({required this.controller, required this.label, required this.icon});
+  MyWidget(
+      {this.keys,
+      required this.controller,
+      required this.label,
+      required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -428,6 +435,7 @@ class MyWidget extends StatelessWidget {
           borderSide: const BorderSide(color: Colors.grey),
         ),
       ),
+      keyboardType: keys,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter your $label';

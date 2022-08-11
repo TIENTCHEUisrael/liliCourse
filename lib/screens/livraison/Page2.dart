@@ -5,8 +5,12 @@ import 'package:lilicourse/Provider/ProviderAdress.dart';
 import 'package:lilicourse/Provider/ProviderAdressLiv.dart';
 import 'package:lilicourse/Provider/ProviderCommande.dart';
 import 'package:lilicourse/main.dart';
+import 'package:lilicourse/models/adresse/Adresse/AdressApi.dart';
+import 'package:lilicourse/models/adresse/AdresseLivraison/AdressLivApi.dart';
 import 'package:lilicourse/models/adresse/AdresseLivraison/AdresseLivraison.dart';
+import 'package:lilicourse/models/adresse/AdresseRamassage/AdressRamApi.dart';
 import 'package:lilicourse/models/adresse/AdresseRamassage/AdresseRamassage.dart';
+import 'package:lilicourse/models/commande/commandeApi.dart';
 import 'package:lilicourse/widgets/dataTable.dart';
 import 'package:lilicourse/widgets/locationInput.dart';
 import 'package:lottie/lottie.dart';
@@ -16,6 +20,7 @@ import '../../Provider/ProviderAdressRam.dart';
 import '../../Provider/providerUser.dart';
 import '../../models/adresse/Adresse/Adresse.dart';
 import '../../models/commande/commande.dart';
+import '../../models/user/user.dart';
 import '../../widgets/appBar.dart';
 import '../../widgets/bas.dart';
 import '../../widgets/containFirst.dart';
@@ -30,6 +35,11 @@ class Page2 extends StatefulWidget {
 }
 
 class _Page2State extends State<Page2> {
+  List<AdressRam>? _adressRam;
+  List<AdressLiv>? _adressLiv;
+  List<Adresse>? _adress;
+  List<Commande>? _commande;
+  bool _isloading = true;
   bool isLoading = false;
   AdressLiv? adressLiv;
   AdressRam? adressRam;
@@ -77,6 +87,69 @@ class _Page2State extends State<Page2> {
     super.initState();
   }
 
+  Future<void> getAdressRam() async {
+    _adressRam = await AdressRamApi.getAdressRam();
+    setState(() {
+      _isloading = false;
+    });
+  }
+
+  Future<void> getAdressLiv() async {
+    _adressLiv = await AdressLivApi.getAdressLiv();
+    setState(() {
+      _isloading = false;
+    });
+  }
+
+  Future<void> getAdress() async {
+    _adress = await AdressApi.getAdress();
+    setState(() {
+      _isloading = false;
+    });
+  }
+
+  Future<void> getCommande() async {
+    _commande = await CommandeApi.getcommandes();
+    setState(() {
+      _isloading = false;
+    });
+  }
+
+  AdressRam addAdressRamassage(BuildContext ctx) {
+    var adR = AdressRam(
+      localisationRam: localisationRamassage!,
+      nameEmetteur: nameemetteur.text,
+      contactEmetteur: int.parse(contactemetteur.text),
+      emailEmetteur: emailemetteur.text,
+      civiliteEmetteur: civiliteemetteur!,
+      instruction: instructionemetteur.text,
+      updatedAt: DateTime.now().toString(),
+    );
+    var proAdl = Provider.of<AdRProvider>(ctx, listen: false);
+    proAdl.createAdressRam(adR).then((value) {
+      if (value!['statut'] == true) {
+        setState(
+          () {
+            adressRam = value['adresseRam'];
+          },
+        );
+        print('OK2');
+        print(adressRam);
+        Provider.of<AdRProvider>(context, listen: false)
+            .setAdressRam(adressRam!);
+        print('..................................................');
+        Fluttertoast.showToast(
+          msg: "Message:${value['message']}",
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: "Error:${value['message']}",
+        );
+      }
+    });
+    return adressRam!;
+  }
+
   AdressLiv addAdressLivraison(BuildContext ctx) {
     var adL = AdressLiv(
         localisationLiv: localisationrecepteur!,
@@ -86,21 +159,16 @@ class _Page2State extends State<Page2> {
         civiliteRecepteur: civiliterecepteur!,
         instruction: instructionrecepteur.text,
         updatedAt: DateTime.now().toString());
-    setState(
-      () {
-        adressLiv = adL;
-      },
-    );
     var proAdl = Provider.of<AdLProvider>(ctx, listen: false);
-    proAdl.createAdresseLiv(adressLiv!).then((value) {
-      if (value['statut'] == true) {
+    proAdl.createAdresseLiv(adL).then((value) {
+      if (value!['statut'] == true) {
         setState(
           () {
             adressLiv = value['adressLiv'];
           },
         );
+        print('OK');
         print(adressLiv);
-        print(value['adressLiv']);
         /*Provider.of<AdLProvider>(context, listen: false)
             .setAdressLiv(adressLiv!);*/
         Fluttertoast.showToast(
@@ -115,45 +183,6 @@ class _Page2State extends State<Page2> {
     return adressLiv!;
   }
 
-  Commande addCommande(BuildContext ctx) {
-    var auth = Provider.of<AuthProvider>(ctx, listen: false);
-    var ad = Provider.of<AdProvider>(ctx, listen: false);
-    var us = auth.user;
-    var adre = ad.adresse;
-    var com = Commande(
-        client_id: us.id!,
-        adresse_id: adre.adressId!,
-        statut: false,
-        updated_at: DateTime.now().toString());
-    setState(
-      () {
-        commande = com;
-        isLoading = false;
-      },
-    );
-    var proAdl = Provider.of<CommProvider>(ctx);
-    proAdl.createAdress(commande!).then((value) {
-      if (value['statut'] == true) {
-        setState(
-          () {
-            commande = value['commande'];
-          },
-        );
-        Provider.of<CommProvider>(context, listen: false)
-            .setCommande(commande!);
-        print('succesfully$commande..........................................');
-        Fluttertoast.showToast(
-          msg: "Message:${value['message']}",
-        );
-      } else {
-        Fluttertoast.showToast(
-          msg: "Error:${value['message']}",
-        );
-      }
-    });
-    return commande!;
-  }
-
   Adresse addAdress(BuildContext ctx) {
     print('Bonjour');
     print(adressLiv);
@@ -165,14 +194,9 @@ class _Page2State extends State<Page2> {
         type: type!,
         planification: planification!,
         updatedAt: DateTime.now().toString());
-    setState(
-      () {
-        adresse = ad;
-      },
-    );
     var proAdl = Provider.of<AdProvider>(ctx, listen: false);
-    proAdl.createAdress(adresse!).then((value) {
-      if (value['statut'] == true) {
+    proAdl.createAdresse(ad).then((value) {
+      if (value!['statut'] == true) {
         setState(
           () {
             adresse = value['adresse'];
@@ -193,32 +217,33 @@ class _Page2State extends State<Page2> {
     return adresse!;
   }
 
-  AdressRam addAdressRamassage(BuildContext ctx) {
-    var adR = AdressRam(
-      localisationRam: localisationRamassage!,
-      nameEmetteur: nameemetteur.text,
-      contactEmetteur: int.parse(contactemetteur.text),
-      emailEmetteur: emailemetteur.text,
-      civiliteEmetteur: civiliteemetteur!,
-      instruction: instructionemetteur.text,
-      updatedAt: DateTime.now().toString(),
-    );
+  Commande addCommande(BuildContext ctx) {
+    var auth = Provider.of<AuthProvider>(ctx, listen: false);
+    var ad = Provider.of<AdProvider>(ctx, listen: false);
+    var us = auth.user;
+    var adre = ad.adresse;
+    var com = Commande(
+        client_id: us.id!,
+        adresse_id: adre.adressId!,
+        statut: false,
+        updated_at: DateTime.now().toString());
     setState(
       () {
-        adressRam = adR;
+        commande = com;
+        isLoading = false;
       },
     );
-    var proAdl = Provider.of<AdRProvider>(ctx, listen: false);
-    proAdl.createAdresseRam(adressRam!).then((value) {
+    var proAdl = Provider.of<CommProvider>(ctx);
+    proAdl.createACommande(commande!).then((value) {
       if (value['statut'] == true) {
         setState(
           () {
-            adressRam = value['adresseRam'];
+            commande = value['commande'];
           },
         );
-        Provider.of<AdRProvider>(context, listen: false)
-            .setAdressRam(adressRam!);
-        print('..................................................');
+        Provider.of<CommProvider>(context, listen: false)
+            .setCommande(commande!);
+        print('succesfully$commande..........................................');
         Fluttertoast.showToast(
           msg: "Message:${value['message']}",
         );
@@ -228,7 +253,7 @@ class _Page2State extends State<Page2> {
         );
       }
     });
-    return adressRam!;
+    return commande!;
   }
 
   void _selectPlaceR(double lat, double lng) {
@@ -735,6 +760,7 @@ class _Page2State extends State<Page2> {
                                     const EdgeInsets.only(left: 8.0, top: 16.0),
                               ),
                               controller: emailemetteur,
+                              keyboardType: TextInputType.emailAddress,
                               style: const TextStyle(fontSize: 12),
                             ),
                             TextField(
@@ -753,6 +779,7 @@ class _Page2State extends State<Page2> {
                                     const EdgeInsets.only(left: 8.0, top: 16.0),
                               ),
                               controller: contactemetteur,
+                              keyboardType: TextInputType.phone,
                               style: const TextStyle(fontSize: 12),
                             ),
                             const SizedBox(
@@ -953,11 +980,13 @@ class _Page2State extends State<Page2> {
                                   ),
                                 ),
                                 hintText: "Email of receiver",
+
                                 //border: InputBorder.none,
                                 contentPadding:
                                     const EdgeInsets.only(left: 8.0, top: 16.0),
                               ),
                               controller: emailrecepteur,
+                              keyboardType: TextInputType.emailAddress,
                               style: const TextStyle(fontSize: 12),
                             ),
                             TextField(
@@ -977,6 +1006,7 @@ class _Page2State extends State<Page2> {
                                     const EdgeInsets.only(left: 8.0, top: 16.0),
                               ),
                               controller: contactrecepteur,
+                              keyboardType: TextInputType.phone,
                               style: const TextStyle(fontSize: 12),
                             ),
                             const SizedBox(
@@ -1399,6 +1429,11 @@ class _Page2State extends State<Page2> {
       ];
 
   Widget buildCompleted(BuildContext ctx) {
+    AuthProvider auth = Provider.of<AuthProvider>(ctx);
+    AdLProvider auth1 = Provider.of<AdLProvider>(ctx);
+    AdProvider auth2 = Provider.of<AdProvider>(ctx);
+    AdRProvider auth3 = Provider.of<AdRProvider>(ctx);
+    CommProvider auth4 = Provider.of<CommProvider>(ctx);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -1442,8 +1477,184 @@ class _Page2State extends State<Page2> {
                       setState(() {
                         isLoading = true;
                       });
-                      print('.......................................');
-                      var one = addAdressRamassage(ctx);
+                      print(
+                          '..................START ADDING.....................');
+
+                      var adressRamassage = AdressRam(
+                        localisationRam: localisationE.text,
+                        nameEmetteur: nameemetteur.text,
+                        contactEmetteur: int.parse(contactemetteur.text),
+                        emailEmetteur: emailemetteur.text,
+                        civiliteEmetteur: civiliteemetteur!,
+                        instruction: instructionemetteur.text,
+                        updatedAt: DateTime.now().toString(),
+                      );
+                      auth3.createAdressRam(adressRamassage).then(
+                        (respo) {
+                          if (respo!['statut']) {
+                            AdressRam adR = respo['adressRam'];
+                            print(adR);
+                            Provider.of<AdRProvider>(context, listen: false)
+                                .setAdressRam(adR);
+
+                            var adressLivraison = AdressLiv(
+                              localisationLiv: localisationR.text,
+                              nameRecepteur: namerecepteur.text,
+                              contactRecepteur:
+                                  int.parse(contactrecepteur.text),
+                              emailRecepteur: emailrecepteur.text,
+                              civiliteRecepteur: civiliterecepteur!,
+                              instruction: instructionrecepteur.text,
+                              updatedAt: DateTime.now().toString(),
+                            );
+                            print(
+                                '..........................FINISH ADRESS RAMASSAGE.................');
+                            auth1.createAdresseLiv(adressLivraison).then(
+                              (value) {
+                                if (value!['statut']) {
+                                  AdressLiv adL = value['adressLiv'];
+                                  print(adL);
+                                  Provider.of<AdLProvider>(context,
+                                          listen: false)
+                                      .setAdressLiv(adL);
+                                  var adress = Adresse(
+                                    adresslivid: adL.adressLivId!,
+                                    adressramid: adR.adressRamId!,
+                                    poids: poids.toString(),
+                                    taille: taille,
+                                    type: type!,
+                                    planification: planification!,
+                                    updatedAt: DateTime.now().toString(),
+                                  );
+                                  print(
+                                      '......................ADRESS LIVRAISON......................');
+                                  auth2.createAdresse(adress).then(
+                                    (other) {
+                                      if (other!['statut'] == true) {
+                                        Adresse ad = other['adress'];
+                                        print(ad);
+                                        Provider.of<AdProvider>(context,
+                                                listen: false)
+                                            .setAdress(ad);
+                                        print(
+                                            '.............................FINISH ADRESS........................');
+                                        User us = auth.user;
+                                        var commande = Commande(
+                                          client_id: us.id!,
+                                          adresse_id: adress.adressId!,
+                                          statut: true,
+                                          updated_at: DateTime.now().toString(),
+                                        );
+
+                                        auth4.createACommande(commande).then(
+                                          (or) {
+                                            if (or['statut']) {
+                                              Commande co = or['commande'];
+                                              print(co);
+                                              Fluttertoast.showToast(
+                                                msg:
+                                                    "Message: Commande,Adresse, AdressLiv and AdressRam are Added}",
+                                              );
+                                              Provider.of<CommProvider>(context,
+                                                      listen: false)
+                                                  .setCommande(co);
+                                              print(
+                                                  '....................FINISH COMMANDE.....................');
+                                              setState(() {
+                                                isLoading = false;
+                                              });
+
+                                              Navigator.push(
+                                                context,
+                                                PageRouteBuilder(
+                                                  pageBuilder: (context,
+                                                      animation,
+                                                      secondaryAnimation) {
+                                                    return PaiementPage(
+                                                      ad: ad,
+                                                      adL: adL,
+                                                      adR: adR,
+                                                      com: co,
+                                                    );
+                                                  },
+                                                  transitionsBuilder: (context,
+                                                      animation,
+                                                      secondaryAnimation,
+                                                      child) {
+                                                    //Premiere animation de bas en haut
+                                                    var begin =
+                                                        const Offset(1.0, 0.0);
+                                                    var end = Offset.zero;
+                                                    var tween = Tween(
+                                                        begin: begin, end: end);
+                                                    return SlideTransition(
+                                                      position: animation
+                                                          .drive(tween),
+                                                      child: child,
+                                                    );
+                                                  },
+                                                ),
+                                              );
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                msg: "Error:${or['message']}",
+                                              );
+                                            }
+                                          },
+                                        );
+                                      } else {
+                                        Fluttertoast.showToast(
+                                          msg: "Error:${other['message']}",
+                                        );
+                                      }
+                                    },
+                                  );
+                                } else {
+                                  Fluttertoast.showToast(
+                                    msg: "Error:${value['message']}",
+                                  );
+                                }
+                              },
+                            );
+                          } else {
+                            Fluttertoast.showToast(
+                              msg: "Error:${respo['message']}",
+                            );
+                          }
+                          Fluttertoast.showToast(
+                            msg: "Message:${respo['message']}",
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: GoogleFonts.poppins(fontSize: 18),
+                    ),
+                    child: const Text(
+                      'Reset',
+                      style: TextStyle(color: red_button),
+                    ),
+                    onPressed: () => setState(() {
+                      isCompleted = false;
+                      currentStep = 0;
+                      /*email.clear();
+                      numero.clear();*/
+                    }),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 150),
+          bas(),
+        ],
+      ),
+    );
+  }
+}
+/*var one = addAdressRamassage(ctx);
                       print(one);
                       var two = addAdressLivraison(ctx);
                       print(two);
@@ -1486,35 +1697,7 @@ class _Page2State extends State<Page2> {
                             },
                           ),
                         );
-                      }
-                    },
-                  ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      textStyle: GoogleFonts.poppins(fontSize: 18),
-                    ),
-                    child: const Text(
-                      'Reset',
-                      style: TextStyle(color: red_button),
-                    ),
-                    onPressed: () => setState(() {
-                      isCompleted = false;
-                      currentStep = 0;
-                      /*email.clear();
-                      numero.clear();*/
-                    }),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 150),
-          bas(),
-        ],
-      ),
-    );
-  }
-}
+                      }*/
 /**Step(
           state: currentStep > 6 ? StepState.complete : StepState.indexed,
           isActive: currentStep >= 6,

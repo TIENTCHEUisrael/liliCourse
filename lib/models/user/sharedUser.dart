@@ -77,6 +77,7 @@ class UserPreferences {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     prefs.setString('currentUser', jsonEncode(data));
+    print('.........................LOGING...................');
   }
 
   static removeUserToSharePreference() async {

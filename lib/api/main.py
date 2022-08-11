@@ -285,7 +285,7 @@ async def getcommandeById(id:int):
     model=await Commande_Pydantic.from_queryset_single(Commande.get(commande_id=id))
     return model
 
-@app.get("/lilicourse/commande",response_model=List[Commande_Pydantic])
+@app.get("/lilicourse/commandes",response_model=List[Commande_Pydantic])
 async def get_all_Commande():
     retour= await Commande_Pydantic.from_queryset(Commande.all())
     return retour

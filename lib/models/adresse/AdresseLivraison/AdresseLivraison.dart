@@ -41,12 +41,12 @@ class AdressLiv {
         "updated_at": updatedAt,
       };
 
-  static List<AdressLiv> adressRamFromSnapshot(List snapshot) {
+  static List<AdressLiv> adressLivFromSnapshot(List snapshot) {
     return snapshot.map((data) => AdressLiv.fromJson(data)).toList();
   }
 
   @override
   String toString() {
-    return 'AdressRam {adresse_liv_id:$adressLivId,localisationLiv: $localisationLiv, name_recepteur: $nameRecepteur, contact_recepteur: $contactRecepteur, email_recepteur: $emailRecepteur,civilite_recepteur:$civiliteRecepteur, instruction:$instruction, updated_at!$updatedAt}';
+    return 'Adresse_liv {adresse_liv_id:$adressLivId,localisationLiv: $localisationLiv, name_recepteur: $nameRecepteur, contactrecepteur: $contactRecepteur, email_recepteur: $emailRecepteur,civilite_recepteur:$civiliteRecepteur, instruction:$instruction, updated_at:$updatedAt}';
   }
 }

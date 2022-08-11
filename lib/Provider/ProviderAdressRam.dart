@@ -70,35 +70,39 @@ class AdRProvider extends ChangeNotifier {
     return obj;
   }
 
-  Future<Map<String, dynamic>> createAdresseRam(AdressRam adressRa) async {
+  Future<Map<String, dynamic>?> createAdressRam(AdressRam us) async {
     var result;
-    var ulrcreate =
+    var urlCreate =
         Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/adressRam/add');
     Map<String, String> header = {"Content-Type": "application/json"};
     try {
       _registerStatus = Statut.registing;
       notifyListeners();
-      final response = await http.post(
-        ulrcreate,
+      final reponse = await http.post(
+        urlCreate,
         headers: header,
         body: json.encode(
-          adressRa.toJson(),
+          us.toJson(),
         ),
       );
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-        _adressRam = AdressRam.fromJson(data);
-        _id = data['adresse_ram_id'];
+      if (reponse.statusCode == 200) {
         _registerStatus = Statut.registed;
+        notifyListeners();
+        var data = jsonDecode(reponse.body);
         AdressRamassagePreferences.saveAdressRamassageToSharePreferences(data);
+        _adressRam = AdressRam.fromJson(data);
+
+        //UserPreferences().saveUser(_user!);
         notifyListeners();
         result = {
           "statut": true,
-          'message': "Adress Ramassage Added",
+          "message": "AdressRam is registed",
           "adressRam": _adressRam!
         };
       } else {
-        result = {"statut": false, 'message': "Adress Livraison error"};
+        _registerStatus = Statut.notregisted;
+        notifyListeners();
+        result = {"statut": false, "message": "User is not registed"};
       }
     } catch (e) {
       print(e);

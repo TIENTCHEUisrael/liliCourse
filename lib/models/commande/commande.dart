@@ -35,6 +35,6 @@ class Commande {
 
   @override
   String toString() {
-    return 'Commande {client_id: $client_id, adresse_id: $adresse_id,statut:$statut,updated_At:$updated_at}';
+    return 'Commande {commande_id:$commandeId,user_id: $client_id, adresse_id: $adresse_id,statut:$statut,updated_At:$updated_at}';
   }
 }
