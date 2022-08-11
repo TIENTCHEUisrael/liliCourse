@@ -41,13 +41,25 @@ class Coursier {
       occupation: json['occupation'] as String,
     );
   }
-
+  Map<String, dynamic> toJson() => {
+        "comande_id": commandeId,
+        "first_name": first_name,
+        "last_name": last_name,
+        "email": email,
+        "phone_number": phone_number,
+        "password": password,
+        "image": image,
+        "transport": transport,
+        "rating": rating,
+        "occupation": occupation,
+        "updated_at": updated_At,
+      };
   static List<Coursier> recipesFromSnapshot(List snapshot) {
     return snapshot.map((data) => Coursier.fromJson(data)).toList();
   }
 
   @override
   String toString() {
-    return 'Coursier {coursier_id:$coursierId, commande_id: $commandeId, first_name:$first_name,email: $email, phone_number: $phone_number,password:$password, image:!$image,transport: $transport, rating: $rating,occupation:$occupation}';
+    return 'Coursier {coursier_id:$coursierId, commande_id: $commandeId, first_name:$first_name,email: $email, phone_number: $phone_number,password:$password, image:!$image,transport: $transport, rating: $rating,occupation:$occupation,updated_at:$updated_At}';
   }
 }

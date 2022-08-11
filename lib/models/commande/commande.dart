@@ -2,7 +2,7 @@ class Commande {
   int? commandeId;
   final int client_id;
   final int adresse_id;
-  final bool statut;
+  final String statut;
   final String? updated_at;
 
   Commande(
@@ -17,7 +17,7 @@ class Commande {
       commandeId: json['commande_id'] as int,
       client_id: json['user_id'] as int,
       adresse_id: json['adresse_id'] as int,
-      statut: json['statut'] as bool,
+      statut: json['statut'] as String,
       updated_at: json['updated_at'] as String,
     );
   }

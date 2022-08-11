@@ -225,7 +225,7 @@ class _Page2State extends State<Page2> {
     var com = Commande(
         client_id: us.id!,
         adresse_id: adre.adressId!,
-        statut: false,
+        statut: "false",
         updated_at: DateTime.now().toString());
     setState(
       () {
@@ -1414,7 +1414,8 @@ class _Page2State extends State<Page2> {
                         height: 10,
                       ),
                       const Center(
-                        child: Text('Recapitulatif'),
+                        child:
+                            Text('**************Recapitulatif****************'),
                       ),
                       const SizedBox(
                         height: 5,
@@ -1468,18 +1469,20 @@ class _Page2State extends State<Page2> {
                       textStyle: GoogleFonts.poppins(fontSize: 18),
                     ),
                     child: isLoading
-                        ? const CircularProgressIndicator()
-                        : Text(
+                        ? const CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : const Text(
                             'Confirm',
-                            style: GoogleFonts.poppins(),
+                            style: TextStyle(color: Colors.white, fontSize: 18),
                           ),
                     onPressed: () {
                       setState(() {
                         isLoading = true;
                       });
-                      print(
-                          '..................START ADDING.....................');
-
+                      print("");
+                      print('..................STARTING.....................');
+                      print("");
                       var adressRamassage = AdressRam(
                         localisationRam: localisationE.text,
                         nameEmetteur: nameemetteur.text,
@@ -1507,8 +1510,10 @@ class _Page2State extends State<Page2> {
                               instruction: instructionrecepteur.text,
                               updatedAt: DateTime.now().toString(),
                             );
+                            print("");
                             print(
-                                '..........................FINISH ADRESS RAMASSAGE.................');
+                                '..........................FINISH ADRESSE RAMASSAGE.................');
+                            print("");
                             auth1.createAdresseLiv(adressLivraison).then(
                               (value) {
                                 if (value!['statut']) {
@@ -1526,8 +1531,10 @@ class _Page2State extends State<Page2> {
                                     planification: planification!,
                                     updatedAt: DateTime.now().toString(),
                                   );
+                                  print("");
                                   print(
-                                      '......................ADRESS LIVRAISON......................');
+                                      '......................FINISH ADRESSE LIVRAISON......................');
+                                  print("");
                                   auth2.createAdresse(adress).then(
                                     (other) {
                                       if (other!['statut'] == true) {
@@ -1536,13 +1543,16 @@ class _Page2State extends State<Page2> {
                                         Provider.of<AdProvider>(context,
                                                 listen: false)
                                             .setAdress(ad);
+                                        print("");
                                         print(
-                                            '.............................FINISH ADRESS........................');
+                                            '.............................FINISH ADRESSE........................');
+                                        print("");
                                         User us = auth.user;
+                                        print(us);
                                         var commande = Commande(
                                           client_id: us.id!,
-                                          adresse_id: adress.adressId!,
-                                          statut: true,
+                                          adresse_id: ad.adressId!,
+                                          statut: "true",
                                           updated_at: DateTime.now().toString(),
                                         );
 
@@ -1553,24 +1563,30 @@ class _Page2State extends State<Page2> {
                                               print(co);
                                               Fluttertoast.showToast(
                                                 msg:
-                                                    "Message: Commande,Adresse, AdressLiv and AdressRam are Added}",
+                                                    "Message: Commande,Adresse, AdressLiv and AdressRam are Added",
                                               );
                                               Provider.of<CommProvider>(context,
                                                       listen: false)
                                                   .setCommande(co);
                                               print(
                                                   '....................FINISH COMMANDE.....................');
+                                              print("");
                                               setState(() {
                                                 isLoading = false;
                                               });
+                                              print("");
+                                              print(
+                                                  "...................................FINISH");
+                                              print("");
 
-                                              Navigator.push(
+                                              Navigator.pushReplacement(
                                                 context,
                                                 PageRouteBuilder(
                                                   pageBuilder: (context,
                                                       animation,
                                                       secondaryAnimation) {
                                                     return PaiementPage(
+                                                      us: us,
                                                       ad: ad,
                                                       adL: adL,
                                                       adR: adR,

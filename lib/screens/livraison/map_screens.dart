@@ -29,7 +29,7 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your MAp'),
+        title: const Text('Your Map'),
         actions: [
           IconButton(
               onPressed: _pickedLocation == null
@@ -37,26 +37,27 @@ class _MapScreenState extends State<MapScreen> {
                   : () {
                       Navigator.of(context).pop(_pickedLocation);
                     },
-              icon: Icon(Icons.check))
+              icon: const Icon(Icons.check))
         ],
       ),
       body: GoogleMap(
-          initialCameraPosition: CameraPosition(
-            target: LatLng(widget.initialLocation.latitude,
-                widget.initialLocation.longitude),
-            zoom: 16,
-          ),
-          onTap: widget.isSelecting ? _selectLocation : null,
-          markers: (_pickedLocation == null && widget.isSelecting)
-              ? {}
-              : {
-                  Marker(
-                    markerId: MarkerId('m1'),
-                    position: _pickedLocation ??
-                        LatLng(widget.initialLocation.latitude,
-                            widget.initialLocation.longitude),
-                  )
-                }),
+        initialCameraPosition: CameraPosition(
+          target: LatLng(widget.initialLocation.latitude,
+              widget.initialLocation.longitude),
+          zoom: 16,
+        ),
+        onTap: widget.isSelecting ? _selectLocation : null,
+        markers: (_pickedLocation == null && widget.isSelecting)
+            ? {}
+            : {
+                Marker(
+                  markerId: const MarkerId('m1'),
+                  position: _pickedLocation ??
+                      LatLng(widget.initialLocation.latitude,
+                          widget.initialLocation.longitude),
+                )
+              },
+      ),
     );
   }
 }

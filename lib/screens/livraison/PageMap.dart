@@ -43,15 +43,15 @@ class _TimeWaitingState extends State<TimeWaiting> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Shex',
+                    'Li',
                     style: GoogleFonts.poppins(color: Colors.red),
                   ),
                   Text(
-                    'pi',
+                    'li',
                     style: GoogleFonts.poppins(color: blue_button),
                   ),
                   Text(
-                    ' livraison version 1.0',
+                    ' Course version 1.0',
                     style: GoogleFonts.poppins(),
                   ),
                 ],

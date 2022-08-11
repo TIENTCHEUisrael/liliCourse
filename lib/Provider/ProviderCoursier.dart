@@ -67,6 +67,50 @@ class CoursProvider extends ChangeNotifier {
     _getStatus = value;
   }
 
+  Future<Map<String, dynamic>?> createCoursier(Coursier us) async {
+    var result;
+    var urlCreate = Uri.parse(
+        '${Api_services.httpbaseUrl2}/lilicourse/coursier/add_coursier');
+    Map<String, String> header = {"Content-Type": "application/json"};
+    try {
+      _registerStatus = Statut.registing;
+      notifyListeners();
+      final reponse = await http.post(
+        urlCreate,
+        headers: header,
+        body: json.encode(
+          us.toJson(),
+        ),
+      );
+      if (reponse.statusCode == 200) {
+        _registerStatus = Statut.registed;
+        notifyListeners();
+        var data = jsonDecode(reponse.body);
+        CoursierPreferenced.saveCoursierToSharePreferences(data);
+        _coursier = Coursier.fromJson(data);
+
+        //UserPreferences().saveUser(_user!);
+        notifyListeners();
+        result = {
+          "statut": true,
+          "message": "Coursier is registed",
+          "coursier": _coursier!
+        };
+      } else {
+        _registerStatus = Statut.notregisted;
+        notifyListeners();
+        result = {
+          "statut": false,
+          "message": "Coursier is not registed",
+          "coursier": _coursier!
+        };
+      }
+    } catch (e) {
+      print(e);
+    }
+    return result;
+  }
+
   Future<Map<String, dynamic>> getCoursier(int id) async {
     var result;
     var urlget =
