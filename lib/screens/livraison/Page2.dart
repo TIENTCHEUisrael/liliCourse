@@ -64,7 +64,7 @@ class _Page2State extends State<Page2> {
 
   String type = "Colis";
   String taille = "Taille XS";
-  double poids = 2;
+  String poids = "2";
   String planification = "Rien";
   PlaceLocation? _pickedLocation;
 
@@ -191,7 +191,7 @@ class _Page2State extends State<Page2> {
     var ad = Adresse(
         adresslivid: adressLiv!.adressLivId!,
         adressramid: adressRam!.adressRamId!,
-        poids: poids.toString(),
+        poids: poids,
         taille: taille,
         type: type,
         planification: planification,
@@ -535,7 +535,7 @@ class _Page2State extends State<Page2> {
                           InkWell(
                             onTap: () {
                               setState(() {
-                                poids = 3;
+                                poids = "3";
                                 t1 = 15;
                                 t2 = 10;
                                 t3 = 10;
@@ -569,7 +569,7 @@ class _Page2State extends State<Page2> {
                             onTap: () {
                               setState(
                                 () {
-                                  poids = 11;
+                                  poids = "11";
                                   t2 = 15;
                                   t1 = 10;
                                   t3 = 10;
@@ -604,7 +604,7 @@ class _Page2State extends State<Page2> {
                             onTap: () {
                               setState(
                                 () {
-                                  poids = 21;
+                                  poids = "21";
                                   t3 = 15;
                                   t2 = 10;
                                   t1 = 10;
@@ -1548,7 +1548,7 @@ class _Page2State extends State<Page2> {
                                     var adress = Adresse(
                                       adresslivid: adL.adressLivId!,
                                       adressramid: adR.adressRamId!,
-                                      poids: poids.toString(),
+                                      poids: poids,
                                       taille: taille,
                                       type: type,
                                       planification: planification,
@@ -1698,181 +1698,3 @@ class _Page2State extends State<Page2> {
     );
   }
 }
-/*var one = addAdressRamassage(ctx);
-                      print(one);
-                      var two = addAdressLivraison(ctx);
-                      print(two);
-                      var three = addAdress(ctx);
-                      print(three);
-                      var fourth = addCommande(ctx);
-                      print(fourth);
-                      print('.............................................');
-
-                      if (one == null ||
-                          two == null ||
-                          three == null ||
-                          fourth == null) {
-                        Fluttertoast.showToast(
-                          msg: "Value is null",
-                        );
-                      } else {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) {
-                              return PaiementPage(
-                                ad: three,
-                                adL: two,
-                                adR: one,
-                                com: fourth,
-                              );
-                            },
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
-                              //Premiere animation de bas en haut
-                              var begin = const Offset(1.0, 0.0);
-                              var end = Offset.zero;
-                              var tween = Tween(begin: begin, end: end);
-                              return SlideTransition(
-                                position: animation.drive(tween),
-                                child: child,
-                              );
-                            },
-                          ),
-                        );
-                      }*/
-/**Step(
-          state: currentStep > 6 ? StepState.complete : StepState.indexed,
-          isActive: currentStep >= 6,
-          title: const Text(''),
-          content: SingleChildScrollView(
-            padding: const EdgeInsets.all(5),
-            child: Column(
-              children: [
-                containFirst(
-                    imagePath: 'assets/images/delivery/svg/paiement.svg',
-                    text: 'Demander une livraison'),
-                Card(
-                  elevation: 5,
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(15),
-                        child: Text(
-                          'Paiements ',
-                          style: GoogleFonts.poppins(fontSize: 15),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              print('Orange Money');
-                            },
-                            child: Column(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(h1),
-                                  child: Card(
-                                    elevation: 4,
-                                    child: Image.asset(
-                                      "assets/images/image2.png",
-                                      height: 110,
-                                      width: 100,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(12),
-                                  child: Text(
-                                    "Orange money",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: blue_button),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              print('Mobile Money');
-                            },
-                            child: Column(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(h2),
-                                  child: Card(
-                                    elevation: 4,
-                                    child: Image.asset(
-                                      "assets/images/image3.jpg",
-                                      height: 110,
-                                      width: 100,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(12),
-                                  child: Text(
-                                    "Mobile Money",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: blue_button),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        child: InkWell(
-                          onTap: () {
-                            print('PayPal money');
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(h3),
-                                child: Card(
-                                  elevation: 4,
-                                  child: Image.asset(
-                                    "assets/images/image1.png",
-                                    height: 110,
-                                    width: 100,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(12),
-                                child: Text(
-                                  "Paypal Money",
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: blue_button),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ), */

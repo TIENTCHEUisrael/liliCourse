@@ -34,7 +34,7 @@ class PaiementPage extends StatefulWidget {
 }
 
 class _PaiementPageState extends State<PaiementPage> {
-  double _price = 1250.000;
+  double _price = 1500.00;
   double pN = 0;
   double tL = 0;
   void calculatePrice() {
@@ -59,7 +59,7 @@ class _PaiementPageState extends State<PaiementPage> {
     } else {
       print('Error');
       Fluttertoast.showToast(
-        msg: "Error:['One Poids is null']}",
+        msg: "Error:['Poids is null']}",
       );
     }
 

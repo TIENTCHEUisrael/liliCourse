@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lilicourse/main.dart';
+import 'package:lilicourse/widgets/appBar.dart';
+import 'package:lilicourse/widgets/bas.dart';
 import 'package:location/location.dart';
 
 import '../../services/location_service.dart';
+import '../Home/HomePage.dart';
 
 class AttentePage extends StatefulWidget {
-  const AttentePage({Key? key}) : super(key: key);
-
   @override
   State<AttentePage> createState() => _AttentePageState();
 }
@@ -100,10 +100,21 @@ class _AttentePageState extends State<AttentePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Track Order",
-          style: TextStyle(color: Colors.black),
-        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (ctx) {
+                    return Home();
+                  },
+                ),
+              );
+            },
+            icon: Icon(Icons.arrow_right),
+          ),
+        ],
       ),
       body: currentLocation == null
           ? attente()
@@ -147,6 +158,7 @@ class _AttentePageState extends State<AttentePage> {
 
   Widget attente() {
     return Container(
+      padding: const EdgeInsets.all(5),
       child: Padding(
         padding: const EdgeInsets.all(5),
         child: Column(
@@ -156,81 +168,19 @@ class _AttentePageState extends State<AttentePage> {
               child: Center(
                 child: SvgPicture.asset(
                   'assets/images/tim.svg',
-                  height: 250,
+                  height: 200,
                   width: 200,
                 ),
               ),
             ),
             Container(
-                padding: const EdgeInsets.only(top: 50, bottom: 50),
-                child: const CircularProgressIndicator()),
-            Container(
-              padding: const EdgeInsets.only(top: 220),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Li',
-                    style: GoogleFonts.poppins(color: Colors.red),
-                  ),
-                  Text(
-                    'li',
-                    style: GoogleFonts.poppins(color: blue_button),
-                  ),
-                  Text(
-                    ' Course version 1.0',
-                    style: GoogleFonts.poppins(),
-                  ),
-                ],
-              ),
+              padding: const EdgeInsets.only(top: 50, bottom: 50),
+              child: const CircularProgressIndicator(),
             ),
+            bas()
           ],
         ),
       ),
     );
   }
 }
-
-/*
-Widget Attente(){
-  return SingleChildScrollView(
-        padding: const EdgeInsets.all(5),
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(top: 95),
-              child: Center(
-                child: Lottie.asset(
-                  'assets/images/timer.json',
-                  height: 250,
-                  width: 200,
-                ),
-              ),
-            ),
-            Container(
-                padding: const EdgeInsets.only(top: 50, bottom: 50),
-                child: const CircularProgressIndicator()),
-            Container(
-              padding: const EdgeInsets.only(top: 220),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Li',
-                    style: GoogleFonts.poppins(color: Colors.red),
-                  ),
-                  Text(
-                    'li',
-                    style: GoogleFonts.poppins(color: blue_button),
-                  ),
-                  Text(
-                    ' Course version 1.0',
-                    style: GoogleFonts.poppins(),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-}*/

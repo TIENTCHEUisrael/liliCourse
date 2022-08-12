@@ -6,7 +6,6 @@ import 'package:lilicourse/Provider/providerUser.dart';
 import 'package:lilicourse/models/commande/commande.dart';
 import 'package:lilicourse/models/paiement/Paiement.dart';
 import 'package:provider/provider.dart';
-
 import '../Animations/custum.dart';
 import '../main.dart';
 import '../screens/livraison/PageMap.dart';
@@ -95,6 +94,14 @@ class _AddTodoPopupCardState extends State<AddTodoPopupCard> {
                     TextButton(
                       onPressed: () {
                         if (widget.com == null || widget.price == null) {
+                          Fluttertoast.showToast(
+                            msg: "Error:['One Value is null']}",
+                          );
+                        }
+                        if (int.parse(_price.text) < widget.price) {
+                          Fluttertoast.showToast(
+                            msg: "Error:['Value is not correct']}",
+                          );
                         } else {
                           var us = auth.user;
                           var paie = Paiement(
@@ -105,28 +112,40 @@ class _AddTodoPopupCardState extends State<AddTodoPopupCard> {
                             phone: _phone.text,
                             updated_at: DateTime.now().toString(),
                           );
+                          print("");
                           print(
                               '.................START PAIEMENT.........................');
+                          print("");
                           paiement.createPaiement(paie).then(
                             (value) {
                               if (value['statut']) {
                                 print("${value['paiement']}");
-                                Fluttertoast.showToast(
-                                  msg: "Message:${value['message']}",
-                                );
-                                setState(
-                                  () {
-                                    _isLoading = false;
-                                  },
-                                );
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (ctx) {
-                                      return const AttentePage();
-                                    },
-                                  ),
-                                );
+                                var p = value['paiement'];
+                                print("");
+                                print(
+                                    '.........START PAIEMENT MTN..............');
+                                print("");
+                                paiement.PaiementMtn(p).then((tap) {
+                                  if (tap['statut']) {
+                                    var ok = tap['data'];
+                                    print(ok);
+                                    setState(() {
+                                      _isLoading = false;
+                                    });
+                                    print("");
+                                    print(
+                                        '.........FINISH PAIEMENT..............');
+                                    print("");
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (ctx) {
+                                          return AttentePage();
+                                        },
+                                      ),
+                                    );
+                                  } else {}
+                                });
                               } else {
                                 Fluttertoast.showToast(
                                   msg: "Error:${value['message']}",
@@ -134,8 +153,11 @@ class _AddTodoPopupCardState extends State<AddTodoPopupCard> {
                               }
                             },
                           );
+
+                          print("");
                           print(
                               ".........................FINISH PAIEMENT.......................");
+                          print("");
                         }
                       },
                       child: Text(
@@ -267,7 +289,7 @@ class _PaiementOrangeState extends State<PaiementOrange> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (ctx) {
-                                      return const AttentePage();
+                                      return AttentePage();
                                     },
                                   ),
                                 );
@@ -410,7 +432,7 @@ class _PaiementPayPalState extends State<PaiementPayPal> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (ctx) {
-                                      return const AttentePage();
+                                      return AttentePage();
                                     },
                                   ),
                                 );

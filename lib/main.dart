@@ -4,6 +4,7 @@ import 'package:lilicourse/Provider/ProviderAdressLiv.dart';
 import 'package:lilicourse/Provider/ProviderAdressRam.dart';
 import 'package:lilicourse/Provider/ProviderCommande.dart';
 import 'package:lilicourse/Provider/ProviderCoursier.dart';
+import 'package:lilicourse/Provider/ProviderPaiement.dart';
 import 'package:provider/provider.dart';
 import '../screens/splashScreen/SplashPage.dart';
 import 'Provider/providerUser.dart';
@@ -64,13 +65,20 @@ class _MyAppState extends State<MyApp> {
             return CommProvider();
           },
         ),
+        ChangeNotifierProvider(
+          create: (_) {
+            return PaiementProvider();
+          },
+        ),
       ],
       child: Consumer<AuthProvider>(
         builder: (context, auth, _) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'LiliCourse',
-            theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+            theme: ThemeData(
+                primaryColor: Colors.white,
+                scaffoldBackgroundColor: Colors.white),
             home: auth.isAuth == true
                 ? Home()
                 : FutureBuilder<bool>(
