@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lilicourse/Provider/providerUser.dart';
+import 'package:lilicourse/main.dart';
 import 'package:lilicourse/screens/NavBar_Pages/Apropos.dart';
 import 'package:lilicourse/screens/login/loginPage.dart';
 import 'package:provider/provider.dart';
@@ -25,8 +26,11 @@ class _NavBarState extends State<NavBar> {
                 padding: EdgeInsets.zero,
                 children: [
                   UserAccountsDrawerHeader(
-                    accountName:
-                        Text('${auth.user.first_name} ${auth.user.last_name}'),
+                    accountName: Text(
+                      '${auth.user.first_name} ${auth.user.last_name}',
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
                     accountEmail: Text(
                       auth.user.email,
                       style: const TextStyle(color: Colors.white60),
@@ -49,7 +53,10 @@ class _NavBarState extends State<NavBar> {
                     ),
                   ),
                   ListTile(
-                    leading: const Icon(Icons.person),
+                    leading: const Icon(
+                      Icons.person,
+                      color: blue_button,
+                    ),
                     title: const Text('Profile'),
                     onLongPress: () {
                       return;
@@ -62,21 +69,27 @@ class _NavBarState extends State<NavBar> {
                       );
                     },
                   ),
-                  Divider(),
+                  const Divider(),
                   ListTile(
-                    leading: const Icon(Icons.person_search_sharp),
+                    leading: const Icon(
+                      Icons.person_search_sharp,
+                      color: blue_button,
+                    ),
                     title: const Text('Delivery man'),
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) {
-                          return DeliveryMan();
+                          return const DeliveryMan();
                         }),
                       );
                     },
                   ),
                   const Divider(),
                   ListTile(
-                    leading: const Icon(Icons.settings),
+                    leading: const Icon(
+                      Icons.settings,
+                      color: blue_button,
+                    ),
                     title: const Text('Setting'),
                     onLongPress: () {
                       return;
@@ -93,7 +106,7 @@ class _NavBarState extends State<NavBar> {
                   ListTile(
                     leading: const Icon(
                       CupertinoIcons.moon_stars,
-                      color: Colors.grey,
+                      color: blue_button,
                     ),
                     title: jour ? const Text('Jour') : const Text('Nuit'),
                     onLongPress: () {
@@ -108,7 +121,10 @@ class _NavBarState extends State<NavBar> {
                   ),
                   const Divider(),
                   ListTile(
-                    leading: const Icon(Icons.info),
+                    leading: const Icon(
+                      Icons.info,
+                      color: blue_button,
+                    ),
                     title: const Text('About'),
                     onLongPress: () {
                       return;
@@ -123,7 +139,10 @@ class _NavBarState extends State<NavBar> {
                   ),
                   const Divider(),
                   ListTile(
-                    leading: const Icon(Icons.exit_to_app),
+                    leading: const Icon(
+                      Icons.exit_to_app,
+                      color: blue_button,
+                    ),
                     title: const Text('Disconnected'),
                     onLongPress: () {
                       return;
