@@ -4,10 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lilicourse/Provider/ProviderPaiement.dart';
 import 'package:lilicourse/Provider/providerUser.dart';
 import 'package:lilicourse/models/adresse/Adresse/Adresse.dart';
+import 'package:lilicourse/models/adresse/AdresseLivraison/AdresseLivraison.dart';
+import 'package:lilicourse/models/adresse/AdresseRamassage/AdresseRamassage.dart';
 import 'package:lilicourse/models/commande/commande.dart';
 import 'package:lilicourse/models/paiement/Paiement.dart';
 import 'package:provider/provider.dart';
 import '../Animations/custum.dart';
+import '../Provider/ProviderAdressLiv.dart';
+import '../Provider/ProviderAdressRam.dart';
 import '../main.dart';
 import '../screens/livraison/PageMap.dart';
 
@@ -483,5 +487,127 @@ class _PaiementPayPalState extends State<PaiementPayPal> {
         ),
       ),
     );
+  }
+}
+
+/// Tag-value used for the add todo popup button.
+const String hero = 'ad-todo';
+
+class Popup extends StatefulWidget {
+  final Adresse ad;
+  final Commande c;
+  final Paiement p;
+
+  Popup({required this.ad, required this.c, required this.p});
+
+  @override
+  State<Popup> createState() => _PopupState();
+}
+
+class _PopupState extends State<Popup> {
+  bool _isloading = true;
+  AdressLiv? _adressLiv;
+  AdressRam? _adressRam;
+  @override
+  void initState() {
+    getAdressRam();
+    getAdressLiv();
+    super.initState();
+  }
+
+  Future<void> getAdressLiv() async {
+    await AdLProvider().getAdressLivById(widget.ad.adresslivid).then((value) {
+      if (value!['statut']) {
+        setState(() {
+          _adressLiv = value['adressLiv'];
+          print(_adressLiv);
+          _isloading = false;
+        });
+      }
+    });
+  }
+
+  Future<void> getAdressRam() async {
+    await AdRProvider().getAdressRamById(widget.ad.adressramid).then((value) {
+      if (value!['statut']) {
+        setState(() {
+          _adressRam = value['adressRam'];
+          print(_adressRam);
+          _isloading = false;
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _isloading
+        ? const Center(child: CircularProgressIndicator())
+        : Center(
+            child: Hero(
+              tag: hero,
+              createRectTween: (begin, end) {
+                return CustomRectTween(begin: begin!, end: end!);
+              },
+              child: Material(
+                color: Colors.white,
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32)),
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: const Text(
+                            'Information Paiement',
+                            style: TextStyle(color: blue_button),
+                          ),
+                          subtitle: Text(
+                              'Mode: ${widget.p.mode}, Money: ${widget.p.montant}, Number: ${widget.p.phone}'),
+                          trailing:
+                              const Icon(Icons.payment, color: blue_button),
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'Order informations ',
+                            style: TextStyle(color: blue_button),
+                          ),
+                          subtitle: Text(
+                              'Weight :${widget.ad.poids}, Size: ${widget.ad.taille}, Type: ${widget.ad.type}'),
+                          trailing:
+                              const Icon(Icons.info_sharp, color: blue_button),
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'Pickup informations ',
+                            style: TextStyle(color: blue_button),
+                          ),
+                          subtitle: Text(
+                              'Transmitter :${_adressRam!.nameEmetteur},Civility :${_adressRam!.civiliteEmetteur}, Contact :${_adressRam!.contactEmetteur}, Adresse :${_adressRam!.localisationRam}'),
+                          trailing: const Icon(Icons.local_activity,
+                              color: blue_button),
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'Deposit informations ',
+                            style: TextStyle(color: blue_button),
+                          ),
+                          subtitle: Text(
+                              'Receiver :${_adressLiv!.nameRecepteur},Civility :${_adressLiv!.civiliteRecepteur}, Contact :${_adressLiv!.contactRecepteur}, Adresse: ${_adressLiv!.localisationLiv}'),
+                          trailing: const Icon(Icons.local_activity,
+                              color: blue_button),
+                        ),
+                        const Center(
+                          child: Text('Thank\'s'),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
   }
 }

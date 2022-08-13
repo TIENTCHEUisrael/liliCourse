@@ -21,7 +21,7 @@ class _RequestEnCourState extends State<RequestEnCour> {
       itemCount: 10,
       itemBuilder: ((context, index) {
         return Padding(
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           child: Column(children: [card()]),
         );
       }),
@@ -31,6 +31,7 @@ class _RequestEnCourState extends State<RequestEnCour> {
   Widget card() {
     return InkWell(
       child: Card(
+        elevation: 5,
         child: Container(
           padding: const EdgeInsets.all(5),
           child: Column(),
