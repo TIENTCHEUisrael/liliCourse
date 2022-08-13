@@ -69,6 +69,33 @@ class AdLProvider extends ChangeNotifier {
     return obj;
   }
 
+  Future<Map<String, dynamic>?> getAdressLivById(int id) async {
+    var result;
+    var urlAdressLiv =
+        Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/adressLivId?id=$id');
+
+    try {
+      final response = await http.get(urlAdressLiv);
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+
+        _adressLiv = AdressLiv.fromJson(data);
+        notifyListeners();
+
+        result = {
+          "statut": true,
+          "message": "Adress Ram getted",
+          "adressRam": _adressLiv
+        };
+      } else {
+        result = {"statut": false, "message": "Adress Liv not getted"};
+      }
+    } catch (e) {
+      print(e);
+    }
+    return result;
+  }
+
   Future<Map<String, dynamic>?> createAdresseLiv(AdressLiv us) async {
     var result;
     var urlCreate =

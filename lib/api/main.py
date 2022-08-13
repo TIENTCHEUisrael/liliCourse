@@ -178,7 +178,7 @@ async def delete_Coursier(id: int):
 #..................................ADRESSE .............................................;
 #........................................................................................
 #get
-@app.get("/lilicourse/adress/{id}",response_model=Adresse_Pydantic,responses={404: {"model": HTTPNotFoundError}})
+@app.get("/lilicourse/adres",response_model=Adresse_Pydantic,responses={404: {"model": HTTPNotFoundError}})
 async def getAdressById(id:int):
     model=await Adresse_Pydantic.from_queryset_single(Adresse.get(adresse_id=id))
     return model
@@ -212,7 +212,7 @@ async def delete_adress(id: int):
 #..................................ADRESSE_RAM..........................................;
 #.......................................................................................
 #get
-@app.get("/lilicourse/adressRam/{id}",response_model=Adresse_ram_Pydantic,responses={404: {"model": HTTPNotFoundError}})
+@app.get("/lilicourse/adressRamId",response_model=Adresse_ram_Pydantic,responses={404: {"model": HTTPNotFoundError}})
 async def getAdressRamById(id:int):
     model=await Adresse_ram_Pydantic.from_queryset_single(Adresse_ram.get(adresse_ram_id=id))
     return model
@@ -246,7 +246,7 @@ async def delete_adressRam(id: int):
 #..................................ADRESSE_LIV..........................................;
 #........................................................................................
 #get
-@app.get("/lilicourse/adressLiv/{id}",response_model=Adresse_liv_Pydantic,responses={404: {"model": HTTPNotFoundError}})
+@app.get("/lilicourse/adressLivId",response_model=Adresse_liv_Pydantic,responses={404: {"model": HTTPNotFoundError}})
 async def getAdressLivById(id:int):
     model=await Adresse_liv_Pydantic.from_queryset_single(Adresse_liv.get(adresse_liv_id=id))
     return model
@@ -280,7 +280,7 @@ async def delete_adressLiv(id: int):
 #..................................COMMANDE.............................................;
 #........................................................................................
 #get
-@app.get("/lilicourse/commande/{id}",response_model=Commande_Pydantic,responses={404: {"model": HTTPNotFoundError}})
+@app.get("/lilicourse/commande/get",response_model=Commande_Pydantic,responses={404: {"model": HTTPNotFoundError}})
 async def getcommandeById(id:int):
     model=await Commande_Pydantic.from_queryset_single(Commande.get(commande_id=id))
     return model
@@ -315,10 +315,11 @@ async def delete_commande(id: int):
 #............................................................................
 
 
-@app.get("/lilicourse/paiement",response_model=List[Paiement_Pydantic])
+@app.get("/lilicourse/paiements",response_model=List[Paiement_Pydantic])
 async def get_all_Paiement():
     retour= await Paiement_Pydantic.from_queryset(Paiement.all())
     return retour 
+
 
 @app.post('/lilicourse/paiementMtn')
 async def paiement(phone:str,somme:str):

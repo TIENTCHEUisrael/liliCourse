@@ -37,6 +37,8 @@ class Page2 extends StatefulWidget {
 }
 
 class _Page2State extends State<Page2> {
+  PlaceLocation? start;
+  PlaceLocation? destination;
   List<AdressRam>? _adressRam;
   List<AdressLiv>? _adressLiv;
   List<Adresse>? _adress;
@@ -268,6 +270,7 @@ class _Page2State extends State<Page2> {
           .then(
         (value) {
           setState(() {
+            start = _pickedLocation;
             localisationE.text = value;
             localisationRamassage = value;
           });
@@ -288,6 +291,7 @@ class _Page2State extends State<Page2> {
           .then(
         (value) {
           setState(() {
+            destination = _pickedLocation;
             localisationR.text = value;
             localisationrecepteur = value;
           });
@@ -1496,6 +1500,11 @@ class _Page2State extends State<Page2> {
                         Fluttertoast.showToast(
                           msg: "Error:['One Value is null']}",
                         );
+                      } else if (start == null || destination == null) {
+                        Fluttertoast.showToast(
+                          msg:
+                              "Error:['Start Location or Destination location is null']}",
+                        );
                       } else {
                         setState(
                           () {
@@ -1611,6 +1620,8 @@ class _Page2State extends State<Page2> {
                                                         animation,
                                                         secondaryAnimation) {
                                                       return PaiementPage(
+                                                        st: start!,
+                                                        de: destination!,
                                                         us: us,
                                                         ad: ad,
                                                         adL: adL,

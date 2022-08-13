@@ -5,9 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:lilicourse/models/adresse/Adresse/Adresse.dart';
+import 'package:lilicourse/models/adresse/AdresseLivraison/AdresseLivraison.dart';
+import 'package:lilicourse/models/adresse/AdresseRamassage/AdresseRamassage.dart';
 import 'package:lilicourse/services/service.dart';
 
 import '../models/adresse/Adresse/sharedAdress.dart';
+import '../models/commande/commande.dart';
 
 enum Statut {
   registing,
@@ -23,6 +26,8 @@ enum Statut {
 
 class AdProvider extends ChangeNotifier {
   Adresse? _adresse;
+  AdressLiv? _adressLiv;
+  AdressRam? _adressRam;
   int? _id;
   String? _name;
   Statut _registerStatus = Statut.notregisted;

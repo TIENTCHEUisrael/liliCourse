@@ -16,6 +16,8 @@ import '../../widgets/bas.dart';
 import '../../widgets/containFirst.dart';
 
 class PaiementPage extends StatefulWidget {
+  final PlaceLocation st;
+  final PlaceLocation de;
   final User us;
   final AdressLiv adL;
   final AdressRam adR;
@@ -23,7 +25,9 @@ class PaiementPage extends StatefulWidget {
   final Commande com;
 
   const PaiementPage(
-      {required this.us,
+      {required this.st,
+      required this.de,
+      required this.us,
       required this.adL,
       required this.adR,
       required this.ad,
@@ -183,7 +187,10 @@ class _PaiementPageState extends State<PaiementPage> {
                         HeroDialogRoute(
                           builder: (context) {
                             return AddTodoPopupCard(
-                                price: _price, com: widget.com);
+                                st: widget.st,
+                                de: widget.de,
+                                price: _price,
+                                com: widget.com);
                           },
                         ),
                       );
@@ -223,7 +230,10 @@ class _PaiementPageState extends State<PaiementPage> {
                         HeroDialogRoute(
                           builder: (context) {
                             return PaiementOrange(
-                                price: _price, com: widget.com);
+                                st: widget.st,
+                                de: widget.de,
+                                price: _price,
+                                com: widget.com);
                           },
                         ),
                       );
@@ -263,7 +273,10 @@ class _PaiementPageState extends State<PaiementPage> {
                         HeroDialogRoute(
                           builder: (context) {
                             return PaiementPayPal(
-                                price: _price, com: widget.com);
+                                st: widget.st,
+                                de: widget.de,
+                                price: _price,
+                                com: widget.com);
                           },
                         ),
                       );

@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lilicourse/Provider/ProviderPaiement.dart';
 import 'package:lilicourse/Provider/providerUser.dart';
+import 'package:lilicourse/models/adresse/Adresse/Adresse.dart';
 import 'package:lilicourse/models/commande/commande.dart';
 import 'package:lilicourse/models/paiement/Paiement.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,13 @@ const String heroAddTodo = 'add-todo-hero';
 class AddTodoPopupCard extends StatefulWidget {
   final double price;
   final Commande com;
-  AddTodoPopupCard({required this.price, required this.com});
+  final PlaceLocation st;
+  final PlaceLocation de;
+  AddTodoPopupCard(
+      {required this.st,
+      required this.de,
+      required this.price,
+      required this.com});
 
   @override
   State<AddTodoPopupCard> createState() => _AddTodoPopupCardState();
@@ -140,7 +147,8 @@ class _AddTodoPopupCardState extends State<AddTodoPopupCard> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (ctx) {
-                                          return AttentePage();
+                                          return AttentePage(
+                                              st: widget.st, de: widget.de);
                                         },
                                       ),
                                     );
@@ -183,7 +191,13 @@ const String otherHero = 'add-hero';
 class PaiementOrange extends StatefulWidget {
   final double price;
   final Commande com;
-  PaiementOrange({required this.price, required this.com});
+  final PlaceLocation st;
+  final PlaceLocation de;
+  PaiementOrange(
+      {required this.st,
+      required this.de,
+      required this.price,
+      required this.com});
 
   @override
   State<PaiementOrange> createState() => _PaiementOrangeState();
@@ -289,7 +303,8 @@ class _PaiementOrangeState extends State<PaiementOrange> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (ctx) {
-                                      return AttentePage();
+                                      return AttentePage(
+                                          st: widget.st, de: widget.de);
                                     },
                                   ),
                                 );
@@ -327,7 +342,13 @@ const String otherHero2 = 'add-todo';
 class PaiementPayPal extends StatefulWidget {
   final double price;
   final Commande com;
-  PaiementPayPal({required this.price, required this.com});
+  final PlaceLocation st;
+  final PlaceLocation de;
+  PaiementPayPal(
+      {required this.st,
+      required this.de,
+      required this.price,
+      required this.com});
   @override
   State<PaiementPayPal> createState() => _PaiementPayPalState();
 }
@@ -432,7 +453,8 @@ class _PaiementPayPalState extends State<PaiementPayPal> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (ctx) {
-                                      return AttentePage();
+                                      return AttentePage(
+                                          st: widget.st, de: widget.de);
                                     },
                                   ),
                                 );

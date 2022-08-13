@@ -13,7 +13,6 @@ class CourserApi {
     for (var i in data) {
       _temp.add(i);
     }
-    print('successfully.............................');
     return Coursier.recipesFromSnapshot(_temp);
   }
 }

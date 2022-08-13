@@ -70,6 +70,33 @@ class AdRProvider extends ChangeNotifier {
     return obj;
   }
 
+  Future<Map<String, dynamic>?> getAdressRamById(int id) async {
+    var result;
+    var urlAdressRam =
+        Uri.parse('${Api_services.httpbaseUrl2}/lilicourse/adressRamId?id=$id');
+
+    try {
+      final response = await http.get(urlAdressRam);
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+
+        _adressRam = AdressRam.fromJson(data);
+        notifyListeners();
+
+        result = {
+          "statut": true,
+          "message": "Adress Ram getted",
+          "adressRam": _adressRam
+        };
+      } else {
+        result = {"statut": false, "message": "Adress Ram not getted"};
+      }
+    } catch (e) {
+      print(e);
+    }
+    return result;
+  }
+
   Future<Map<String, dynamic>?> createAdressRam(AdressRam us) async {
     var result;
     var urlCreate =

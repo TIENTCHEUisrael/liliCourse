@@ -2,6 +2,7 @@ import http.client, urllib.request, urllib.parse, urllib.error, base64
 import json
 import requests
 import sys
+import uuid
 
 
 
@@ -53,7 +54,6 @@ def generate_api_key(x_reference_id, ocp_Apim_subscription_Key):
     return key
 
 
-
 #get Tokent
 def get_token(ocp_Apim_subscription_Key, key):
     access_tok=""
@@ -85,9 +85,9 @@ def get_token(ocp_Apim_subscription_Key, key):
 
 #Start transaction
 def requesttopay(
+                  x_reference_id="03fddfc0-b324-4fa0-9a83-302db2e2de26",
                   content_type="application/json",
-                  x_reference_id="c72f517f-7261-4f01-b52c-d8578d26917f",
-                  ocp_Apim_subscription_Key="85d786d5050949d390c8f1cf92e97c29",
+                  ocp_Apim_subscription_Key="4dd1f48a808e4da7b97ca5ef5cd2f827",
                   x_target_environment='sandbox',
                   amount='1000',
                   phone_number='677111143',
@@ -131,5 +131,5 @@ def requesttopay(
     except Exception as e:
         #print("[Errno {0}] {1}".format(e.errno, e.strerror))
         print('Error')
-
-#print(requesttopay(content_type="application/json", x_reference_id="faab54ac-c3c5-4261-a049-8852c252f8e4", ocp_Apim_subscription_Key="85d786d5050949d390c8f1cf92e97c29", x_target_environment="sandbox",amount="1100",phone_number="655326045"))
+#print(uuid.uuid4())
+#print(requesttopay(content_type="application/json", x_reference_id="03fddfc0-b324-4fa0-9a83-302db2e2de26", ocp_Apim_subscription_Key="4dd1f48a808e4da7b97ca5ef5cd2f827", x_target_environment="sandbox",amount="1100",phone_number="665326045"))

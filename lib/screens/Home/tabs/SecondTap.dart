@@ -20,12 +20,22 @@ class _RequestEnCourState extends State<RequestEnCour> {
     return ListView.builder(
       itemCount: 10,
       itemBuilder: ((context, index) {
-        return Container(
-          child: Center(
-            child: Text('ZEZE'),
-          ),
+        return Padding(
+          padding: EdgeInsets.all(5),
+          child: Column(children: [card()]),
         );
       }),
+    );
+  }
+
+  Widget card() {
+    return InkWell(
+      child: Card(
+        child: Container(
+          padding: const EdgeInsets.all(5),
+          child: Column(),
+        ),
+      ),
     );
   }
 }

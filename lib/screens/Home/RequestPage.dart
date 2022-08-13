@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../main.dart';
-import '../../screens/Home/tabs/firstTab.dart';
-import '../../screens/Home/tabs/secondTab.dart';
+import 'tabs/SecondTap.dart';
+import 'tabs/FirstTap.dart';
 
 class RequestPage extends StatefulWidget {
   @override
