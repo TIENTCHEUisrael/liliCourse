@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lilicourse/main.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../widgets/bas.dart';
@@ -28,11 +30,46 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Center(
-        child: Column(
-          children: [
-            Container(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 250,
+                ),
+                Center(
+                  child: Image.asset(
+                    "assets/images/d.png",
+                    height: 250,
+                    width: 250,
+                  ),
+                ),
+                const SizedBox(
+                  height: 220,
+                ),
+                bas(),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 320,
+            left: 20,
+            child: Text(
+              'Application de gestion de livraison coté client',
+              style: GoogleFonts.poppins(
+                  color: blue_button, fontStyle: FontStyle.italic),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/**const CircularProgressIndicator(), 
+ * Container(
               padding: const EdgeInsets.only(
                 top: 60,
                 left: 5,
@@ -40,26 +77,4 @@ class _SplashPageState extends State<SplashPage> {
               ),
               child: Lottie.asset("assets/images/splash1/delivery3.json",
                   height: 300),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 5),
-              child: Image.asset(
-                "assets/images/d.png",
-                height: 150,
-                width: 150,
-              ),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            const CircularProgressIndicator(),
-            const SizedBox(
-              height: 120,
-            ),
-            bas(),
-          ],
-        ),
-      ),
-    ));
-  }
-}
+            ), */
