@@ -55,6 +55,7 @@ class _Page2State extends State<Page2> {
   double t1 = 10;
   double t2 = 10;
   double t3 = 10;
+  double t4 = 10;
   double h1 = 15;
   double h2 = 9;
   double h3 = 12;
@@ -76,7 +77,7 @@ class _Page2State extends State<Page2> {
   final contactrecepteur = TextEditingController();
   final emailrecepteur = TextEditingController();
   final instructionrecepteur = TextEditingController();
-  String? civiliterecepteur;
+  String civiliterecepteur = "Feminin";
 
   String? localisationRamassage;
   final localisationE = TextEditingController();
@@ -84,7 +85,7 @@ class _Page2State extends State<Page2> {
   final contactemetteur = TextEditingController();
   final emailemetteur = TextEditingController();
   final instructionemetteur = TextEditingController();
-  String? civiliteemetteur;
+  String civiliteemetteur = "Feminin";
 
   @override
   void initState() {
@@ -125,7 +126,7 @@ class _Page2State extends State<Page2> {
       nameEmetteur: nameemetteur.text,
       contactEmetteur: int.parse(contactemetteur.text),
       emailEmetteur: emailemetteur.text,
-      civiliteEmetteur: civiliteemetteur!,
+      civiliteEmetteur: civiliteemetteur,
       instruction: instructionemetteur.text,
       updatedAt: DateTime.now().toString(),
     );
@@ -160,7 +161,7 @@ class _Page2State extends State<Page2> {
         nameRecepteur: namerecepteur.text,
         contactRecepteur: int.parse(contactrecepteur.text),
         emailRecepteur: emailrecepteur.text,
-        civiliteRecepteur: civiliterecepteur!,
+        civiliteRecepteur: civiliterecepteur,
         instruction: instructionrecepteur.text,
         updatedAt: DateTime.now().toString());
     var proAdl = Provider.of<AdLProvider>(ctx, listen: false);
@@ -539,10 +540,45 @@ class _Page2State extends State<Page2> {
                           InkWell(
                             onTap: () {
                               setState(() {
+                                poids = "2";
+                                t1 = 10;
+                                t2 = 10;
+                                t3 = 10;
+                                t4 = 15;
+                                print('poids:$poids');
+                              });
+                            },
+                            child: Card(
+                              elevation: 4,
+                              child: Container(
+                                padding: EdgeInsets.all(t4),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      '<3 KG',
+                                      style: GoogleFonts.poppins(
+                                          color: blue_button),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      '+500 XAF',
+                                      style: GoogleFonts.poppins(
+                                          color: blue_button),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
                                 poids = "3";
                                 t1 = 15;
                                 t2 = 10;
                                 t3 = 10;
+                                t4 = 10;
                                 print('poids:$poids');
                               });
                             },
@@ -559,7 +595,7 @@ class _Page2State extends State<Page2> {
                                       textAlign: TextAlign.center,
                                     ),
                                     Text(
-                                      '+1000 XAF',
+                                      '+1500 XAF',
                                       style: GoogleFonts.poppins(
                                           color: blue_button),
                                       textAlign: TextAlign.center,
@@ -571,15 +607,14 @@ class _Page2State extends State<Page2> {
                           ),
                           InkWell(
                             onTap: () {
-                              setState(
-                                () {
-                                  poids = "11";
-                                  t2 = 15;
-                                  t1 = 10;
-                                  t3 = 10;
-                                  print('poids:$poids');
-                                },
-                              );
+                              setState(() {
+                                poids = "11";
+                                t1 = 10;
+                                t2 = 15;
+                                t3 = 10;
+                                t4 = 10;
+                                print('poids:$poids');
+                              });
                             },
                             child: Card(
                               elevation: 4,
@@ -588,49 +623,13 @@ class _Page2State extends State<Page2> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      '10-20 KG',
+                                      '11-20 KG',
                                       style: GoogleFonts.poppins(
                                           color: blue_button),
                                       textAlign: TextAlign.center,
                                     ),
                                     Text(
-                                      '+3000 XAF',
-                                      style: GoogleFonts.poppins(
-                                          color: blue_button),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              setState(
-                                () {
-                                  poids = "21";
-                                  t3 = 15;
-                                  t2 = 10;
-                                  t1 = 10;
-
-                                  print('poids:$poids');
-                                },
-                              );
-                            },
-                            child: Card(
-                              elevation: 4,
-                              child: Container(
-                                padding: EdgeInsets.all(t3),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      '>21KG',
-                                      style: GoogleFonts.poppins(
-                                          color: blue_button),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      '+5000',
+                                      '+3000',
                                       style: GoogleFonts.poppins(
                                           color: blue_button),
                                       textAlign: TextAlign.center,
@@ -641,6 +640,44 @@ class _Page2State extends State<Page2> {
                             ),
                           ),
                         ],
+                      ),
+                      Center(
+                        child: InkWell(
+                          onTap: () {
+                            setState(
+                              () {
+                                poids = "21";
+                                t3 = 15;
+                                t2 = 10;
+                                t1 = 10;
+                                t4 = 10;
+                                print('poids:$poids');
+                              },
+                            );
+                          },
+                          child: Card(
+                            elevation: 4,
+                            child: Container(
+                              padding: EdgeInsets.all(t3),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    '>21KG',
+                                    style:
+                                        GoogleFonts.poppins(color: blue_button),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    '+5000 XAF',
+                                    style:
+                                        GoogleFonts.poppins(color: blue_button),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                       Container(
                         padding: const EdgeInsets.all(10),
@@ -1242,25 +1279,6 @@ class _Page2State extends State<Page2> {
                                   style: GoogleFonts.poppins(fontSize: 15)),
                             ],
                           ),
-                          Row(
-                            children: [
-                              Radio(
-                                value: 5,
-                                groupValue: _value,
-                                onChanged: (value) {
-                                  setState(
-                                    () {
-                                      _value = value as int;
-                                      planification = "Comme vous voulez";
-                                    },
-                                  );
-                                  print(planification);
-                                },
-                              ),
-                              Text('Rien',
-                                  style: GoogleFonts.poppins(fontSize: 15)),
-                            ],
-                          ),
                         ],
                       ),
                       const SizedBox(
@@ -1388,7 +1406,7 @@ class _Page2State extends State<Page2> {
                         email: emailemetteur.text,
                         contact: contactemetteur.text,
                         civility:
-                            civiliteemetteur == null ? " " : civiliteemetteur!,
+                            civiliteemetteur == null ? " " : civiliteemetteur,
                         localisation: localisationRamassage == null
                             ? " "
                             : localisationRamassage!,
@@ -1408,9 +1426,8 @@ class _Page2State extends State<Page2> {
                         name: namerecepteur.text,
                         email: emailrecepteur.text,
                         contact: contactrecepteur.text,
-                        civility: civiliterecepteur == null
-                            ? " "
-                            : civiliterecepteur!,
+                        civility:
+                            civiliterecepteur == null ? " " : civiliterecepteur,
                         localisation: localisationrecepteur == null
                             ? " "
                             : localisationrecepteur!,
@@ -1487,13 +1504,13 @@ class _Page2State extends State<Page2> {
                           nameemetteur.text.isEmpty ||
                           contactemetteur.text.isEmpty ||
                           emailemetteur.text.isEmpty ||
-                          civiliteemetteur!.isEmpty ||
+                          civiliteemetteur.isEmpty ||
                           instructionemetteur.text.isEmpty ||
                           localisationR.text.isEmpty ||
                           namerecepteur.text.isEmpty ||
                           emailrecepteur.text.isEmpty ||
                           contactrecepteur.text.isEmpty ||
-                          civiliterecepteur!.isEmpty ||
+                          civiliterecepteur.isEmpty ||
                           instructionrecepteur.text.isEmpty ||
                           poids == null ||
                           taille.isEmpty) {
@@ -1520,7 +1537,7 @@ class _Page2State extends State<Page2> {
                           nameEmetteur: nameemetteur.text,
                           contactEmetteur: int.parse(contactemetteur.text),
                           emailEmetteur: emailemetteur.text,
-                          civiliteEmetteur: civiliteemetteur!,
+                          civiliteEmetteur: civiliteemetteur,
                           instruction: instructionemetteur.text,
                           updatedAt: DateTime.now().toString(),
                         );
@@ -1538,7 +1555,7 @@ class _Page2State extends State<Page2> {
                                 contactRecepteur:
                                     int.parse(contactrecepteur.text),
                                 emailRecepteur: emailrecepteur.text,
-                                civiliteRecepteur: civiliterecepteur!,
+                                civiliteRecepteur: civiliterecepteur,
                                 instruction: instructionrecepteur.text,
                                 updatedAt: DateTime.now().toString(),
                               );

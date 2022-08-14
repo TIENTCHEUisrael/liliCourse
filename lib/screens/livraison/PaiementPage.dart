@@ -94,8 +94,8 @@ class _PaiementPageState extends State<PaiementPage> {
 
   @override
   void initState() {
-    super.initState();
     calculatePrice();
+    super.initState();
   }
 
   @override

@@ -40,7 +40,7 @@ class _AddTodoPopupCardState extends State<AddTodoPopupCard> {
     TextEditingController _price = TextEditingController();
     AuthProvider auth = Provider.of<AuthProvider>(context);
     PaiementProvider paiement = Provider.of<PaiementProvider>(context);
-    bool _isLoading = true;
+    bool _isLoading = false;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32.0),
@@ -130,6 +130,9 @@ class _AddTodoPopupCardState extends State<AddTodoPopupCard> {
                           paiement.createPaiement(paie).then(
                             (value) {
                               if (value['statut']) {
+                                setState(() {
+                                  _isLoading = true;
+                                });
                                 print("${value['paiement']}");
                                 var p = value['paiement'];
                                 print("");
@@ -172,11 +175,13 @@ class _AddTodoPopupCardState extends State<AddTodoPopupCard> {
                           print("");
                         }
                       },
-                      child: Text(
-                        'Validate',
-                        style: GoogleFonts.poppins(
-                            color: blue_button, fontSize: 18),
-                      ),
+                      child: _isLoading
+                          ? const CircularProgressIndicator()
+                          : Text(
+                              'Validate',
+                              style: GoogleFonts.poppins(
+                                  color: blue_button, fontSize: 18),
+                            ),
                     ),
                   ],
                 ),
