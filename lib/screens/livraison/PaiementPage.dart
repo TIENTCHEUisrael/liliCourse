@@ -42,10 +42,14 @@ class _PaiementPageState extends State<PaiementPage> {
   double pN = 0;
   double tL = 0;
   void calculatePrice() {
-    if (widget.ad.poids == "3") {
+    if (widget.ad.poids == "2") {
+      setState(() {
+        _price += 0;
+      });
+    } else if (widget.ad.poids == "3") {
       setState(
         () {
-          _price += 1000;
+          _price += 1500;
         },
       );
     } else if (widget.ad.poids == "11") {
@@ -70,13 +74,13 @@ class _PaiementPageState extends State<PaiementPage> {
     if (widget.ad.taille == "Taille XS") {
       setState(
         () {
-          _price += 500;
+          _price += 1000;
         },
       );
     } else if (widget.ad.taille == "Taille S") {
       setState(
         () {
-          _price += 1000;
+          _price += 1500;
         },
       );
     } else {

@@ -172,8 +172,8 @@ class _HomePageState extends State<HomePage> {
                                         contact: _coursiers![index]
                                             .phone_number
                                             .toString(),
-                                        note: double.parse(
-                                            _coursiers![index].rating),
+                                        /*note: double.parse(
+                                            _coursiers![index].rating),*/
                                       ),
                                     );
                                   },
@@ -264,10 +264,7 @@ class _HomePageState extends State<HomePage> {
 }
 
 buildCard(
-    {required Image image,
-    required String name,
-    required String contact,
-    required double note}) {
+    {required Image image, required String name, required String contact}) {
   return Card(
     child: Container(
       padding: null,
@@ -295,7 +292,7 @@ buildCard(
             contact,
             style: GoogleFonts.poppins(fontSize: 13),
           ),
-          RatingBar.builder(
+          /*RatingBar.builder(
             initialRating: note,
             direction: Axis.horizontal,
             allowHalfRating: false,
@@ -308,7 +305,7 @@ buildCard(
             onRatingUpdate: (rating) {
               print(rating);
             },
-          ),
+          ),*/
         ],
       ),
     ),
