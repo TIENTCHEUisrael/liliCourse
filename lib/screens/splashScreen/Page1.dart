@@ -25,7 +25,7 @@ class Page1 extends StatelessWidget {
               alignment: const Alignment(1, 0.3),
               width: 300,
               child: Text(
-                'Avec Shexpi vous avez la possibilite d’avoir un de nos coursier de Douala a disposition pour votre colis ',
+                'Avec LiliCourse vous avez la possibilite d’avoir un de nos coursier  a disposition pour gerer votre demande ',
                 style: GoogleFonts.poppins(
                   fontSize: 15,
                 ),

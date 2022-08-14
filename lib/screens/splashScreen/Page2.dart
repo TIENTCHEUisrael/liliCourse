@@ -24,7 +24,7 @@ class Page2 extends StatelessWidget {
               alignment: const Alignment(1, 0.3),
               width: 300,
               child: Text(
-                'Attribuer votre commande, ou colis aux coursiers',
+                'Faite votre demande de livraison via LiliCourse',
                 style: GoogleFonts.poppins(
                   fontSize: 15,
                 ),

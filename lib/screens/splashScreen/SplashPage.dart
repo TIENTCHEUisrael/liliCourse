@@ -30,39 +30,29 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 250,
-                ),
-                Center(
-                  child: Image.asset(
-                    "assets/images/d.png",
-                    height: 250,
-                    width: 250,
-                  ),
-                ),
-                const SizedBox(
-                  height: 220,
-                ),
-                bas(),
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 250,
             ),
-          ),
-          Positioned(
-            bottom: 320,
-            left: 20,
-            child: Text(
-              'Application de gestion de livraison coté client',
-              style: GoogleFonts.poppins(
-                  color: blue_button, fontStyle: FontStyle.italic),
-              textAlign: TextAlign.center,
+            Center(
+              child: Image.asset(
+                "assets/images/d.png",
+                height: 250,
+                width: 250,
+              ),
             ),
-          ),
-        ],
+            const SizedBox(
+              height: 10,
+            ),
+            const CircularProgressIndicator(),
+            const SizedBox(
+              height: 180,
+            ),
+            bas(),
+          ],
+        ),
       ),
     );
   }
