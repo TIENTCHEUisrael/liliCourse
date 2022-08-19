@@ -28,6 +28,7 @@ class _AttentePageState extends State<AttentePage> {
   LatLng? destination;
   LatLng? coursierLocalisation;
   Marker? _origin;
+  Marker? _current;
   Directions? _info;
   Marker? _destination;
   double t = 4.057882565127137;
@@ -59,6 +60,7 @@ class _AttentePageState extends State<AttentePage> {
     coursierLocalisation = const LatLng(4.057882565127137, 9.720073007047176);
     _addMarkerLivraison(destination!);
     _addMarkerRamassage(sourceLocation!);
+    getPolyPoints();
     super.didChangeDependencies();
   }
 
@@ -147,13 +149,11 @@ class _AttentePageState extends State<AttentePage> {
     }
   }
 
-  Future<void> getMarkers() async {}
-
   @override
   void initState() {
     //start();
     getCurrentLocation();
-    getPolyPoints();
+    //getPolyPoints();
     super.initState();
   }
 
@@ -206,21 +206,13 @@ class _AttentePageState extends State<AttentePage> {
               },
               markers: {
                 Marker(
-                  markerId: const MarkerId('Cllient'),
+                  markerId: const MarkerId('Client'),
                   infoWindow: const InfoWindow(title: 'Client'),
                   icon: BitmapDescriptor.defaultMarkerWithHue(
                       BitmapDescriptor.hueRed),
                   position: LatLng(
                       currentLocation!.latitude!, currentLocation!.longitude!),
                 ),
-                /*Marker(
-                  markerId: MarkerId("source"),
-                  position: sourceLocation!,
-                ),
-                Marker(
-                  markerId: MarkerId("destination"),
-                  position: destination!,
-                ),*/
                 if (_origin != null) _origin!,
                 if (_destination != null) _destination!
               },

@@ -104,6 +104,9 @@ class _AddTodoPopupCardState extends State<AddTodoPopupCard> {
                     ),
                     TextButton(
                       onPressed: () {
+                        setState(() {
+                          _isLoading = true;
+                        });
                         if (widget.com == null || widget.price == null) {
                           Fluttertoast.showToast(
                             msg: "Error:['One Value is null']}",
@@ -130,9 +133,6 @@ class _AddTodoPopupCardState extends State<AddTodoPopupCard> {
                           paiement.createPaiement(paie).then(
                             (value) {
                               if (value['statut']) {
-                                setState(() {
-                                  _isLoading = true;
-                                });
                                 print("${value['paiement']}");
                                 var p = value['paiement'];
                                 print("");
