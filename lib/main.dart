@@ -5,6 +5,7 @@ import 'package:lilicourse/Provider/ProviderAdressRam.dart';
 import 'package:lilicourse/Provider/ProviderCommande.dart';
 import 'package:lilicourse/Provider/ProviderCoursier.dart';
 import 'package:lilicourse/Provider/ProviderPaiement.dart';
+import 'package:lilicourse/theme/themeManager.dart';
 import 'package:provider/provider.dart';
 import '../screens/splashScreen/SplashPage.dart';
 import 'Provider/providerUser.dart';
@@ -76,9 +77,6 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'LiliCourse',
-            theme: ThemeData(
-                primaryColor: Colors.white,
-                scaffoldBackgroundColor: Colors.white),
             home: auth.isAuth == true
                 ? Home()
                 : FutureBuilder<bool>(
