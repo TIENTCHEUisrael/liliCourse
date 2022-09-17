@@ -90,8 +90,7 @@ class _LocationInputState extends State<LocationInput> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              FlatButton.icon(
-                textColor: blue_button,
+              TextButton.icon(
                 icon: const Icon(
                   Icons.location_on,
                   size: 15,
@@ -102,8 +101,7 @@ class _LocationInputState extends State<LocationInput> {
                 ),
                 onPressed: _getCurrentUserLocation,
               ),
-              FlatButton.icon(
-                textColor: blue_button,
+              TextButton.icon(
                 icon: const Icon(Icons.map),
                 label: Text(
                   'Select on Map',

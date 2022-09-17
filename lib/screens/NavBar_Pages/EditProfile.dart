@@ -134,10 +134,9 @@ class _EditPageState extends State<EditProfile> {
                             height: 45,
                             alignment: Alignment.center,
                             child: Container(
-                              child: FlatButton.icon(
+                              child: TextButton.icon(
                                 icon: const Icon(Icons.camera),
                                 label: const Text('Camera'),
-                                textColor: blue_button,
                                 onPressed: () => pickImage(ImageSource.camera),
                               ),
                             ),
@@ -146,10 +145,9 @@ class _EditPageState extends State<EditProfile> {
                             height: 45,
                             alignment: Alignment.center,
                             child: Container(
-                              child: FlatButton.icon(
+                              child: TextButton.icon(
                                 icon: const Icon(Icons.camera),
                                 label: const Text('Gallery'),
-                                textColor: blue_button,
                                 onPressed: () => pickImage(ImageSource.gallery),
                               ),
                             ),

@@ -205,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
                     bottom: 30,
                   ),
                   width: double.infinity,
-                  child: FlatButton(
+                  child: TextButton(
                     child: Text(
                       'Inscription',
                       style: GoogleFonts.poppins(
